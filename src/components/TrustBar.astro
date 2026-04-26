@@ -4,6 +4,7 @@
 
 interface Marca {
   nome: string;
+  dominio?: string;  // pra logo via Clearbit
   origem: string;
   destaque: string;
   pontos: string[];
@@ -215,26 +216,14 @@ const categorias: Categoria[] = [
     ],
   },
   {
-    titulo: 'Inversores premium',
+    titulo: 'Inversores String',
     icon: '⚡',
     cor: 'primary',
     marcas: [
       {
-        nome: 'SolarEdge',
-        origem: '🇮🇱 Israel · Fundada em 2006',
-        destaque: 'Pioneira em otimizadores de potência por módulo',
-        pontos: [
-          'Tecnologia de otimização painel-a-painel (mais geração com sombra)',
-          'Monitoramento granular módulo a módulo',
-          'Segurança superior (SafeDC)',
-          'Top 1 mundial em equipamentos com otimização',
-        ],
-        tecnologias: ['Power Optimizer', 'HD-Wave', 'Monitoramento ao vivo'],
-        ecosunUsa: 'Inversores premium pra casas com sombreamento ou alto padrão',
-      },
-      {
         nome: 'Sungrow',
-        origem: '🇨🇳 China · Fundada em 1997',
+        dominio: 'sungrowpower.com',
+        origem: 'Fundada em 1997',
         destaque: 'Top 1 mundial em inversores fotovoltaicos',
         pontos: [
           'Mais de 405 GW instalados globalmente',
@@ -243,11 +232,26 @@ const categorias: Categoria[] = [
           'Excelente suporte e disponibilidade no BR',
         ],
         tecnologias: ['SG/SH series', 'String inverter', 'Híbrido'],
-        ecosunUsa: 'Inversores residenciais, comerciais e industriais (Grupo A)',
+        ecosunUsa: 'Residenciais, comerciais e industriais (Grupo A)',
+      },
+      {
+        nome: 'Huawei',
+        dominio: 'huawei.com',
+        origem: 'Fundada em 1987',
+        destaque: 'Inversores Smart String com tecnologia avançada',
+        pontos: [
+          'FusionSolar — monitoramento de ponta',
+          'Inteligência artificial integrada',
+          'Garantia robusta',
+          'Excelente integração com baterias Soluna',
+        ],
+        tecnologias: ['SUN2000', 'Smart String', 'AI Diagnostics'],
+        ecosunUsa: 'Sistemas premium com monitoramento avançado',
       },
       {
         nome: 'GoodWe',
-        origem: '🇨🇳 China · Fundada em 2010',
+        dominio: 'goodwe.com',
+        origem: 'Fundada em 2010',
         destaque: 'Forte em sistemas híbridos com bateria',
         pontos: [
           'Linha completa: residencial, comercial e híbrido',
@@ -259,34 +263,30 @@ const categorias: Categoria[] = [
         ecosunUsa: 'Sistemas híbridos residenciais',
       },
       {
-        nome: 'Deye',
-        origem: '🇨🇳 China · Fundada em 1991',
-        destaque: 'Líder em inversores híbridos e Grid Zero',
+        nome: 'Solis',
+        dominio: 'solisinverters.com',
+        origem: 'Fundada em 2005',
+        destaque: 'Especialista global em inversores string',
         pontos: [
-          'Especialista em sistemas híbridos com bateria',
-          'Tecnologia Grid Zero nativa (sem injeção)',
-          'Compatível com várias químicas de bateria',
-          'Forte na linha comercial 30-110 kW',
+          'Foco exclusivo em inversores fotovoltaicos',
+          'Linhas residenciais, comerciais e utility',
+          'Forte presença internacional',
+          'Custo-benefício competitivo',
         ],
-        tecnologias: ['Híbrido', 'Grid Zero', 'Off-grid'],
-        ecosunUsa: 'Sistemas híbridos comerciais e Grid Zero',
+        tecnologias: ['Mini', 'S6', 'String inverter'],
+        ecosunUsa: 'Sistemas residenciais e comerciais string',
       },
-      {
-        nome: 'FoxESS',
-        origem: '🇨🇳 China · Fundada em 2019',
-        destaque: 'Inovação em híbridos com excelente custo-benefício',
-        pontos: [
-          'Crescimento explosivo (top fabricantes 2024-2026)',
-          'Linha completa: PV, híbrido, bateria all-in-one',
-          'Eficiência até 98%',
-          'Forte presença no mercado BR',
-        ],
-        tecnologias: ['H1/H3', 'AIO (All-in-One)', 'Energy Cube'],
-        ecosunUsa: 'Inversores híbridos residenciais e comerciais',
-      },
+    ],
+  },
+  {
+    titulo: 'Microinversores',
+    icon: '🔌',
+    cor: 'primary',
+    marcas: [
       {
         nome: 'Hoymiles',
-        origem: '🇨🇳 China · Fundada em 2012',
+        dominio: 'hoymiles.com',
+        origem: 'Fundada em 2012',
         destaque: 'Líder global em microinversores',
         pontos: [
           'Top 1 fabricante mundial de microinversores',
@@ -299,7 +299,8 @@ const categorias: Categoria[] = [
       },
       {
         nome: 'NEP',
-        origem: '🇨🇳 China · Especialista em microinversores',
+        dominio: 'northernep.com',
+        origem: 'Especialista em microinversores',
         destaque: 'Microinversores robustos com alta confiabilidade',
         pontos: [
           'Especialista em micro-FV',
@@ -309,6 +310,85 @@ const categorias: Categoria[] = [
         ],
         tecnologias: ['BDM Series', 'PLC monitoring'],
         ecosunUsa: 'Microinversores em sistemas com sombreamento',
+      },
+      {
+        nome: 'FoxESS',
+        dominio: 'fox-ess.com',
+        origem: 'Fundada em 2019',
+        destaque: 'Microinversores e híbridos com excelente custo-benefício',
+        pontos: [
+          'Crescimento explosivo (top fabricantes 2024-2026)',
+          'Linha completa: micro, string, híbrido, AIO',
+          'Eficiência até 98%',
+          'Forte presença no mercado BR',
+        ],
+        tecnologias: ['H1/H3', 'AIO', 'Microinversor série M'],
+        ecosunUsa: 'Microinversores e híbridos residenciais',
+      },
+      {
+        nome: 'APsystems',
+        dominio: 'apsystems.com',
+        origem: 'Fundada em 2010',
+        destaque: 'Pioneira em microinversores multi-painel',
+        pontos: [
+          'Microinversor que atende 2-4 painéis (mais econômico)',
+          'Tecnologia ZigBee pra monitoramento',
+          'Forte garantia 25 anos',
+          'Boa relação custo-benefício',
+        ],
+        tecnologias: ['DS3 Series', 'YC Series', 'Multi-input'],
+        ecosunUsa: 'Microinversores multi-painel residenciais',
+      },
+      {
+        nome: 'Deye',
+        dominio: 'deyeinverter.com',
+        origem: 'Fundada em 1991',
+        destaque: 'Microinversores e híbridos com Grid Zero',
+        pontos: [
+          'Especialista em sistemas híbridos com bateria',
+          'Tecnologia Grid Zero nativa (sem injeção)',
+          'Linha de microinversores em expansão',
+          'Forte na linha comercial híbrida',
+        ],
+        tecnologias: ['Sun-M', 'Híbrido', 'Grid Zero'],
+        ecosunUsa: 'Microinversores e híbridos comerciais',
+      },
+      {
+        nome: 'Enphase',
+        dominio: 'enphase.com',
+        origem: 'Fundada em 2006',
+        destaque: 'Pioneira mundial em microinversores',
+        pontos: [
+          'Inventora do conceito moderno de microinversor',
+          'Top 1 mundial em microinversores premium',
+          'Garantia 25 anos painel-a-painel',
+          'Plataforma Enphase Enlighten (monitoramento granular)',
+        ],
+        tecnologias: ['IQ Series', 'Encharge battery', 'Envoy'],
+        ecosunUsa: 'Microinversores premium residenciais alto padrão',
+      },
+    ],
+  },
+  {
+    titulo: 'Solução SolarEdge (otimizadores)',
+    icon: '🎯',
+    cor: 'accent',
+    marcas: [
+      {
+        nome: 'SolarEdge',
+        dominio: 'solaredge.com',
+        origem: 'Fundada em 2006',
+        destaque: 'A única solução com OTIMIZADOR por módulo + inversor central. O melhor dos 2 mundos.',
+        pontos: [
+          'Otimizador (P-series) em cada painel = sem perda por sombra',
+          'Inversor central HD-Wave (mais leve e eficiente)',
+          'Monitoramento ao vivo painel-a-painel',
+          'SafeDC™: tensão 1V quando inversor desligado (segurança máxima)',
+          'Top 1 mundial em sistemas com otimizadores',
+          'Bateria DC-coupled integrada (Energy Bank)',
+        ],
+        tecnologias: ['Power Optimizer', 'HD-Wave', 'SafeDC', 'Monitoramento granular'],
+        ecosunUsa: 'Sistemas premium com sombreamento, alto padrão e máxima segurança',
       },
     ],
   },
@@ -539,9 +619,18 @@ const categorias: Categoria[] = [
               <button
                 type="button"
                 data-marca={`${cat.titulo}::${m.nome}`}
-                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg px-3 py-2.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center"
+                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg px-3 py-2.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center min-h-[52px]"
               >
-                <div class="font-bold text-xs text-dark group-hover:text-primary-700 transition-colors leading-tight">
+                {m.dominio ? (
+                  <img
+                    src={`https://logo.clearbit.com/${m.dominio}`}
+                    alt={m.nome}
+                    class="h-7 w-auto max-w-full object-contain mx-auto group-hover:scale-110 transition-transform"
+                    loading="lazy"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+                  />
+                ) : null}
+                <div class={`font-bold text-xs text-dark group-hover:text-primary-700 transition-colors leading-tight ${m.dominio ? 'hidden' : ''}`}>
                   {m.nome}
                 </div>
               </button>
