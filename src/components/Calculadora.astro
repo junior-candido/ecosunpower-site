@@ -137,14 +137,16 @@
   const resArvores = document.getElementById('res-arvores');
   const ctaWa = document.getElementById('calc-cta-wa') as HTMLAnchorElement;
 
-  // Constantes Brasília (irradiação 5.4 kWh/m²/dia em média)
-  const TARIFA_MEDIA_BRASILIA = 0.85; // R$/kWh (aprox CEB)
-  const HORAS_SOL_DIA = 5.0;
+  // Constantes Brasília — premissas técnicas atualizadas (Pesquisa Greener jan/2026 + tarifa CEB DF)
+  // Tarifa CEB B1: R$ 0,98 (consumo padrão) e R$ 1,12 (alto padrão >220 kWh). Usamos média ponderada.
+  const TARIFA_MEDIA_BRASILIA = 1.05; // R$/kWh (CEB DF média 2026)
+  const HORAS_SOL_DIA = 5.2; // Brasília: irradiação média 5.0-5.4 kWh/m²/dia
+  // Preços Greener jan/2026 + premium engenharia EcoSunPower (15% acima média mercado por qualidade técnica)
   const PRECO_KWP_INSTALADO = {
-    residencial: 5500, // R$/kWp
-    comercial: 5000,
-    rural: 5800,
-    industrial: 4200,
+    residencial: 3400, // R$/kWp (Greener residencial 4-8 kWp + premium EcoSun)
+    comercial: 2800,   // R$/kWp (Greener comercial 12-50 kWp + premium)
+    rural: 3600,       // R$/kWp (rural tem logística e estruturas especiais)
+    industrial: 2200,  // R$/kWp (Greener Grupo A 150kWp+ + premium)
   };
 
   function formatBRL(v: number): string {
