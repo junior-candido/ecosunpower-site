@@ -26,8 +26,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1FB8E8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="canonical" href={canonicalURL} />
+
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="EcoSunPower" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="EcoSunPower" />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -82,5 +91,71 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
       <slot />
     </main>
     <Footer />
+
+    <!-- PWA Install Prompt -->
+    <div id="pwa-install-banner" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-sm bg-white rounded-2xl shadow-2xl border-2 border-primary-200 p-4 hidden z-50 animate-fade-in-up">
+      <div class="flex items-start gap-3">
+        <img src="/icon-192.png" alt="EcoSunPower" class="w-12 h-12 rounded-xl flex-shrink-0" />
+        <div class="flex-1 min-w-0">
+          <h3 class="font-bold text-dark text-sm">Instalar EcoSunPower</h3>
+          <p class="text-xs text-muted mt-0.5 leading-snug">
+            Adicione à tela inicial pra acesso rápido + funciona offline.
+          </p>
+          <div class="flex gap-2 mt-3">
+            <button id="pwa-install-btn" class="flex-1 px-3 py-2 bg-primary-500 hover:bg-primary-600 text-white text-xs font-bold rounded-lg transition-colors">
+              ⚡ Instalar
+            </button>
+            <button id="pwa-dismiss-btn" class="px-3 py-2 text-muted hover:text-dark text-xs font-semibold transition-colors">
+              Agora não
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Service Worker + PWA Install -->
+    <script is:inline>
+      // Register Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW falhou:', err));
+        });
+      }
+
+      // PWA Install prompt
+      let deferredPrompt;
+      const banner = document.getElementById('pwa-install-banner');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const dismissBtn = document.getElementById('pwa-dismiss-btn');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        // Mostra banner depois de 5s pro usuário ter contato com site
+        const dismissed = localStorage.getItem('pwa-dismissed');
+        if (!dismissed) {
+          setTimeout(() => banner?.classList.remove('hidden'), 5000);
+        }
+      });
+
+      installBtn?.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        banner?.classList.add('hidden');
+      });
+
+      dismissBtn?.addEventListener('click', () => {
+        banner?.classList.add('hidden');
+        localStorage.setItem('pwa-dismissed', String(Date.now()));
+      });
+
+      // Detecta quando instalado
+      window.addEventListener('appinstalled', () => {
+        banner?.classList.add('hidden');
+        deferredPrompt = null;
+      });
+    </script>
   </body>
 </html>
