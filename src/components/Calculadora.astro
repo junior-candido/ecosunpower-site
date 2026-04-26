@@ -1,0 +1,217 @@
+---
+// CALCULADORA DE ECONOMIA — feature killer
+// Cliente coloca conta de luz → sistema calcula tudo + dispara WhatsApp qualificado
+---
+
+<section id="calculadora" class="section bg-white">
+  <div class="container-wide">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <span class="tag-accent">Calculadora exclusiva</span>
+      <h2 class="text-4xl lg:text-5xl mt-4 mb-5">
+        Quanto VOCÊ economiza com <span class="text-gradient">solar?</span>
+      </h2>
+      <p class="text-lg text-muted leading-relaxed">
+        Resposta em 30 segundos. Sem cadastro, sem enrolação.
+        Vai direto pro especialista responder, com seu projeto sob medida.
+      </p>
+    </div>
+
+    <!-- Calculadora -->
+    <div class="max-w-4xl mx-auto bg-gradient-to-br from-primary-50 via-white to-accent-50 rounded-3xl shadow-card border border-primary-100 p-6 lg:p-10">
+      <!-- Form fields -->
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <!-- Conta de luz -->
+        <div>
+          <label class="block text-sm font-bold text-dark mb-2">
+            💡 Sua conta de luz mensal
+          </label>
+          <div class="relative">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-2xl font-bold text-muted">R$</span>
+            <input
+              type="number"
+              id="calc-conta"
+              value="800"
+              min="100"
+              max="100000"
+              class="w-full pl-14 pr-4 py-4 text-2xl font-bold text-dark bg-white border-2 border-slate-200 rounded-xl focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-100 transition"
+            />
+          </div>
+          <p class="text-xs text-muted mt-2">Use a média dos últimos 3 meses</p>
+        </div>
+
+        <!-- Tipo -->
+        <div>
+          <label class="block text-sm font-bold text-dark mb-2">
+            🏠 Tipo de imóvel
+          </label>
+          <select
+            id="calc-tipo"
+            class="w-full px-4 py-4 text-base font-semibold text-dark bg-white border-2 border-slate-200 rounded-xl focus:border-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-100 transition cursor-pointer"
+          >
+            <option value="residencial">🏠 Residencial</option>
+            <option value="comercial">🏢 Comercial / Empresa</option>
+            <option value="rural">🌾 Rural / Agro</option>
+            <option value="industrial">🏭 Industrial (Grupo A)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Botão calcular -->
+      <button
+        id="calc-btn"
+        type="button"
+        class="w-full btn-secondary text-lg justify-center mb-8 py-4"
+      >
+        ⚡ Calcular minha economia
+      </button>
+
+      <!-- Resultado (escondido inicialmente) -->
+      <div id="calc-resultado" class="hidden">
+        <div class="border-t-2 border-dashed border-primary-200 pt-8">
+          <h3 class="text-2xl lg:text-3xl text-center mb-8 font-display">
+            🎉 Seu sistema personalizado:
+          </h3>
+
+          <!-- Cards de resultado -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-2xl p-5 text-center border-2 border-primary-100">
+              <div class="text-xs text-muted mb-1 uppercase tracking-wider font-semibold">Sistema ideal</div>
+              <div class="text-2xl lg:text-3xl font-display font-bold text-primary-600" id="res-sistema">— kWp</div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 text-center border-2 border-accent-100">
+              <div class="text-xs text-muted mb-1 uppercase tracking-wider font-semibold">Investimento</div>
+              <div class="text-2xl lg:text-3xl font-display font-bold text-accent-600" id="res-investimento">R$ —</div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 text-center border-2 border-emerald-100">
+              <div class="text-xs text-muted mb-1 uppercase tracking-wider font-semibold">Economia/mês</div>
+              <div class="text-2xl lg:text-3xl font-display font-bold text-emerald-600" id="res-economia">R$ —</div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 text-center border-2 border-violet-100">
+              <div class="text-xs text-muted mb-1 uppercase tracking-wider font-semibold">Pago em</div>
+              <div class="text-2xl lg:text-3xl font-display font-bold text-violet-600" id="res-payback">— anos</div>
+            </div>
+          </div>
+
+          <!-- Resumo destaque -->
+          <div class="bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-2xl p-6 text-center mb-6">
+            <div class="text-sm uppercase tracking-wider opacity-90 mb-2">Em 25 anos você economiza</div>
+            <div class="text-4xl lg:text-5xl font-display font-bold mb-2" id="res-economia-total">R$ —</div>
+            <div class="text-sm opacity-90">
+              Equivale a <strong class="text-accent-200" id="res-arvores">— árvores plantadas</strong>
+            </div>
+          </div>
+
+          <!-- CTA WhatsApp -->
+          <a
+            id="calc-cta-wa"
+            href="https://wa.me/5561998805002"
+            target="_blank"
+            rel="noopener"
+            class="block w-full btn-primary text-lg justify-center py-4"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Quero esse sistema! Falar agora pelo WhatsApp
+          </a>
+          <p class="text-xs text-muted text-center mt-3">
+            ⚡ Resposta de especialista em até 24h · Visita técnica gratuita
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const conta = document.getElementById('calc-conta') as HTMLInputElement;
+  const tipo = document.getElementById('calc-tipo') as HTMLSelectElement;
+  const btn = document.getElementById('calc-btn');
+  const resultado = document.getElementById('calc-resultado');
+  const resSistema = document.getElementById('res-sistema');
+  const resInvestimento = document.getElementById('res-investimento');
+  const resEconomia = document.getElementById('res-economia');
+  const resPayback = document.getElementById('res-payback');
+  const resTotal = document.getElementById('res-economia-total');
+  const resArvores = document.getElementById('res-arvores');
+  const ctaWa = document.getElementById('calc-cta-wa') as HTMLAnchorElement;
+
+  // Constantes Brasília (irradiação 5.4 kWh/m²/dia em média)
+  const TARIFA_MEDIA_BRASILIA = 0.85; // R$/kWh (aprox CEB)
+  const HORAS_SOL_DIA = 5.0;
+  const PRECO_KWP_INSTALADO = {
+    residencial: 5500, // R$/kWp
+    comercial: 5000,
+    rural: 5800,
+    industrial: 4200,
+  };
+
+  function formatBRL(v: number): string {
+    return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  }
+
+  function calcular() {
+    const valorConta = parseFloat(conta.value) || 800;
+    const tipoImovel = tipo.value as 'residencial' | 'comercial' | 'rural' | 'industrial';
+
+    // 1. Consumo mensal estimado em kWh
+    const consumoMensal = valorConta / TARIFA_MEDIA_BRASILIA;
+    const consumoDiario = consumoMensal / 30;
+
+    // 2. Sistema necessário em kWp
+    const sistemaKwp = consumoDiario / HORAS_SOL_DIA * 1.15; // 15% de margem
+
+    // 3. Investimento estimado
+    const investimento = sistemaKwp * PRECO_KWP_INSTALADO[tipoImovel];
+
+    // 4. Economia mensal (95% da conta vira zero, paga só taxa mínima ~R$ 30)
+    const economiaMensal = valorConta - 30;
+    const economiaAnual = economiaMensal * 12;
+
+    // 5. Payback
+    const paybackAnos = investimento / economiaAnual;
+
+    // 6. Em 25 anos com reajuste 7%
+    let economia25anos = 0;
+    let contaAtual = valorConta;
+    for (let i = 0; i < 25; i++) {
+      economia25anos += (contaAtual - 30) * 12;
+      contaAtual *= 1.07;
+    }
+    economia25anos -= investimento;
+
+    // 7. Árvores equivalentes (1 kWh ≈ 0.42 kg CO2; 1 árvore absorve ~22 kg/ano)
+    const kwhAno = sistemaKwp * HORAS_SOL_DIA * 365;
+    const arvores = Math.round((kwhAno * 25 * 0.42) / 22);
+
+    // Update UI
+    if (resSistema) resSistema.textContent = `${sistemaKwp.toFixed(1)} kWp`;
+    if (resInvestimento) resInvestimento.textContent = formatBRL(investimento);
+    if (resEconomia) resEconomia.textContent = formatBRL(economiaMensal);
+    if (resPayback) resPayback.textContent = `${paybackAnos.toFixed(1)} anos`;
+    if (resTotal) resTotal.textContent = formatBRL(economia25anos);
+    if (resArvores) resArvores.textContent = `${arvores.toLocaleString('pt-BR')} árvores plantadas`;
+
+    // Update WhatsApp link
+    const msg = `Oi! Simulei no site da EcoSunPower e quero conversar sobre meu sistema:%0A%0A` +
+                `📊 *Minha simulação:*%0A` +
+                `• Conta atual: ${formatBRL(valorConta)}/mês%0A` +
+                `• Tipo: ${tipo.options[tipo.selectedIndex].text}%0A` +
+                `• Sistema sugerido: ${sistemaKwp.toFixed(1)} kWp%0A` +
+                `• Investimento: ${formatBRL(investimento)}%0A` +
+                `• Economia mensal: ${formatBRL(economiaMensal)}%0A` +
+                `• Payback: ${paybackAnos.toFixed(1)} anos%0A%0A` +
+                `Pode me passar mais detalhes?`;
+    ctaWa.href = `https://wa.me/5561998805002?text=${msg}`;
+
+    // Show result
+    resultado?.classList.remove('hidden');
+    resultado?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  btn?.addEventListener('click', calcular);
+  conta?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') calcular();
+  });
+</script>

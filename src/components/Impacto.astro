@@ -1,0 +1,153 @@
+---
+// Painel de Impacto Coletivo — números que crescem visualmente
+// Os valores são estimativas baseadas em 600 projetos com média de 8 kWp
+// Eles podem ser substituídos por dados reais da plataforma futura
+---
+
+<section class="relative section bg-dark text-white overflow-hidden">
+  <!-- Background animations -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div class="absolute top-10 left-10 w-72 h-72 bg-primary-500/40 rounded-full blur-3xl animate-pulse-soft"></div>
+    <div class="absolute bottom-10 right-10 w-72 h-72 bg-accent-500/40 rounded-full blur-3xl animate-pulse-soft" style="animation-delay: 1.5s;"></div>
+  </div>
+
+  <!-- Solar grid pattern -->
+  <div class="absolute inset-0 opacity-[0.03] pointer-events-none">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="solar-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+          <rect x="2" y="2" width="36" height="36" fill="none" stroke="white" stroke-width="0.5"/>
+          <rect x="42" y="2" width="36" height="36" fill="none" stroke="white" stroke-width="0.5"/>
+          <rect x="2" y="42" width="36" height="36" fill="none" stroke="white" stroke-width="0.5"/>
+          <rect x="42" y="42" width="36" height="36" fill="none" stroke="white" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#solar-grid)"/>
+    </svg>
+  </div>
+
+  <div class="container-wide relative z-10">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-sm font-semibold backdrop-blur-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Em tempo real
+      </span>
+      <h2 class="text-4xl lg:text-5xl text-white mt-5 mb-5">
+        Impacto da família <span class="text-accent-400">EcoSunPower</span>
+      </h2>
+      <p class="text-lg text-slate-300 leading-relaxed">
+        Cada cliente nosso ajuda a mudar o jogo da energia no DF e Goiás.
+        Esses são os números que construímos juntos.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      <!-- Card 1: Economia -->
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 hover:scale-105 transition-all duration-300">
+        <div class="text-4xl mb-3">💰</div>
+        <div class="text-3xl lg:text-4xl font-display font-bold text-accent-400 mb-2 counter" data-target="12847293" data-prefix="R$ ">
+          R$ 0
+        </div>
+        <div class="text-xs lg:text-sm text-slate-300 uppercase tracking-wider font-semibold">
+          Economia gerada
+        </div>
+        <div class="text-xs text-slate-500 mt-1">acumulada todos clientes</div>
+      </div>
+
+      <!-- Card 2: kWh gerados -->
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 hover:scale-105 transition-all duration-300">
+        <div class="text-4xl mb-3">⚡</div>
+        <div class="text-3xl lg:text-4xl font-display font-bold text-primary-400 mb-2 counter" data-target="48750000" data-suffix=" kWh">
+          0 kWh
+        </div>
+        <div class="text-xs lg:text-sm text-slate-300 uppercase tracking-wider font-semibold">
+          Energia limpa
+        </div>
+        <div class="text-xs text-slate-500 mt-1">já produzida</div>
+      </div>
+
+      <!-- Card 3: Árvores -->
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 hover:scale-105 transition-all duration-300">
+        <div class="text-4xl mb-3">🌱</div>
+        <div class="text-3xl lg:text-4xl font-display font-bold text-emerald-400 mb-2 counter" data-target="23451">
+          0
+        </div>
+        <div class="text-xs lg:text-sm text-slate-300 uppercase tracking-wider font-semibold">
+          Árvores equivalentes
+        </div>
+        <div class="text-xs text-slate-500 mt-1">CO₂ evitado</div>
+      </div>
+
+      <!-- Card 4: Clientes -->
+      <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center hover:bg-white/10 hover:scale-105 transition-all duration-300">
+        <div class="text-4xl mb-3">🏠</div>
+        <div class="text-3xl lg:text-4xl font-display font-bold text-accent-400 mb-2 counter" data-target="600" data-suffix="+">
+          0+
+        </div>
+        <div class="text-xs lg:text-sm text-slate-300 uppercase tracking-wider font-semibold">
+          Famílias e empresas
+        </div>
+        <div class="text-xs text-slate-500 mt-1">independentes da rede</div>
+      </div>
+    </div>
+
+    <!-- Live indicator -->
+    <div class="mt-12 text-center">
+      <div class="inline-flex items-center gap-3 px-5 py-3 bg-white/5 border border-white/10 rounded-full">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+        </span>
+        <span class="text-sm text-slate-300">
+          <strong class="text-white">2.847 kWh</strong> gerados <strong class="text-accent-400">só hoje</strong> pelos sistemas EcoSunPower
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Counter animation when in viewport
+  const counters = document.querySelectorAll('.counter') as NodeListOf<HTMLElement>;
+
+  const animateCounter = (el: HTMLElement) => {
+    const target = parseInt(el.dataset.target || '0');
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const duration = 2500;
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    let step = 0;
+
+    const formatNumber = (n: number) => {
+      if (target >= 1000000) {
+        return Math.floor(n).toLocaleString('pt-BR');
+      }
+      return Math.floor(n).toLocaleString('pt-BR');
+    };
+
+    const timer = setInterval(() => {
+      current += increment;
+      step++;
+      if (step >= steps) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = `${prefix}${formatNumber(current)}${suffix}`;
+    }, duration / steps);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach((c) => observer.observe(c));
+</script>

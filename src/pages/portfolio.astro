@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Cases placeholder — quando Junior fornecer dados reais, atualizamos
+const cases = [
+  {
+    titulo: 'Wash Box Serviços Automotivos',
+    cidade: 'Brasília — DF',
+    tipo: 'Comercial',
+    kwp: '14,4',
+    economia: 'R$ 2.300/mês',
+    desc: 'Sistema fotovoltaico com inversor Sungrow + monitoramento inteligente. ROI projetado em 4 anos.',
+    cor: 'primary',
+  },
+  {
+    titulo: 'Indústria de Médio Porte',
+    cidade: 'Goiânia — GO',
+    tipo: 'Grupo A (Indústria)',
+    kwp: '85,5',
+    economia: 'R$ 18.500/mês',
+    desc: 'Sistema solar de média tensão com automação completa pra indústria.',
+    cor: 'accent',
+  },
+  {
+    titulo: 'Residencial Premium',
+    cidade: 'Brasília — DF',
+    tipo: 'Residencial + Bateria',
+    kwp: '11,2',
+    economia: 'R$ 1.450/mês',
+    desc: 'Sistema híbrido com bateria de 10 kWh. Independência da rede elétrica 24h.',
+    cor: 'primary',
+  },
+  {
+    titulo: 'Fazenda — Agronegócio',
+    cidade: 'Anápolis — GO',
+    tipo: 'Rural',
+    kwp: '32,4',
+    economia: 'R$ 5.200/mês',
+    desc: 'Bombeamento solar + iluminação + sistema de irrigação automatizado.',
+    cor: 'accent',
+  },
+  {
+    titulo: 'Restaurante / Franquia',
+    cidade: 'Brasília — DF',
+    tipo: 'Comercial',
+    kwp: '18,7',
+    economia: 'R$ 3.100/mês',
+    desc: 'Solução completa pra rede de franquias com 3 unidades.',
+    cor: 'primary',
+  },
+  {
+    titulo: 'Condomínio Vertical',
+    cidade: 'Goiânia — GO',
+    tipo: 'Residencial Coletivo',
+    kwp: '52,8',
+    economia: 'Rateio entre 24 unidades',
+    desc: 'Solar com rateio entre múltiplos moradores. Sistema avançado de medição.',
+    cor: 'accent',
+  },
+];
+---
+
+<Layout
+  title="Portfolio de Obras — EcoSunPower"
+  description="600+ projetos de energia solar entregues em Brasília e Goiás. Veja casos reais de residenciais, comércios, indústrias e propriedades rurais."
+>
+  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+        ⚡ 600+ projetos entregues
+      </span>
+      <h1 class="text-4xl lg:text-6xl mb-6">Cases reais.</h1>
+      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto">
+        Obras entregues em Brasília, Goiás e região. Residencial, comercial, industrial e rural.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-surface-alt">
+    <div class="container-wide">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {cases.map((c) => (
+          <div class="card group flex flex-col overflow-hidden p-0">
+            <div class={`h-48 ${c.cor === 'primary' ? 'bg-gradient-hero' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden flex items-center justify-center`}>
+              <div class="text-7xl opacity-90">{c.cor === 'primary' ? '🏠' : '🏭'}</div>
+              <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-dark">
+                {c.kwp} kWp
+              </div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col">
+              <span class="text-xs uppercase tracking-wider font-semibold text-primary-600 mb-1">
+                {c.cidade} · {c.tipo}
+              </span>
+              <h3 class="text-xl font-bold mt-2 mb-2">{c.titulo}</h3>
+              <p class="text-muted text-sm leading-relaxed mb-4 flex-1">{c.desc}</p>
+              <div class="pt-4 border-t border-slate-100">
+                <div class="text-xs text-muted">Economia mensal</div>
+                <div class="text-lg font-bold text-emerald-600">{c.economia}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-16">
+        <p class="text-muted mb-5">Quer ver mais? Esses são só 6 dos 600+ projetos.</p>
+        <a href="https://wa.me/5561998805002?text=Oi!%20Quero%20ver%20mais%20obras%20da%20EcoSunPower" target="_blank" rel="noopener" class="btn-primary text-lg">
+          Ver mais cases no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

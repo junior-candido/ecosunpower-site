@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Exclusão de Dados — EcoSunPower" description="Como solicitar exclusão de seus dados pessoais conforme LGPD">
+  <section class="section bg-white">
+    <div class="container-narrow">
+      <h1 class="text-4xl mb-8">Solicitar Exclusão de Dados</h1>
+
+      <div class="bg-primary-50 border-l-4 border-primary-500 p-6 rounded-r-xl mb-10">
+        <p class="text-dark font-semibold mb-2">📋 Conforme a LGPD (Lei 13.709/2018)</p>
+        <p class="text-muted text-sm">
+          Você tem o direito de solicitar a exclusão dos seus dados pessoais a qualquer momento.
+          Atendemos solicitações em até <strong>15 dias úteis</strong>.
+        </p>
+      </div>
+
+      <div class="space-y-6 text-muted leading-relaxed">
+        <h2 class="text-2xl text-dark">Como solicitar</h2>
+        <p>Envie sua solicitação por um dos canais abaixo, informando:</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Nome completo</li>
+          <li>CPF ou email cadastrado</li>
+          <li>Telefone usado nos contatos com a EcoSunPower</li>
+          <li>Motivo da solicitação (opcional, mas ajuda a melhorar nosso serviço)</li>
+        </ul>
+
+        <h2 class="text-2xl text-dark mt-10">Canais de solicitação</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-6">
+          <a href="mailto:junior@ecosunpower.eng.br?subject=Solicita%C3%A7%C3%A3o%20de%20Exclus%C3%A3o%20de%20Dados&body=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20a%20exclus%C3%A3o%20dos%20meus%20dados%20pessoais.%0A%0ANome%20completo%3A%20%0ACPF%2Femail%20cadastrado%3A%20%0ATelefone%3A%20" class="card hover:shadow-glow-primary group">
+            <div class="text-4xl mb-3">📧</div>
+            <h3 class="font-bold mb-2 group-hover:text-primary-600 transition">Por Email</h3>
+            <p class="text-sm text-muted">Envie pra junior@ecosunpower.eng.br</p>
+          </a>
+          <a href="https://wa.me/5561998805002?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20a%20exclus%C3%A3o%20dos%20meus%20dados%20pessoais." target="_blank" rel="noopener" class="card hover:shadow-glow-primary group">
+            <div class="text-4xl mb-3">💬</div>
+            <h3 class="font-bold mb-2 group-hover:text-primary-600 transition">Por WhatsApp</h3>
+            <p class="text-sm text-muted">+55 61 99880-5002</p>
+          </a>
+        </div>
+
+        <h2 class="text-2xl text-dark mt-10">O que será excluído</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Dados de contato (nome, telefone, email, endereço)</li>
+          <li>Histórico de simulações na calculadora</li>
+          <li>Mensagens trocadas com nossa equipe (exceto onde houver obrigação legal de manter)</li>
+        </ul>
+
+        <h2 class="text-2xl text-dark mt-10">O que pode ser mantido</h2>
+        <p>Por obrigação legal, podemos manter (de forma anonimizada quando possível):</p>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>Dados fiscais de clientes (notas fiscais — 5 anos)</li>
+          <li>Documentação técnica de obras realizadas (ART, projetos — vitalício)</li>
+          <li>Contratos de prestação de serviço</li>
+        </ul>
+
+        <h2 class="text-2xl text-dark mt-10">Prazo</h2>
+        <p>Atendemos sua solicitação em <strong>até 15 dias úteis</strong> após receber a confirmação dos seus dados pra evitar exclusões indevidas.</p>
+      </div>
+    </div>
+  </section>
+</Layout>
