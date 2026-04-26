@@ -605,26 +605,12 @@ const categorias: Categoria[] = [
               <button
                 type="button"
                 data-marca={`${cat.titulo}::${m.nome}`}
-                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg px-3 py-2.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center min-h-[52px]"
+                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg px-3 py-3 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center min-h-[48px]"
               >
-                {m.dominio ? (
-                  <div class="flex items-center gap-2 justify-center">
-                    <img
-                      src={`https://www.google.com/s2/favicons?domain=${m.dominio}&sz=64`}
-                      alt={m.nome}
-                      class="w-6 h-6 object-contain flex-shrink-0 group-hover:scale-110 transition-transform"
-                      loading="lazy"
-                      onerror="this.style.display='none'"
-                    />
-                    <span class="font-bold text-xs text-dark group-hover:text-primary-700 transition-colors leading-tight">
-                      {m.nome}
-                    </span>
-                  </div>
-                ) : (
-                  <div class="font-bold text-xs text-dark group-hover:text-primary-700 transition-colors leading-tight">
-                    {m.nome}
-                  </div>
-                )}
+                <span class="font-bold text-sm text-dark group-hover:text-primary-700 transition-colors leading-tight">
+                  {m.nome}
+                </span>
+              </button>
               </button>
             ))}
           </div>
