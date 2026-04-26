@@ -819,21 +819,16 @@ const categorias: Categoria[] = [
     });
   });
 
-  // Click handlers no modal (delegação dentro do modal)
-  modal?.addEventListener('click', (e) => {
+  // Click handlers — fecha se NÃO clicou dentro do card (qualquer lugar fora fecha)
+  modal?.addEventListener('mousedown', (e) => {
     const target = e.target;
     if (!(target instanceof Element)) return;
-    // Botão X fechar
-    if (target.closest('.modal-close-btn')) {
-      e.preventDefault();
-      e.stopPropagation();
-      closeModal();
+    // Se clicou dentro do card content, NÃO fecha (exceto no botão X)
+    if (target.closest('#marca-modal-content') && !target.closest('.modal-close-btn')) {
       return;
     }
-    // Click no fundo escuro (não no card)
-    if (e.target === modal) {
-      closeModal();
-    }
+    // Caso contrário (fora do card OU no X), fecha
+    closeModal();
   });
 
   // Esc fecha
