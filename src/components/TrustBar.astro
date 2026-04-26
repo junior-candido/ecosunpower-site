@@ -18,6 +18,116 @@ interface Categoria {
   marcas: Marca[];
 }
 
+interface Tecnologia {
+  nome: string;
+  oQueE: string;
+  vantagens: string[];
+  quandoEscolher: string;
+  marcasQueOferecem: string[];
+  icon: string;
+}
+
+const tecnologias: Tecnologia[] = [
+  {
+    nome: 'TOPCon',
+    icon: '⚡',
+    oQueE: 'Tecnologia de célula solar com camada fina passivada de óxido de túnel. É a "terceira geração" dos painéis fotovoltaicos, sucessora do PERC.',
+    vantagens: [
+      'Eficiência até 22-23% (PERC tradicional fica em 19-20%)',
+      'Melhor performance em alta temperatura (importante no DF/GO!)',
+      'Coeficiente de degradação menor (-0,40%/°C vs -0,45%)',
+      'Garantia de 25-30 anos de performance',
+      'Ótima geração em dias nublados',
+    ],
+    quandoEscolher: 'Pra QUASE TODOS os projetos novos. É o padrão atual do mercado premium. Especialmente bom em climas quentes como Brasília.',
+    marcasQueOferecem: ['Trina Solar', 'LONGi', 'Jinko Solar', 'DAH Solar', 'Risen Energy'],
+  },
+  {
+    nome: 'N-Type',
+    icon: '🔬',
+    oQueE: 'Tipo de silício usado nas células. Em vez do P-Type tradicional (com boro), usa fósforo. Resultado: células mais duráveis e eficientes ao longo do tempo.',
+    vantagens: [
+      'Sem degradação induzida por luz (LID) — perde menos com o tempo',
+      'Sem degradação induzida por luz e temperatura (LeTID)',
+      'Maior eficiência (até 25% em laboratório)',
+      'Vida útil 30+ anos com >87% da capacidade',
+      'Bifacialidade superior (mais geração na parte de trás)',
+    ],
+    quandoEscolher: 'Pra clientes que querem MÁXIMO retorno em longo prazo. Sistema dura mais e gera mais energia ao longo dos anos.',
+    marcasQueOferecem: ['Trina Vertex N', 'Jinko Tiger Neo', 'LONGi Hi-MO', 'Risen Energy'],
+  },
+  {
+    nome: 'Half-cell',
+    icon: '✂️',
+    oQueE: 'Painel onde as células de silício são cortadas ao meio com laser de precisão. Em vez de 60 ou 72 células inteiras, tem 120 ou 144 meio-células.',
+    vantagens: [
+      'Reduz perdas por sombreamento parcial (sombra em 1 célula afeta menos)',
+      'Menor temperatura de operação (gera mais energia)',
+      '+3% de eficiência vs painéis tradicionais',
+      'Maior tolerância a falhas',
+      'Padrão atual em todos os módulos premium',
+    ],
+    quandoEscolher: 'SEMPRE — hoje é padrão de mercado. Se vier um painel sem half-cell, fuja!',
+    marcasQueOferecem: ['Todas as marcas Tier 1 (Trina, Jinko, LONGi, JA, DAH, Risen)'],
+  },
+  {
+    nome: 'Bifacial',
+    icon: '🪞',
+    oQueE: 'Painel que gera energia pelas DUAS faces (frente E verso). A face de trás capta luz refletida do telhado/solo (albedo).',
+    vantagens: [
+      'Geração extra de 5% a 25% (depende da superfície embaixo)',
+      'Ideal pra telhado branco, solo claro, lajes técnicas',
+      'Mesma área = mais energia',
+      'Vida útil mais longa (vidro nas 2 faces protege mais)',
+      'Excelente custo-benefício se aplicado certo',
+    ],
+    quandoEscolher: 'Pra usinas grandes em SOLO, telhado branco, ou lajes industriais com piso claro. Pra telhado de cerâmica comum, ganho é mínimo.',
+    marcasQueOferecem: ['Trina Vertex', 'LONGi Hi-MO', 'JA DeepBlue', 'Jinko Tiger', 'Risen'],
+  },
+  {
+    nome: 'HJT',
+    icon: '🔀',
+    oQueE: 'Heterojunction Technology — combina silício cristalino com silício amorfo. É a tecnologia "next-gen" depois do TOPCon.',
+    vantagens: [
+      'Eficiência ainda maior (25%+ em laboratório)',
+      'Melhor coeficiente térmico (gera mais em calor)',
+      'Excelente bifacialidade (até 95%)',
+      'Degradação extremamente baixa (<0,25%/ano)',
+      'Vida útil estimada de 35+ anos',
+    ],
+    quandoEscolher: 'Pra projetos PREMIUM com orçamento maior, alto padrão residencial ou cliente exigente. Custo mais alto que TOPCon, mas justifica em longo prazo.',
+    marcasQueOferecem: ['Risen Energy (especialista)', 'Algumas linhas Trina e Jinko'],
+  },
+  {
+    nome: 'LFP',
+    icon: '🔋',
+    oQueE: 'Lithium Iron Phosphate — química de bateria mais segura. Em vez de cobalto/níquel (NMC), usa ferro/fosfato.',
+    vantagens: [
+      'MUITO mais segura (não pega fogo, não explode)',
+      'Vida útil 6.000-10.000 ciclos (16-25 anos uso diário)',
+      'Funciona bem em temperaturas altas',
+      'Sem risco térmico (thermal runaway)',
+      'Material mais sustentável (sem cobalto raro)',
+    ],
+    quandoEscolher: 'SEMPRE pra residencial e comercial. É a química padrão atual pra armazenamento estacionário (instalação fixa em casa/empresa).',
+    marcasQueOferecem: ['Deye', 'FoxESS', 'Unipower', 'Dyness', 'Soluna (Huawei)', 'SolarEdge'],
+  },
+  {
+    nome: 'Multi-busbar',
+    icon: '〰️',
+    oQueE: 'Trilhas de cobre (busbars) que conduzem a corrente das células pra fora do painel. Multi = vários (de 5 a 16 trilhas em vez de 3-4 antigos).',
+    vantagens: [
+      'Reduz resistência elétrica (menos perda)',
+      'Distribuição mais uniforme da corrente',
+      '+1-2% de eficiência',
+      'Maior tolerância a microfissuras',
+      'Padrão de todos os painéis premium modernos',
+    ],
+    quandoEscolher: 'SEMPRE — hoje é padrão. Painéis sem multi-busbar são considerados defasados.',
+    marcasQueOferecem: ['Todas as marcas Tier 1'],
+  },
+];
+
 const categorias: Categoria[] = [
   {
     titulo: 'Painéis fotovoltaicos',
@@ -442,17 +552,17 @@ const categorias: Categoria[] = [
       ))}
     </div>
 
-    <!-- Bottom note (tecnologias com azul escuro da marca) -->
+    <!-- Bottom: tecnologias clicáveis -->
     <div class="text-center mt-14">
-      <p class="text-xs uppercase tracking-widest text-muted font-bold mb-4">Tecnologias premium em todos os projetos</p>
+      <p class="text-xs uppercase tracking-widest text-muted font-bold mb-4">
+        Tecnologias premium em todos os projetos · <span class="text-primary-600">Clica pra entender</span>
+      </p>
       <div class="inline-flex flex-wrap items-center justify-center gap-2 px-2 max-w-4xl">
-        <span class="tech-badge">⚡ TOPCon</span>
-        <span class="tech-badge">⚡ N-Type</span>
-        <span class="tech-badge">⚡ Half-cell</span>
-        <span class="tech-badge">⚡ Bifacial</span>
-        <span class="tech-badge">⚡ HJT</span>
-        <span class="tech-badge">⚡ LFP</span>
-        <span class="tech-badge">⚡ Multi-busbar</span>
+        {tecnologias.map((t) => (
+          <button type="button" data-tech={t.nome} class="tech-badge cursor-pointer">
+            {t.icon} {t.nome}
+          </button>
+        ))}
       </div>
     </div>
   </div>
@@ -508,7 +618,7 @@ const categorias: Categoria[] = [
   }
 </style>
 
-<script define:vars={{ categoriasData: categorias }}>
+<script define:vars={{ categoriasData: categorias, tecnologiasData: tecnologias }}>
   const modal = document.getElementById('marca-modal');
   const modalContent = document.getElementById('marca-modal-content');
 
@@ -518,6 +628,12 @@ const categorias: Categoria[] = [
     cat.marcas.forEach((m) => {
       marcasMap[`${cat.titulo}::${m.nome}`] = { ...m, categoria: cat.titulo, icon: cat.icon };
     });
+  });
+
+  // Mapa de tecnologias
+  const techMap = {};
+  tecnologiasData.forEach((t) => {
+    techMap[t.nome] = t;
   });
 
   // Renderiza conteúdo do modal
@@ -591,6 +707,68 @@ const categorias: Categoria[] = [
 
   }
 
+  function renderTechModal(tech) {
+    modalContent.innerHTML = `
+      <div class="relative">
+        <div class="bg-gradient-hero p-6 rounded-t-3xl text-white relative overflow-hidden">
+          <div class="absolute -top-20 -right-20 w-40 h-40 bg-accent-400/30 rounded-full blur-3xl"></div>
+          <button id="marca-modal-close" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Fechar">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+          <div class="relative">
+            <div class="text-xs text-slate-200/80 mb-2 uppercase tracking-wider font-semibold">
+              🔬 Tecnologia
+            </div>
+            <h3 class="text-3xl font-display font-bold">${tech.icon} ${tech.nome}</h3>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-muted mb-2">O que é</h4>
+            <p class="text-sm text-dark-soft leading-relaxed">${tech.oQueE}</p>
+          </div>
+
+          <div class="mt-5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">Vantagens reais</h4>
+            <ul class="space-y-2">
+              ${tech.vantagens.map((v) => `
+                <li class="flex items-start gap-2 text-sm text-dark-soft">
+                  <span class="text-primary-500 mt-0.5">✓</span>
+                  <span>${v}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          <div class="mt-5 p-4 bg-accent-50 border-2 border-accent-200 rounded-xl">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🎯</span>
+              <div>
+                <h4 class="text-sm font-bold text-dark mb-1">Quando escolher</h4>
+                <p class="text-sm text-muted leading-relaxed">${tech.quandoEscolher}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">Marcas que oferecem</h4>
+            <div class="flex flex-wrap gap-2">
+              ${tech.marcasQueOferecem.map((m) => `<span class="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-semibold">${m}</span>`).join('')}
+            </div>
+          </div>
+
+          <a href="https://wa.me/5561998805002?text=${encodeURIComponent(`Oi! Quero saber mais sobre ${tech.nome} pra meu sistema solar`)}" target="_blank" rel="noopener" class="mt-6 w-full inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-bold text-sm px-5 py-3 rounded-full transition-colors">
+            Quero ${tech.nome} no meu sistema
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
   function openModal(key) {
     const marca = marcasMap[key];
     if (!marca || !modal) return;
@@ -598,7 +776,18 @@ const categorias: Categoria[] = [
     modal.classList.remove('hidden');
     modal.classList.add('flex');
     document.body.style.overflow = 'hidden';
-    // Trigger animação na próxima frame
+    requestAnimationFrame(() => {
+      modal.setAttribute('data-state', 'open');
+    });
+  }
+
+  function openTechModal(techName) {
+    const tech = techMap[techName];
+    if (!tech || !modal) return;
+    renderTechModal(tech);
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => {
       modal.setAttribute('data-state', 'open');
     });
@@ -620,6 +809,14 @@ const categorias: Categoria[] = [
     btn.addEventListener('click', () => {
       const key = btn.getAttribute('data-marca');
       if (key) openModal(key);
+    });
+  });
+
+  // Click handlers nas tecnologias
+  document.querySelectorAll('.tech-badge').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const techName = btn.getAttribute('data-tech');
+      if (techName) openTechModal(techName);
     });
   });
 
