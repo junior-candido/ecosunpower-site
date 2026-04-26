@@ -1,87 +1,602 @@
 ---
-// Trust Bar — marcas premium que a EcoSunPower trabalha
-// Estilo: tipografia elegante (sem logos, evita questões de marca)
-const categorias = [
+// Trust Bar PREMIUM — marcas clicáveis com ficha técnica
+// Cliente clica na marca → modal abre com info detalhada
+
+interface Marca {
+  nome: string;
+  origem: string;
+  destaque: string;
+  pontos: string[];
+  tecnologias?: string[];
+  ecosunUsa?: string;
+}
+
+interface Categoria {
+  titulo: string;
+  icon: string;
+  cor: string;
+  marcas: Marca[];
+}
+
+const categorias: Categoria[] = [
   {
     titulo: 'Painéis fotovoltaicos',
     icon: '☀️',
-    marcas: ['Trina Solar', 'LONGi', 'Jinko Solar', 'DAH Solar', 'Risen Energy', 'HONOR Solar'],
+    cor: 'primary',
+    marcas: [
+      {
+        nome: 'Trina Solar',
+        origem: '🇨🇳 China · Fundada em 1997',
+        destaque: 'Líder mundial em módulos N-Type e Vertex',
+        pontos: [
+          'Top 1 fabricante do mundo (Tier 1 Bloomberg)',
+          'Tecnologia Vertex N de 715-720W',
+          '25 anos de garantia de eficiência',
+          'Mais de 240 GW vendidos globalmente',
+        ],
+        tecnologias: ['N-Type TOPCon', 'Half-cell', 'Multi-busbar', 'Bifacial'],
+        ecosunUsa: 'Linha Vertex N 715/720W',
+      },
+      {
+        nome: 'LONGi',
+        origem: '🇨🇳 China · Fundada em 2000',
+        destaque: 'Maior fabricante mundial de wafers de silício',
+        pontos: [
+          'Líder em pesquisa de Hi-MO X10 (até 670W)',
+          'Eficiência recorde 27,3% em laboratório',
+          'Verticalmente integrada (do silício ao módulo)',
+          'Empresa mais valiosa do setor solar mundial',
+        ],
+        tecnologias: ['HPBC', 'TOPCon', 'Hi-MO 7'],
+        ecosunUsa: 'Painéis 635/640W (premium residencial e comercial)',
+      },
+      {
+        nome: 'Jinko Solar',
+        origem: '🇨🇳 China · Fundada em 2006',
+        destaque: 'Pioneira em módulos N-Type Tiger Neo',
+        pontos: [
+          'Top 3 fabricantes mundiais',
+          'Linha Tiger Neo N-Type ultra eficiente',
+          'Fábrica nos EUA (qualidade garantida)',
+          'Forte garantia: 30 anos de performance',
+        ],
+        tecnologias: ['N-Type TOPCon', 'Tiger Neo', 'Multi-busbar'],
+        ecosunUsa: 'Linha Tiger Neo (alto padrão)',
+      },
+      {
+        nome: 'DAH Solar',
+        origem: '🇨🇳 China · Fundada em 2009',
+        destaque: 'Especialista em módulos Full Screen sem moldura',
+        pontos: [
+          'Tecnologia Full Screen: 5% mais geração',
+          'Design clean, ideal pra arquitetura premium',
+          'Patente de módulos sem espaços entre células',
+          'Forte presença no mercado BR',
+        ],
+        tecnologias: ['Full Screen', 'TOPCon', 'Bifacial'],
+        ecosunUsa: 'Linha Full Screen (residencial alto padrão)',
+      },
+      {
+        nome: 'Risen Energy',
+        origem: '🇨🇳 China · Fundada em 1986',
+        destaque: 'Uma das mais antigas e estáveis do setor',
+        pontos: [
+          'Tier 1 Bloomberg há 10+ anos consecutivos',
+          'Forte produção verticalizada',
+          'Painéis até 700W com alta confiabilidade',
+          'Ótima relação custo-benefício',
+        ],
+        tecnologias: ['HJT', 'TOPCon', 'Half-cell'],
+        ecosunUsa: 'Linhas HJT e TOPCon (residencial e comercial)',
+      },
+      {
+        nome: 'HONOR Solar',
+        origem: '🇨🇳 China · Marca emergente',
+        destaque: 'Painéis premium com excelente custo-benefício',
+        pontos: [
+          'Tecnologia de última geração',
+          'Garantia estendida',
+          'Suporte técnico responsivo no Brasil',
+          'Linha completa pra residencial e comercial',
+        ],
+        tecnologias: ['N-Type', 'Half-cell'],
+        ecosunUsa: 'Linha residencial e comercial',
+      },
+    ],
   },
   {
     titulo: 'Inversores premium',
     icon: '⚡',
-    marcas: ['SolarEdge', 'Sungrow', 'GoodWe', 'Deye', 'FoxESS', 'Hoymiles', 'NEP'],
+    cor: 'primary',
+    marcas: [
+      {
+        nome: 'SolarEdge',
+        origem: '🇮🇱 Israel · Fundada em 2006',
+        destaque: 'Pioneira em otimizadores de potência por módulo',
+        pontos: [
+          'Tecnologia de otimização painel-a-painel (mais geração com sombra)',
+          'Monitoramento granular módulo a módulo',
+          'Segurança superior (SafeDC)',
+          'Top 1 mundial em equipamentos com otimização',
+        ],
+        tecnologias: ['Power Optimizer', 'HD-Wave', 'Monitoramento ao vivo'],
+        ecosunUsa: 'Inversores premium pra casas com sombreamento ou alto padrão',
+      },
+      {
+        nome: 'Sungrow',
+        origem: '🇨🇳 China · Fundada em 1997',
+        destaque: 'Top 1 mundial em inversores fotovoltaicos',
+        pontos: [
+          'Mais de 405 GW instalados globalmente',
+          'Líder em inversores string e centralizados',
+          'Forte presença em utilitário e comercial',
+          'Excelente suporte e disponibilidade no BR',
+        ],
+        tecnologias: ['SG/SH series', 'String inverter', 'Híbrido'],
+        ecosunUsa: 'Inversores residenciais, comerciais e industriais (Grupo A)',
+      },
+      {
+        nome: 'GoodWe',
+        origem: '🇨🇳 China · Fundada em 2010',
+        destaque: 'Forte em sistemas híbridos com bateria',
+        pontos: [
+          'Linha completa: residencial, comercial e híbrido',
+          'Compatível com várias marcas de bateria',
+          'Top 5 fabricante de inversores residenciais',
+          'Aplicativo SEMS Portal pra monitoramento',
+        ],
+        tecnologias: ['ET Plus+', 'EH', 'Lynx Home'],
+        ecosunUsa: 'Sistemas híbridos residenciais',
+      },
+      {
+        nome: 'Deye',
+        origem: '🇨🇳 China · Fundada em 1991',
+        destaque: 'Líder em inversores híbridos e Grid Zero',
+        pontos: [
+          'Especialista em sistemas híbridos com bateria',
+          'Tecnologia Grid Zero nativa (sem injeção)',
+          'Compatível com várias químicas de bateria',
+          'Forte na linha comercial 30-110 kW',
+        ],
+        tecnologias: ['Híbrido', 'Grid Zero', 'Off-grid'],
+        ecosunUsa: 'Sistemas híbridos comerciais e Grid Zero',
+      },
+      {
+        nome: 'FoxESS',
+        origem: '🇨🇳 China · Fundada em 2019',
+        destaque: 'Inovação em híbridos com excelente custo-benefício',
+        pontos: [
+          'Crescimento explosivo (top fabricantes 2024-2026)',
+          'Linha completa: PV, híbrido, bateria all-in-one',
+          'Eficiência até 98%',
+          'Forte presença no mercado BR',
+        ],
+        tecnologias: ['H1/H3', 'AIO (All-in-One)', 'Energy Cube'],
+        ecosunUsa: 'Inversores híbridos residenciais e comerciais',
+      },
+      {
+        nome: 'Hoymiles',
+        origem: '🇨🇳 China · Fundada em 2012',
+        destaque: 'Líder global em microinversores',
+        pontos: [
+          'Top 1 fabricante mundial de microinversores',
+          'Funciona painel-a-painel (sem perda por sombreamento)',
+          'Ideal pra telhados complexos com sombras',
+          '25 anos de garantia',
+        ],
+        tecnologias: ['MI Series', 'HMS-A', 'HMT'],
+        ecosunUsa: 'Microinversores pra residencial complexo',
+      },
+      {
+        nome: 'NEP',
+        origem: '🇨🇳 China · Especialista em microinversores',
+        destaque: 'Microinversores robustos com alta confiabilidade',
+        pontos: [
+          'Especialista em micro-FV',
+          'Comunicação PLC nativa',
+          'Compatível com painéis até 700W',
+          'Custo-benefício atraente',
+        ],
+        tecnologias: ['BDM Series', 'PLC monitoring'],
+        ecosunUsa: 'Microinversores em sistemas com sombreamento',
+      },
+    ],
   },
   {
     titulo: 'Baterias e armazenamento',
     icon: '🔋',
-    marcas: ['Pylontech', 'Deye', 'FoxESS', 'Unipower', 'Dyness', 'Soluna (Huawei)', 'SolarEdge'],
+    cor: 'accent',
+    marcas: [
+      {
+        nome: 'Pylontech',
+        origem: '🇨🇳 China · Fundada em 2009',
+        destaque: 'Top 1 mundial em baterias residenciais',
+        pontos: [
+          'Líder global em baterias LFP residenciais',
+          'Tecnologia Lithium-Iron-Phosphate (mais segura)',
+          'Compatível com a maioria dos inversores híbridos',
+          '10 anos de garantia',
+        ],
+        tecnologias: ['US/UP series', 'LFP', 'Comunicação CAN/RS485'],
+        ecosunUsa: 'Sistemas residenciais com bateria standalone',
+      },
+      {
+        nome: 'Deye',
+        origem: '🇨🇳 China',
+        destaque: 'Baterias integradas com inversores Deye',
+        pontos: [
+          'Sistema integrado (mesmo fabricante do inversor)',
+          'Tecnologia LFP segura',
+          'Comunicação nativa com inversor Deye',
+          'Modular (escala conforme necessidade)',
+        ],
+        tecnologias: ['BOS-G', 'LFP'],
+        ecosunUsa: 'Sistemas híbridos completos Deye',
+      },
+      {
+        nome: 'FoxESS',
+        origem: '🇨🇳 China',
+        destaque: 'Baterias all-in-one com inversor integrado',
+        pontos: [
+          'Sistemas AIO (tudo em um equipamento só)',
+          'Energy Cube modular até 25,6 kWh',
+          'Backup UPS automático',
+          'Instalação simplificada',
+        ],
+        tecnologias: ['AIO Series', 'Energy Cube', 'LFP'],
+        ecosunUsa: 'Soluções híbridas all-in-one',
+      },
+      {
+        nome: 'Unipower',
+        origem: '🇧🇷 Brasil · Tradição em soluções de energia',
+        destaque: 'Marca brasileira com forte suporte local',
+        pontos: [
+          'Suporte técnico e garantia no Brasil',
+          'Linha LFP de qualidade',
+          'Compatível com diversos inversores',
+          'Boa relação custo-benefício',
+        ],
+        tecnologias: ['LFP'],
+        ecosunUsa: 'Sistemas com necessidade de suporte local rápido',
+      },
+      {
+        nome: 'Dyness',
+        origem: '🇨🇳 China · Fundada em 2017',
+        destaque: 'Crescimento rápido em baterias residenciais',
+        pontos: [
+          'Foco em LFP (mais segura)',
+          'Compatibilidade ampla com inversores',
+          'Linha modular escalável',
+          'Forte presença em projetos pequeno e médio porte',
+        ],
+        tecnologias: ['LFP', 'B-Box', 'PowerBox'],
+        ecosunUsa: 'Sistemas residenciais com bateria',
+      },
+      {
+        nome: 'Soluna (Huawei)',
+        origem: '🇨🇳 China · Submarca da Huawei',
+        destaque: 'Tecnologia Huawei aplicada em baterias',
+        pontos: [
+          'Qualidade e tecnologia Huawei',
+          'Integração nativa com inversores Huawei',
+          'Sistemas LUNA2000 modulares',
+          'Monitoramento via app FusionSolar',
+        ],
+        tecnologias: ['LUNA2000', 'LFP'],
+        ecosunUsa: 'Sistemas premium integrados Huawei',
+      },
+      {
+        nome: 'SolarEdge',
+        origem: '🇮🇱 Israel',
+        destaque: 'Baterias integradas ao ecossistema SolarEdge',
+        pontos: [
+          'Integração nativa com inversores SolarEdge',
+          'Bateria DC-coupled (mais eficiente)',
+          'Backup automático em quedas',
+          'Monitoramento granular',
+        ],
+        tecnologias: ['Energy Bank', 'DC-coupled'],
+        ecosunUsa: 'Sistemas premium com SolarEdge',
+      },
+    ],
   },
   {
     titulo: 'Proteção elétrica',
     icon: '🛡️',
-    marcas: ['WEG', 'Clamper', 'Steck', 'Prysmian'],
+    cor: 'primary',
+    marcas: [
+      {
+        nome: 'WEG',
+        origem: '🇧🇷 Brasil · Fundada em 1961',
+        destaque: 'Maior fabricante brasileira de equipamentos elétricos',
+        pontos: [
+          'Multinacional brasileira premium',
+          'Disjuntores e proteção certificados',
+          'Garantia e suporte nacional',
+          'Confiabilidade comprovada em milhões de instalações',
+        ],
+        ecosunUsa: 'Disjuntores, contatores e proteção em geral',
+      },
+      {
+        nome: 'Clamper',
+        origem: '🇧🇷 Brasil · Especialista em DPS',
+        destaque: 'Líder em Dispositivos de Proteção Surto (DPS)',
+        pontos: [
+          'Especialista em proteção contra surtos',
+          'DPS obrigatório em todo sistema solar',
+          'Forte presença no setor solar BR',
+          'Tecnologia de varistor avançada',
+        ],
+        ecosunUsa: 'DPS em todo sistema instalado (obrigatório)',
+      },
+      {
+        nome: 'Steck',
+        origem: '🇧🇷 Brasil · Fundada em 1968',
+        destaque: 'Tradição em proteção e materiais elétricos',
+        pontos: [
+          'Marca tradicional brasileira',
+          'Linha completa de proteção',
+          'Disponibilidade nacional ampla',
+          'Padrão de qualidade reconhecido',
+        ],
+        ecosunUsa: 'Proteção e acessórios elétricos',
+      },
+      {
+        nome: 'Prysmian',
+        origem: '🇮🇹 Itália · Líder mundial em cabos',
+        destaque: 'Cabos solares (DC) certificados internacionalmente',
+        pontos: [
+          'Líder global em cabos elétricos',
+          'Cabos solares com proteção UV (25+ anos)',
+          'Certificação TÜV alemã',
+          'Resistência total a intempéries',
+        ],
+        ecosunUsa: 'Cabos DC solares em todos os projetos',
+      },
+    ],
   },
   {
     titulo: 'Distribuidores parceiros',
     icon: '🤝',
-    marcas: ['BelEnergy', 'Fortlev Solar', 'Aldo Solar', 'Focus Solar'],
+    cor: 'accent',
+    marcas: [
+      {
+        nome: 'BelEnergy',
+        origem: '🇧🇷 Brasil · Distribuidora top 3',
+        destaque: 'Maior distribuidora solar do Brasil',
+        pontos: [
+          'Top 3 distribuidoras BR',
+          'Estoque completo de marcas Tier 1',
+          'Suporte técnico e financeiro',
+          'Parceria sólida com EcoSunPower',
+        ],
+        ecosunUsa: 'Fornecimento principal de painéis e inversores',
+      },
+      {
+        nome: 'Fortlev Solar',
+        origem: '🇧🇷 Brasil · Tradição em soluções',
+        destaque: 'Distribuidora com forte logística nacional',
+        pontos: [
+          'Disponibilidade ampla no DF e GO',
+          'Marcas premium em estoque',
+          'Suporte pós-venda',
+          'Parceria comercial estratégica',
+        ],
+        ecosunUsa: 'Equipamentos diversos e estruturas',
+      },
+      {
+        nome: 'Aldo Solar',
+        origem: '🇧🇷 Brasil · Pioneira no setor',
+        destaque: 'Uma das mais tradicionais distribuidoras BR',
+        pontos: [
+          'Presença consolidada há mais de 30 anos',
+          'Suporte técnico especializado',
+          'Linha completa Tier 1',
+          'Forte na região Centro-Oeste',
+        ],
+        ecosunUsa: 'Materiais elétricos e componentes',
+      },
+      {
+        nome: 'Focus Solar',
+        origem: '🇧🇷 Brasil · Distribuidora regional forte',
+        destaque: 'Forte atuação no Centro-Oeste',
+        pontos: [
+          'Especialista em projetos comerciais e industriais',
+          'Suporte técnico e logístico ágil',
+          'Marcas premium em estoque',
+          'Parceria local em DF e GO',
+        ],
+        ecosunUsa: 'Projetos comerciais e Grupo A',
+      },
+    ],
   },
 ];
 ---
 
-<section class="bg-gradient-tech py-16 lg:py-20 border-y border-slate-200">
+<section class="bg-gradient-tech py-20 lg:py-24 border-y border-slate-200">
   <div class="container-wide">
     <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
+    <div class="text-center max-w-3xl mx-auto mb-14">
       <span class="tag-accent">Tecnologia premium</span>
-      <h2 class="text-3xl lg:text-4xl mt-4 mb-4">
+      <h2 class="text-3xl lg:text-5xl mt-4 mb-5">
         Trabalhamos só com <span class="text-gradient">o melhor do mercado</span>
       </h2>
       <p class="text-base lg:text-lg text-muted leading-relaxed">
         Fornecedores Tier 1 com tecnologia de ponta — TOPCon, N-Type, Half-cell, Bifacial,
-        otimizadores e híbridos. Cada componente escolhido pra durar 25+ anos.
+        otimizadores e híbridos. <strong>Clica em qualquer marca</strong> pra saber mais.
       </p>
     </div>
 
-    <!-- Grid de categorias -->
-    <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+    <!-- Categorias -->
+    <div class="space-y-8 max-w-6xl mx-auto">
       {categorias.map((cat) => (
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-card-hover transition-all">
-          <div class="flex items-center gap-3 mb-4">
+        <div>
+          <div class="flex items-center gap-3 mb-4 px-2">
             <span class="text-2xl">{cat.icon}</span>
-            <h3 class="font-bold text-dark text-sm uppercase tracking-wider">{cat.titulo}</h3>
+            <h3 class="font-display font-bold text-dark text-lg">{cat.titulo}</h3>
+            <div class="flex-1 h-px bg-slate-200"></div>
+            <span class="text-xs text-muted font-semibold">{cat.marcas.length} marcas</span>
           </div>
-          <div class="flex flex-wrap gap-2">
-            {cat.marcas.map((marca) => (
-              <span class="inline-flex items-center px-3 py-1.5 bg-slate-50 hover:bg-primary-50 hover:text-primary-700 border border-slate-200 hover:border-primary-300 rounded-lg text-sm font-semibold text-dark-soft transition-colors cursor-default">
-                {marca}
-              </span>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {cat.marcas.map((m, mIdx) => (
+              <button
+                type="button"
+                data-marca={`${cat.titulo}::${m.nome}`}
+                class="marca-btn group relative bg-white hover:bg-primary-50 border-2 border-slate-200 hover:border-primary-400 rounded-xl px-4 py-4 text-left transition-all hover:-translate-y-1 hover:shadow-card-hover"
+              >
+                <div class="font-bold text-sm text-dark group-hover:text-primary-700 transition-colors leading-tight">
+                  {m.nome}
+                </div>
+                <div class="text-[10px] text-muted mt-1 line-clamp-1">{m.origem}</div>
+                <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-primary-500">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                  </svg>
+                </div>
+              </button>
             ))}
           </div>
         </div>
       ))}
     </div>
 
-    <!-- Bottom note -->
-    <div class="text-center mt-10">
+    <!-- Bottom note (tecnologias) -->
+    <div class="text-center mt-12">
       <div class="inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3 bg-white rounded-full shadow-sm border border-slate-200 max-w-3xl">
-        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
-          ✅ <span>TOPCon</span>
-        </span>
-        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
-          ✅ <span>N-Type</span>
-        </span>
-        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
-          ✅ <span>Half-cell</span>
-        </span>
-        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
-          ✅ <span>Bifacial</span>
-        </span>
-        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
-          ✅ <span>Multi-busbar</span>
-        </span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ TOPCon</span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ N-Type</span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ Half-cell</span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ Bifacial</span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ HJT</span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">✅ LFP</span>
       </div>
     </div>
   </div>
 </section>
+
+<!-- MODAL DE INFORMAÇÃO DA MARCA -->
+<div id="marca-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-dark/60 backdrop-blur-sm">
+  <div id="marca-modal-content" class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up">
+    <!-- Conteúdo injetado via JS -->
+  </div>
+</div>
+
+<script define:vars={{ categoriasData: categorias }}>
+  const modal = document.getElementById('marca-modal');
+  const modalContent = document.getElementById('marca-modal-content');
+
+  // Mapa rápido pra encontrar marca por chave
+  const marcasMap = {};
+  categoriasData.forEach((cat) => {
+    cat.marcas.forEach((m) => {
+      marcasMap[`${cat.titulo}::${m.nome}`] = { ...m, categoria: cat.titulo, icon: cat.icon };
+    });
+  });
+
+  // Renderiza conteúdo do modal
+  function renderModal(marca) {
+    const techHtml = marca.tecnologias && marca.tecnologias.length
+      ? `<div class="mt-5">
+           <h4 class="text-xs font-bold uppercase tracking-wider text-muted mb-2">Tecnologias destaque</h4>
+           <div class="flex flex-wrap gap-2">
+             ${marca.tecnologias.map((t) => `<span class="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-semibold">${t}</span>`).join('')}
+           </div>
+         </div>`
+      : '';
+
+    const usaHtml = marca.ecosunUsa
+      ? `<div class="mt-5 p-4 bg-accent-50 border-2 border-accent-200 rounded-xl">
+           <div class="flex items-start gap-3">
+             <span class="text-2xl">⚡</span>
+             <div>
+               <h4 class="text-sm font-bold text-dark mb-1">Como a EcoSunPower usa</h4>
+               <p class="text-sm text-muted leading-relaxed">${marca.ecosunUsa}</p>
+             </div>
+           </div>
+         </div>`
+      : '';
+
+    modalContent.innerHTML = `
+      <div class="relative">
+        <!-- Header com gradient -->
+        <div class="bg-gradient-hero p-6 rounded-t-3xl text-white relative overflow-hidden">
+          <div class="absolute -top-20 -right-20 w-40 h-40 bg-accent-400/30 rounded-full blur-3xl"></div>
+          <button id="marca-modal-close" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Fechar">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+          <div class="relative">
+            <div class="text-xs text-slate-200/80 mb-2 uppercase tracking-wider font-semibold">
+              ${marca.icon} ${marca.categoria}
+            </div>
+            <h3 class="text-3xl font-display font-bold">${marca.nome}</h3>
+            <div class="text-sm text-slate-100/90 mt-2">${marca.origem}</div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="p-6">
+          <p class="text-base text-dark font-semibold leading-snug">${marca.destaque}</p>
+
+          <div class="mt-5">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">Por que é referência</h4>
+            <ul class="space-y-2">
+              ${marca.pontos.map((p) => `
+                <li class="flex items-start gap-2 text-sm text-dark-soft">
+                  <span class="text-primary-500 mt-0.5">✓</span>
+                  <span>${p}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          ${techHtml}
+          ${usaHtml}
+
+          <a href="https://wa.me/5561998805002?text=${encodeURIComponent(`Oi! Quero saber mais sobre sistemas com ${marca.nome}`)}" target="_blank" rel="noopener" class="mt-6 w-full inline-flex items-center justify-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-bold text-sm px-5 py-3 rounded-full transition-colors">
+            Quero um sistema com ${marca.nome}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </div>
+    `;
+
+    // Bind close
+    document.getElementById('marca-modal-close')?.addEventListener('click', closeModal);
+  }
+
+  function openModal(key) {
+    const marca = marcasMap[key];
+    if (!marca) return;
+    renderModal(marca);
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  // Click handlers nas marcas
+  document.querySelectorAll('.marca-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-marca');
+      if (key) openModal(key);
+    });
+  });
+
+  // Click fora fecha
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Esc fecha
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
