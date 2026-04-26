@@ -4,7 +4,7 @@ const servicos = [
     title: 'Sistema On-grid',
     desc: 'Carro-chefe da EcoSunPower. Pra residências, comércios e indústrias conectados à rede. Reduz a conta em até 95% e tem o melhor custo-benefício do mercado.',
     cta: 'Quero on-grid',
-    icon: '🌞',
+    icon: 'ongrid',
     color: 'primary',
     featured: true,
     badge: 'Mais vendido',
@@ -13,7 +13,7 @@ const servicos = [
     title: 'Solar + Bateria',
     desc: 'Sistema híbrido com armazenamento. Energia 24h mesmo na falta de luz. Independência total e segurança energética.',
     cta: 'Quero com bateria',
-    icon: '🔋',
+    icon: 'bateria',
     color: 'accent',
     featured: false,
   },
@@ -21,7 +21,7 @@ const servicos = [
     title: 'Off-grid e Bombeamento',
     desc: 'Pra locais sem rede elétrica: fazendas, sítios, irrigação. Sistema autônomo dimensionado pra demanda específica.',
     cta: 'Quero off-grid',
-    icon: '🚜',
+    icon: 'offgrid',
     color: 'primary',
     featured: false,
   },
@@ -29,7 +29,7 @@ const servicos = [
     title: 'Carregador para Carro Elétrico',
     desc: 'Instalação de carregadores de qualquer porte: wallbox residencial, comercial e DC fast charging. Com ou sem solar acoplado.',
     cta: 'Quero carregador',
-    icon: '🔌',
+    icon: 'carregador',
     color: 'accent',
     featured: false,
   },
@@ -37,7 +37,7 @@ const servicos = [
     title: 'Manutenção de Sistemas',
     desc: 'Limpeza, diagnóstico, monitoramento remoto e reparo. Atendemos sistemas EcoSunPower e de outras instaladoras.',
     cta: 'Quero manutenção',
-    icon: '🛠️',
+    icon: 'manutencao',
     color: 'primary',
     featured: false,
   },
@@ -45,7 +45,7 @@ const servicos = [
     title: 'Mercado Livre / Grupo A',
     desc: 'Solução completa pra indústrias e grandes empresas em alta tensão. Migração pro mercado livre e geração própria.',
     cta: 'Quero saber mais',
-    icon: '🏭',
+    icon: 'industria',
     color: 'accent',
     featured: false,
   },
@@ -69,19 +69,90 @@ const servicos = [
     <!-- Cards -->
     <div class="grid md:grid-cols-3 gap-6">
       {servicos.map((s) => (
-        <div class={`card group flex flex-col overflow-hidden p-0 relative ${s.featured ? 'ring-2 ring-accent-500 ring-offset-2' : ''}`}>
+        <div class={`card group flex flex-col overflow-hidden p-0 relative transition-all hover:-translate-y-1 ${s.featured ? 'ring-2 ring-accent-500 ring-offset-2' : ''}`}>
           {s.featured && s.badge && (
             <div class="absolute top-3 right-3 z-10 bg-accent-500 text-dark text-xs font-bold px-3 py-1 rounded-full shadow-lg">
               ⭐ {s.badge}
             </div>
           )}
 
-          <!-- Image placeholder com gradient -->
-          <div class={`h-44 ${s.color === 'primary' ? 'bg-gradient-hero' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden`}>
-            <div class="absolute inset-0 flex items-center justify-center text-6xl opacity-90 group-hover:scale-110 transition-transform">
-              {s.icon}
+          <!-- Icon area -->
+          <div class={`h-44 ${s.color === 'primary' ? 'bg-gradient-to-br from-primary-500 to-primary-700' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden flex items-center justify-center`}>
+            <!-- Decorative pattern -->
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 70% 70%, white 1px, transparent 2px); background-size: 40px 40px;"></div>
+
+            <!-- SVG Icon -->
+            <div class="relative z-10 text-white group-hover:scale-110 transition-transform duration-300">
+              {s.icon === 'ongrid' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="8" y="10" width="48" height="28" rx="2"/>
+                  <line x1="8" y1="24" x2="56" y2="24"/>
+                  <line x1="24" y1="10" x2="24" y2="38"/>
+                  <line x1="40" y1="10" x2="40" y2="38"/>
+                  <line x1="32" y1="38" x2="32" y2="46"/>
+                  <line x1="20" y1="46" x2="44" y2="46"/>
+                  <path d="M14 46L14 56 24 56"/>
+                  <path d="M50 46L50 56 40 56"/>
+                  <circle cx="14" cy="56" r="2.5"/>
+                  <circle cx="50" cy="56" r="2.5"/>
+                </svg>
+              )}
+              {s.icon === 'bateria' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="6" y="18" width="48" height="32" rx="3"/>
+                  <line x1="54" y1="28" x2="54" y2="40"/>
+                  <line x1="58" y1="28" x2="58" y2="40"/>
+                  <rect x="14" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
+                  <rect x="24" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
+                  <rect x="34" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
+                  <path d="M18 8L26 16M22 12L30 4M40 12L48 4M44 16L52 8" opacity="0.7"/>
+                </svg>
+              )}
+              {s.icon === 'offgrid' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="48" cy="14" r="6"/>
+                  <line x1="48" y1="2" x2="48" y2="6"/>
+                  <line x1="56" y1="6" x2="59" y2="3"/>
+                  <line x1="60" y1="14" x2="56" y2="14"/>
+                  <line x1="56" y1="22" x2="59" y2="25"/>
+                  <path d="M8 50V32l16-10 16 10v18"/>
+                  <path d="M18 50v-10h12v10"/>
+                  <line x1="4" y1="50" x2="44" y2="50"/>
+                  <path d="M50 38v8M48 42h4" stroke-width="2"/>
+                  <line x1="50" y1="50" x2="60" y2="50"/>
+                </svg>
+              )}
+              {s.icon === 'carregador' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="18" y="8" width="28" height="36" rx="3"/>
+                  <line x1="26" y1="8" x2="26" y2="14"/>
+                  <line x1="38" y1="8" x2="38" y2="14"/>
+                  <path d="M34 22l-6 8h4l-2 6 6-8h-4l2-6z" fill="currentColor" stroke="none"/>
+                  <path d="M32 44v6"/>
+                  <rect x="14" y="50" width="36" height="6" rx="2"/>
+                  <circle cx="22" cy="56" r="2.5" fill="currentColor"/>
+                  <circle cx="42" cy="56" r="2.5" fill="currentColor"/>
+                </svg>
+              )}
+              {s.icon === 'manutencao' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M44 8a10 10 0 0 0-10 14L8 48l8 8 26-26a10 10 0 0 0 14-10l-8 8-6-6 8-8a10 10 0 0 0-6-6z"/>
+                  <circle cx="14" cy="50" r="2" fill="currentColor"/>
+                </svg>
+              )}
+              {s.icon === 'industria' && (
+                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 56V28l14 8V28l14 8V28l14 8v20"/>
+                  <line x1="2" y1="56" x2="62" y2="56"/>
+                  <rect x="14" y="42" width="6" height="8"/>
+                  <rect x="28" y="42" width="6" height="8"/>
+                  <rect x="42" y="42" width="6" height="8"/>
+                  <path d="M22 14l-4 6h6l-2 6 4-6h-6l2-6z" fill="currentColor" stroke="none"/>
+                  <line x1="6" y1="20" x2="6" y2="28"/>
+                </svg>
+              )}
             </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
           </div>
 
           <!-- Content -->
