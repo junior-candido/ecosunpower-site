@@ -448,34 +448,45 @@ const categorias: Categoria[] = [
       ))}
     </div>
 
-    <!-- Bottom note (tecnologias) -->
-    <div class="text-center mt-12">
-      <div class="inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-2 px-2 max-w-4xl">
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> TOPCon
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> N-Type
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> Half-cell
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> Bifacial
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> HJT
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> LFP
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-primary-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm hover:bg-primary-800 transition-colors">
-          <span class="text-accent-400">✓</span> Multi-busbar
-        </span>
+    <!-- Bottom note (tecnologias com azul escuro da marca) -->
+    <div class="text-center mt-14">
+      <p class="text-xs uppercase tracking-widest text-muted font-bold mb-4">Tecnologias premium em todos os projetos</p>
+      <div class="inline-flex flex-wrap items-center justify-center gap-2 px-2 max-w-4xl">
+        <span class="tech-badge">⚡ TOPCon</span>
+        <span class="tech-badge">⚡ N-Type</span>
+        <span class="tech-badge">⚡ Half-cell</span>
+        <span class="tech-badge">⚡ Bifacial</span>
+        <span class="tech-badge">⚡ HJT</span>
+        <span class="tech-badge">⚡ LFP</span>
+        <span class="tech-badge">⚡ Multi-busbar</span>
       </div>
     </div>
   </div>
 </section>
+
+<style>
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.1rem;
+    background-color: #0B5A87 !important;
+    color: #ffffff !important;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(11, 90, 135, 0.25);
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .tech-badge:hover {
+    background-color: #073E5C !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(11, 90, 135, 0.4);
+  }
+</style>
 
 <!-- MODAL DE INFORMAÇÃO DA MARCA -->
 <div id="marca-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-dark/60 backdrop-blur-sm">
