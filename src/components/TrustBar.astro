@@ -1,0 +1,82 @@
+---
+// Trust Bar — marcas premium que a EcoSunPower trabalha
+// Estilo: tipografia elegante (sem logos, evita questões de marca)
+const categorias = [
+  {
+    titulo: 'Painéis fotovoltaicos',
+    icon: '☀️',
+    marcas: ['Trina Solar', 'JA Solar', 'LONGi', 'Jinko Solar', 'DAH Solar'],
+  },
+  {
+    titulo: 'Inversores premium',
+    icon: '⚡',
+    marcas: ['SolarEdge', 'Sungrow', 'Solis', 'Deye', 'FoxESS', 'Hoymiles', 'NEP'],
+  },
+  {
+    titulo: 'Baterias e armazenamento',
+    icon: '🔋',
+    marcas: ['BYD', 'Pylontech', 'Deye', 'FoxESS', 'Huawei'],
+  },
+  {
+    titulo: 'Proteção elétrica',
+    icon: '🛡️',
+    marcas: ['WEG', 'Clamper', 'Steck', 'Prysmian'],
+  },
+];
+---
+
+<section class="bg-gradient-tech py-16 lg:py-20 border-y border-slate-200">
+  <div class="container-wide">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="tag-accent">Tecnologia premium</span>
+      <h2 class="text-3xl lg:text-4xl mt-4 mb-4">
+        Trabalhamos só com <span class="text-gradient">o melhor do mercado</span>
+      </h2>
+      <p class="text-base lg:text-lg text-muted leading-relaxed">
+        Fornecedores Tier 1 com tecnologia de ponta — TOPCon, N-Type, Half-cell, Bifacial,
+        otimizadores e híbridos. Cada componente escolhido pra durar 25+ anos.
+      </p>
+    </div>
+
+    <!-- Grid de categorias -->
+    <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+      {categorias.map((cat) => (
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-card-hover transition-all">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-2xl">{cat.icon}</span>
+            <h3 class="font-bold text-dark text-sm uppercase tracking-wider">{cat.titulo}</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            {cat.marcas.map((marca) => (
+              <span class="inline-flex items-center px-3 py-1.5 bg-slate-50 hover:bg-primary-50 hover:text-primary-700 border border-slate-200 hover:border-primary-300 rounded-lg text-sm font-semibold text-dark-soft transition-colors cursor-default">
+                {marca}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Bottom note -->
+    <div class="text-center mt-10">
+      <div class="inline-flex flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-3 bg-white rounded-full shadow-sm border border-slate-200 max-w-3xl">
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
+          ✅ <span>TOPCon</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
+          ✅ <span>N-Type</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
+          ✅ <span>Half-cell</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
+          ✅ <span>Bifacial</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-xs text-muted font-semibold uppercase tracking-wider">
+          ✅ <span>Multi-busbar</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
