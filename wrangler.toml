@@ -1,0 +1,8 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "ecosunpower-site"
+compatibility_date = "2026-04-26"
+
+# Astro static build output
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
