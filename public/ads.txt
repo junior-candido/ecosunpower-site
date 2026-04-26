@@ -1,0 +1,3 @@
+# EcoSunPower Energia Solar — ads.txt
+# Quando AdSense for aprovado, descomente a linha abaixo com o Publisher ID real.
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0

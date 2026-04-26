@@ -1,5 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const featured = allPosts.find((p) => p.data.featured) ?? allPosts[0];
+const rest = featured ? allPosts.filter((p) => p.slug !== featured.slug) : allPosts;
+
+const dateFmt = (d: Date) => new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(d);
+
+const categoryLabel: Record<string, string> = {
+  tecnico: 'Técnico',
+  tecnologia: 'Tecnologia',
+  mercado: 'Mercado',
+  regulacao: 'Regulação',
+  casos: 'Casos',
+  tutorial: 'Tutorial',
+};
+
+const hasAnyPost = allPosts.length > 0;
 ---
 
 <Layout
@@ -8,44 +28,139 @@ import Layout from '../../layouts/Layout.astro';
 >
   <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
     <div class="container-narrow relative z-10 text-center">
       <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
-        🤖 Conteúdo curado por IA + revisado por engenheiros
+        ⚡ Conteúdo técnico — energia solar, baterias e mercado
       </span>
       <h1 class="text-4xl lg:text-6xl mb-6">Blog EcoSunPower</h1>
       <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto">
-        Tudo que você precisa saber sobre energia solar, baterias e o futuro da energia.
+        Insights práticos do dia a dia da engenharia solar em Brasília-DF e Goiás.
       </p>
     </div>
   </section>
 
-  <section class="section bg-surface-alt">
-    <div class="container-wide">
-      <!-- Em construção -->
-      <div class="max-w-2xl mx-auto text-center bg-white rounded-3xl p-12 shadow-card">
-        <div class="text-6xl mb-6">📝</div>
-        <h2 class="text-3xl mb-4">Em construção</h2>
-        <p class="text-muted leading-relaxed mb-8">
-          Estamos preparando conteúdo de alto nível sobre energia solar, baterias, Grid Zero,
-          autoconsumo, mercado livre e muito mais. Em breve, publicações semanais.
-        </p>
-        <div class="bg-primary-50 border-2 border-primary-100 rounded-2xl p-6 text-left">
-          <h3 class="font-bold mb-3 text-primary-700">Próximos artigos planejados:</h3>
-          <ul class="space-y-2 text-sm text-muted">
-            <li>📌 Quanto custa um sistema solar em Brasília em 2026?</li>
-            <li>📌 Lei 14.300 explicada: como fica quem instalar até 2028</li>
-            <li>📌 Bateria solar: vale a pena em 2026?</li>
-            <li>📌 Grid Zero: o que é e por que adotar</li>
-            <li>📌 Solar pra empresas (Grupo A): guia completo</li>
-            <li>📌 Sistema híbrido: solar + bateria + rede explicado</li>
-            <li>📌 Cálculo de payback: planilha grátis</li>
-            <li>📌 Neoenergia-DF / Equatorial-GO: como funciona compensação de créditos</li>
-          </ul>
+  {!hasAnyPost && (
+    <section class="section bg-surface-alt">
+      <div class="container-wide">
+        <div class="max-w-2xl mx-auto text-center bg-white rounded-3xl p-12 shadow-card">
+          <div class="text-6xl mb-6">📝</div>
+          <h2 class="text-3xl mb-4">Em construção</h2>
+          <p class="text-muted leading-relaxed mb-8">
+            Estamos preparando conteúdo de alto nível sobre energia solar, baterias, Grid Zero,
+            autoconsumo e mercado livre. Em breve, publicações regulares.
+          </p>
+          <a href="https://wa.me/5561998805002?text=Oi!%20Quero%20que%20me%20avise%20quando%20o%20blog%20da%20EcoSunPower%20publicar%20artigos%20novos" target="_blank" rel="noopener" class="inline-block btn-primary">
+            Avise-me quando publicar
+          </a>
         </div>
-        <a href="https://wa.me/5561998805002?text=Oi!%20Quero%20que%20me%20avise%20quando%20o%20blog%20da%20EcoSunPower%20publicar%20artigos%20novos" target="_blank" rel="noopener" class="inline-block mt-8 btn-primary">
-          Avise-me quando publicar
-        </a>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
+
+  {hasAnyPost && (
+    <section class="section bg-surface-alt">
+      <div class="container-wide">
+        <!-- Featured post -->
+        {featured && (
+          <a href={`/blog/${featured.slug}`} class="block mb-12 group">
+            <div class="bg-white rounded-3xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow">
+              <div class="grid md:grid-cols-2 gap-0">
+                {featured.data.heroImage && (
+                  <div class="aspect-[4/3] md:aspect-auto md:h-full bg-dark relative overflow-hidden">
+                    <img
+                      src={featured.data.heroImage}
+                      alt={featured.data.heroImageAlt ?? featured.data.title}
+                      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="eager"
+                    />
+                  </div>
+                )}
+                <div class="p-8 md:p-12 flex flex-col justify-center">
+                  <div class="flex items-center gap-3 mb-4">
+                    <span class="inline-flex items-center px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                      Destaque
+                    </span>
+                    <span class="inline-flex items-center px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                      {categoryLabel[featured.data.category]}
+                    </span>
+                  </div>
+                  <h2 class="text-2xl md:text-3xl font-bold mb-4 group-hover:text-primary-600 transition-colors leading-tight">
+                    {featured.data.title}
+                  </h2>
+                  <p class="text-muted leading-relaxed mb-6">
+                    {featured.data.description}
+                  </p>
+                  <div class="flex items-center gap-3 text-xs text-muted">
+                    <time datetime={featured.data.pubDate.toISOString()}>{dateFmt(featured.data.pubDate)}</time>
+                    {featured.data.readingTime && (
+                      <>
+                        <span>·</span>
+                        <span>{featured.data.readingTime} min de leitura</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        )}
+
+        <!-- Grid of posts -->
+        {rest.length > 0 && (
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rest.map((post) => (
+              <a href={`/blog/${post.slug}`} class="group block bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow">
+                {post.data.heroImage && (
+                  <div class="aspect-[16/10] bg-dark relative overflow-hidden">
+                    <img
+                      src={post.data.heroImage}
+                      alt={post.data.heroImageAlt ?? post.data.title}
+                      class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="p-6 flex-1 flex flex-col">
+                  <span class="inline-flex items-center w-fit px-2 py-0.5 bg-primary-100 text-primary-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
+                    {categoryLabel[post.data.category]}
+                  </span>
+                  <h3 class="text-lg font-bold mb-2 group-hover:text-primary-600 transition-colors leading-tight line-clamp-2">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-muted leading-relaxed mb-4 line-clamp-3 flex-1">
+                    {post.data.description}
+                  </p>
+                  <div class="flex items-center gap-2 text-xs text-muted">
+                    <time datetime={post.data.pubDate.toISOString()}>{dateFmt(post.data.pubDate)}</time>
+                    {post.data.readingTime && (
+                      <>
+                        <span>·</span>
+                        <span>{post.data.readingTime} min</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )}
 </Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
