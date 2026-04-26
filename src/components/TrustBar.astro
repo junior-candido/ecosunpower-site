@@ -632,18 +632,18 @@ const categorias: Categoria[] = [
             <div class="flex-1 h-px bg-slate-200"></div>
           </div>
 
-          <div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-1">
+          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-2">
             {cat.marcas.map((m, mIdx) => (
               <button
                 type="button"
                 data-marca={`${cat.titulo}::${m.nome}`}
-                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded p-0.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center h-7"
+                class="marca-btn marca-btn-fix group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg transition-all hover:-translate-y-0.5 hover:shadow-card"
               >
                 {logoMap[m.nome] ? (
                   <img
                     src={logoMap[m.nome]}
                     alt={m.nome}
-                    class="max-h-5 max-w-full object-contain group-hover:scale-125 transition-transform"
+                    class="logo-img-fix"
                     loading="lazy"
                     onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
                   />
@@ -696,6 +696,28 @@ const categorias: Categoria[] = [
     background-color: #073E5C !important;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(11, 90, 135, 0.4);
+  }
+
+  /* Botão da marca: tamanho fixo garantido */
+  .marca-btn-fix {
+    width: 100% !important;
+    height: 60px !important;
+    padding: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  .logo-img-fix {
+    max-height: 36px !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    transition: transform 0.2s !important;
+  }
+  .marca-btn-fix:hover .logo-img-fix {
+    transform: scale(1.1);
   }
 </style>
 
