@@ -489,11 +489,30 @@ const categorias: Categoria[] = [
 </style>
 
 <!-- MODAL DE INFORMAÇÃO DA MARCA -->
-<div id="marca-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-dark/60 backdrop-blur-sm">
-  <div id="marca-modal-content" class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up">
+<div id="marca-modal" class="marca-modal-bg fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-dark/60 backdrop-blur-sm transition-opacity duration-200" data-state="closed">
+  <div id="marca-modal-content" class="marca-modal-card bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl transition-all duration-200">
     <!-- Conteúdo injetado via JS -->
   </div>
 </div>
+
+<style>
+  .marca-modal-bg[data-state="closed"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .marca-modal-bg[data-state="open"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .marca-modal-bg[data-state="closed"] .marca-modal-card {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+  }
+  .marca-modal-bg[data-state="open"] .marca-modal-card {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+</style>
 
 <script define:vars={{ categoriasData: categorias }}>
   const modal = document.getElementById('marca-modal');
@@ -576,23 +595,30 @@ const categorias: Categoria[] = [
       </div>
     `;
 
-    // Bind close
-    document.getElementById('marca-modal-close')?.addEventListener('click', closeModal);
   }
 
   function openModal(key) {
     const marca = marcasMap[key];
-    if (!marca) return;
+    if (!marca || !modal) return;
     renderModal(marca);
-    modal?.classList.remove('hidden');
-    modal?.classList.add('flex');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
     document.body.style.overflow = 'hidden';
+    // Trigger animação na próxima frame
+    requestAnimationFrame(() => {
+      modal.setAttribute('data-state', 'open');
+    });
   }
 
   function closeModal() {
-    modal?.classList.add('hidden');
-    modal?.classList.remove('flex');
+    if (!modal) return;
+    modal.setAttribute('data-state', 'closed');
     document.body.style.overflow = '';
+    // Espera animação terminar antes de hide
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }, 200);
   }
 
   // Click handlers nas marcas
@@ -603,13 +629,26 @@ const categorias: Categoria[] = [
     });
   });
 
-  // Click fora fecha
+  // Click no botão X fechar (delegação - funciona mesmo após re-render)
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest('#marca-modal-close')) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeModal();
+    }
+  });
+
+  // Click no fundo escuro fecha
   modal?.addEventListener('click', (e) => {
     if (e.target === modal) closeModal();
   });
 
   // Esc fecha
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
   });
 </script>
