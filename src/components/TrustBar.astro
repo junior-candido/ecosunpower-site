@@ -632,18 +632,18 @@ const categorias: Categoria[] = [
             <div class="flex-1 h-px bg-slate-200"></div>
           </div>
 
-          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2">
+          <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7 xl:grid-cols-8 gap-1.5">
             {cat.marcas.map((m, mIdx) => (
               <button
                 type="button"
                 data-marca={`${cat.titulo}::${m.nome}`}
-                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg p-1.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center min-h-[44px]"
+                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-md p-1 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center min-h-[36px]"
               >
                 {logoMap[m.nome] ? (
                   <img
                     src={logoMap[m.nome]}
                     alt={m.nome}
-                    class="max-h-5 max-w-full object-contain group-hover:scale-110 transition-transform"
+                    class="max-h-4 max-w-full object-contain group-hover:scale-110 transition-transform"
                     loading="lazy"
                     onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
                   />
