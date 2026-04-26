@@ -1,25 +1,53 @@
 ---
 const servicos = [
   {
-    title: 'Solar Residencial',
-    desc: 'Sistemas pra casas, sítios e chácaras. Reduza sua conta em até 95% com projeto sob medida.',
-    cta: 'Quero pra minha casa',
+    title: 'Sistema On-grid',
+    desc: 'Carro-chefe da EcoSunPower. Pra residências, comércios e indústrias conectados à rede. Reduz a conta em até 95% e tem o melhor custo-benefício do mercado.',
+    cta: 'Quero on-grid',
+    icon: '🌞',
     color: 'primary',
-    image: '/servico-residencial.jpg',
-  },
-  {
-    title: 'Solar Comercial',
-    desc: 'Pra lojas, escritórios, restaurantes e franquias. ROI rápido + previsibilidade de custos.',
-    cta: 'Quero pro meu negócio',
-    color: 'accent',
-    image: '/servico-comercial.jpg',
+    featured: true,
+    badge: 'Mais vendido',
   },
   {
     title: 'Solar + Bateria',
-    desc: 'Independência total da rede. Energia 24h, mesmo se faltar luz. Sistema premium.',
+    desc: 'Sistema híbrido com armazenamento. Energia 24h mesmo na falta de luz. Independência total e segurança energética.',
     cta: 'Quero com bateria',
+    icon: '🔋',
+    color: 'accent',
+    featured: false,
+  },
+  {
+    title: 'Off-grid e Bombeamento',
+    desc: 'Pra locais sem rede elétrica: fazendas, sítios, irrigação. Sistema autônomo dimensionado pra demanda específica.',
+    cta: 'Quero off-grid',
+    icon: '🚜',
     color: 'primary',
-    image: '/servico-bateria.jpg',
+    featured: false,
+  },
+  {
+    title: 'Carregador para Carro Elétrico',
+    desc: 'Instalação de carregadores de qualquer porte: wallbox residencial, comercial e DC fast charging. Com ou sem solar acoplado.',
+    cta: 'Quero carregador',
+    icon: '🔌',
+    color: 'accent',
+    featured: false,
+  },
+  {
+    title: 'Manutenção de Sistemas',
+    desc: 'Limpeza, diagnóstico, monitoramento remoto e reparo. Atendemos sistemas EcoSunPower e de outras instaladoras.',
+    cta: 'Quero manutenção',
+    icon: '🛠️',
+    color: 'primary',
+    featured: false,
+  },
+  {
+    title: 'Mercado Livre / Grupo A',
+    desc: 'Solução completa pra indústrias e grandes empresas em alta tensão. Migração pro mercado livre e geração própria.',
+    cta: 'Quero saber mais',
+    icon: '🏭',
+    color: 'accent',
+    featured: false,
   },
 ];
 ---
@@ -30,29 +58,35 @@ const servicos = [
     <div class="text-center max-w-3xl mx-auto mb-16">
       <span class="tag-accent">Nossos serviços</span>
       <h2 class="text-4xl lg:text-5xl mt-4 mb-5">
-        Soluções para <span class="text-gradient">cada perfil</span>
+        Soluções completas <span class="text-gradient">em energia</span>
       </h2>
       <p class="text-lg text-muted leading-relaxed">
         Da casa de 3 quartos à indústria com demanda de 500 kWp.
-        Projeto técnico personalizado pra cada cliente.
+        Solar é o foco principal, mas atendemos qualquer demanda na área de energia.
       </p>
     </div>
 
     <!-- Cards -->
     <div class="grid md:grid-cols-3 gap-6">
       {servicos.map((s) => (
-        <div class="card group flex flex-col overflow-hidden p-0">
+        <div class={`card group flex flex-col overflow-hidden p-0 relative ${s.featured ? 'ring-2 ring-accent-500 ring-offset-2' : ''}`}>
+          {s.featured && s.badge && (
+            <div class="absolute top-3 right-3 z-10 bg-accent-500 text-dark text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+              ⭐ {s.badge}
+            </div>
+          )}
+
           <!-- Image placeholder com gradient -->
-          <div class={`h-48 ${s.color === 'primary' ? 'bg-gradient-hero' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden`}>
-            <div class="absolute inset-0 flex items-center justify-center text-7xl opacity-90 group-hover:scale-110 transition-transform">
-              {s.color === 'primary' ? '🌞' : '⚡'}
+          <div class={`h-44 ${s.color === 'primary' ? 'bg-gradient-hero' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden`}>
+            <div class="absolute inset-0 flex items-center justify-center text-6xl opacity-90 group-hover:scale-110 transition-transform">
+              {s.icon}
             </div>
             <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
           </div>
 
           <!-- Content -->
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
+            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
               {s.title}
             </h3>
             <p class="text-muted text-sm leading-relaxed mb-6 flex-1">{s.desc}</p>
