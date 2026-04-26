@@ -425,20 +425,15 @@ const categorias: Categoria[] = [
             <span class="text-xs text-muted font-semibold">{cat.marcas.length} marcas</span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2">
             {cat.marcas.map((m, mIdx) => (
               <button
                 type="button"
                 data-marca={`${cat.titulo}::${m.nome}`}
-                class="marca-btn group relative bg-white hover:bg-primary-50 border-2 border-slate-200 hover:border-primary-400 rounded-xl px-4 py-5 text-center transition-all hover:-translate-y-1 hover:shadow-card-hover flex items-center justify-center min-h-[64px]"
+                class="marca-btn group relative bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-400 rounded-lg px-3 py-2.5 text-center transition-all hover:-translate-y-0.5 hover:shadow-card flex items-center justify-center"
               >
-                <div class="font-bold text-sm text-dark group-hover:text-primary-700 transition-colors leading-tight">
+                <div class="font-bold text-xs text-dark group-hover:text-primary-700 transition-colors leading-tight">
                   {m.nome}
-                </div>
-                <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-primary-500">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                  </svg>
                 </div>
               </button>
             ))}
