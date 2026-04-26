@@ -532,7 +532,6 @@ const categorias: Categoria[] = [
             <span class="text-2xl">{cat.icon}</span>
             <h3 class="font-display font-bold text-dark text-lg">{cat.titulo}</h3>
             <div class="flex-1 h-px bg-slate-200"></div>
-            <span class="text-xs text-muted font-semibold">{cat.marcas.length} marcas</span>
           </div>
 
           <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2">
@@ -664,7 +663,7 @@ const categorias: Categoria[] = [
         <!-- Header com gradient -->
         <div class="bg-gradient-hero p-6 rounded-t-3xl text-white relative overflow-hidden">
           <div class="absolute -top-20 -right-20 w-40 h-40 bg-accent-400/30 rounded-full blur-3xl"></div>
-          <button id="marca-modal-close" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Fechar">
+          <button type="button" class="modal-close-btn absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors z-10 cursor-pointer" aria-label="Fechar">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -712,7 +711,7 @@ const categorias: Categoria[] = [
       <div class="relative">
         <div class="bg-gradient-hero p-6 rounded-t-3xl text-white relative overflow-hidden">
           <div class="absolute -top-20 -right-20 w-40 h-40 bg-accent-400/30 rounded-full blur-3xl"></div>
-          <button id="marca-modal-close" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors" aria-label="Fechar">
+          <button type="button" class="modal-close-btn absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors z-10 cursor-pointer" aria-label="Fechar">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -820,20 +819,21 @@ const categorias: Categoria[] = [
     });
   });
 
-  // Click no botão X fechar (delegação - funciona mesmo após re-render)
-  document.addEventListener('click', (e) => {
+  // Click handlers no modal (delegação dentro do modal)
+  modal?.addEventListener('click', (e) => {
     const target = e.target;
     if (!(target instanceof Element)) return;
-    if (target.closest('#marca-modal-close')) {
+    // Botão X fechar
+    if (target.closest('.modal-close-btn')) {
       e.preventDefault();
       e.stopPropagation();
       closeModal();
+      return;
     }
-  });
-
-  // Click no fundo escuro fecha
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+    // Click no fundo escuro (não no card)
+    if (e.target === modal) {
+      closeModal();
+    }
   });
 
   // Esc fecha
