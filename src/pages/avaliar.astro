@@ -1,0 +1,246 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Pega query string ?obra=<slug> pra preencher case_slug.
+// Cliente pode chegar via link generico (/avaliar) ou de obra especifica (/avaliar?obra=residencial-villeneuve).
+const url = new URL(Astro.request.url);
+const obraSlug = url.searchParams.get('obra') ?? '';
+
+// Vars publicas (PUBLIC_* sao expostas ao client-side pelo Astro)
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL ?? '';
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '';
+---
+
+<Layout
+  title="Avalie a EcoSunPower"
+  description="Conte como foi sua experiência com a EcoSunPower. Sua avaliação ajuda outros clientes."
+>
+  <section class="section bg-surface min-h-[80vh]">
+    <div class="container-narrow max-w-2xl">
+      <div class="text-center mb-10">
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full mb-4 text-sm font-semibold text-amber-900">
+          ⭐ Sua opinião vale ouro
+        </span>
+        <h1 class="mb-3">Conte como foi sua experiência</h1>
+        <p class="text-muted">Sua avaliação ajuda outros clientes a confiarem na gente. Leva 30 segundos.</p>
+      </div>
+
+      <form id="form-avaliar" class="card p-8 space-y-6">
+        <input type="hidden" name="case_slug" value={obraSlug} />
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="nome">Seu nome <span class="text-red-500">*</span></label>
+          <input
+            id="nome"
+            name="cliente_nome"
+            type="text"
+            required
+            minlength="2"
+            maxlength="80"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            placeholder="Maria Silva"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="cidade">Cidade (opcional)</label>
+          <input
+            id="cidade"
+            name="cliente_cidade"
+            type="text"
+            maxlength="60"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            placeholder="Brasília-DF"
+          />
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2">Sua nota <span class="text-red-500">*</span></label>
+          <div class="flex items-center gap-2" id="estrelas-wrapper" role="radiogroup" aria-label="Nota">
+            {[1, 2, 3, 4, 5].map(n => (
+              <button
+                type="button"
+                data-estrela={n}
+                role="radio"
+                aria-checked="false"
+                aria-label={`${n} estrela${n > 1 ? 's' : ''}`}
+                class="estrela text-4xl text-slate-300 hover:text-amber-400 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-300 rounded"
+              >
+                ★
+              </button>
+            ))}
+          </div>
+          <input id="estrelas-input" type="hidden" name="estrelas" required />
+          <p class="text-xs text-muted mt-2">Clique nas estrelas pra dar sua nota.</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="texto">Conte como foi (opcional, mas a gente adora!)</label>
+          <textarea
+            id="texto"
+            name="texto"
+            maxlength="1500"
+            rows="5"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200 resize-none"
+            placeholder="Atendimento, instalação, equipe, prazo, resultado..."
+          ></textarea>
+          <p class="text-xs text-muted mt-1"><span id="char-count">0</span>/1500</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="telefone">Seu telefone (opcional)</label>
+          <input
+            id="telefone"
+            name="cliente_telefone"
+            type="tel"
+            maxlength="20"
+            class="w-full rounded-lg border border-slate-300 px-4 py-3 focus:border-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            placeholder="(61) 99999-0000"
+          />
+          <p class="text-xs text-muted mt-1">Só usamos se quisermos confirmar sua avaliação.</p>
+        </div>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="btn-primary w-full text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Enviar avaliação
+        </button>
+
+        <p class="text-xs text-center text-muted">
+          Ao enviar, você concorda que sua avaliação pode aparecer em <a href="/portfolio" class="text-primary-600 underline">ecosunpower.eng.br/portfolio</a> após análise.
+        </p>
+      </form>
+
+      <!-- Estado de sucesso -->
+      <div id="sucesso" class="card p-10 text-center hidden">
+        <div class="text-6xl mb-4">🎉</div>
+        <h2 class="text-2xl font-bold mb-3">Obrigado!</h2>
+        <p class="text-muted mb-6">Sua avaliação chegou na gente. Logo logo aparece no nosso site.</p>
+        <p class="text-sm text-muted mb-6">Se você também quiser deixar sua avaliação no Google (opcional), é por aqui:</p>
+        <a href="https://g.page/r/CWB5ipa57HzhEAE/review" target="_blank" rel="noopener" class="btn-secondary inline-block">
+          Avaliar também no Google →
+        </a>
+      </div>
+
+      <!-- Estado de erro -->
+      <div id="erro" class="card p-8 hidden border-red-200 bg-red-50">
+        <h3 class="font-bold text-red-900 mb-2">Ops, deu ruim aqui</h3>
+        <p class="text-sm text-red-700" id="erro-msg"></p>
+        <button type="button" id="tentar-novamente" class="mt-4 btn-secondary">Tentar de novo</button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ supabaseUrl, supabaseAnonKey }}>
+  const form = document.getElementById('form-avaliar');
+  const sucesso = document.getElementById('sucesso');
+  const erro = document.getElementById('erro');
+  const erroMsg = document.getElementById('erro-msg');
+  const submitBtn = document.getElementById('submit-btn');
+  const charCount = document.getElementById('char-count');
+  const textoEl = document.getElementById('texto');
+  const estrelasInput = document.getElementById('estrelas-input');
+  const estrelasBtns = document.querySelectorAll('.estrela');
+  const tentarNovamente = document.getElementById('tentar-novamente');
+
+  // Contagem de chars no textarea
+  textoEl.addEventListener('input', () => {
+    charCount.textContent = textoEl.value.length;
+  });
+
+  // Estrelas — clique e hover
+  let estrelaSelecionada = 0;
+  function pintarEstrelas(n) {
+    estrelasBtns.forEach((b) => {
+      const v = parseInt(b.dataset.estrela);
+      b.classList.toggle('text-amber-400', v <= n);
+      b.classList.toggle('text-slate-300', v > n);
+      b.setAttribute('aria-checked', v === n ? 'true' : 'false');
+    });
+  }
+  estrelasBtns.forEach((b) => {
+    b.addEventListener('click', () => {
+      estrelaSelecionada = parseInt(b.dataset.estrela);
+      estrelasInput.value = estrelaSelecionada;
+      pintarEstrelas(estrelaSelecionada);
+    });
+    b.addEventListener('mouseenter', () => {
+      pintarEstrelas(parseInt(b.dataset.estrela));
+    });
+  });
+  document.getElementById('estrelas-wrapper').addEventListener('mouseleave', () => {
+    pintarEstrelas(estrelaSelecionada);
+  });
+
+  function showErro(msg) {
+    erro.classList.remove('hidden');
+    erroMsg.textContent = msg;
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar avaliação';
+  }
+  tentarNovamente.addEventListener('click', () => {
+    erro.classList.add('hidden');
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    erro.classList.add('hidden');
+
+    if (estrelaSelecionada === 0) {
+      showErro('Por favor, selecione de 1 a 5 estrelas.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      showErro('Configuração faltando. Avise o suporte.');
+      return;
+    }
+
+    const data = new FormData(form);
+    const payload = {
+      case_slug: data.get('case_slug') || null,
+      cliente_nome: (data.get('cliente_nome') || '').toString().trim(),
+      cliente_cidade: (data.get('cliente_cidade') || '').toString().trim() || null,
+      cliente_telefone: (data.get('cliente_telefone') || '').toString().trim() || null,
+      estrelas: estrelaSelecionada,
+      texto: (data.get('texto') || '').toString().trim() || null,
+      user_agent: navigator.userAgent.slice(0, 200),
+    };
+
+    try {
+      const res = await fetch(`${supabaseUrl}/rest/v1/public_reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${supabaseAnonKey}`,
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 201 || res.status === 200) {
+        form.classList.add('hidden');
+        sucesso.classList.remove('hidden');
+        // Scroll suave pro topo da seção de sucesso
+        sucesso.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        const txt = await res.text();
+        // Rate limit detectado
+        if (txt.includes('Rate limit')) {
+          showErro('Você já enviou várias avaliações recentemente. Tente daqui 1 hora.');
+        } else {
+          showErro(`Erro ao enviar (HTTP ${res.status}). Tenta de novo em alguns segundos.`);
+        }
+      }
+    } catch (err) {
+      showErro(`Erro de conexão. Verifica sua internet e tenta de novo.`);
+    }
+  });
+</script>
