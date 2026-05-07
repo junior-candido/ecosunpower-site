@@ -20,4 +20,31 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const cases = defineCollection({
+  type: 'data',
+  schema: z.object({
+    slug: z.string(),
+    titulo: z.string(),
+    cliente: z.string().optional(),
+    cidade: z.string(),
+    uf: z.enum(['DF', 'GO']),
+    tipo: z.enum(['residencial', 'comercial', 'industrial', 'rural', 'hibrido', 'usina']),
+    kwp: z.number().positive().optional(),
+    economiaMensalBrl: z.number().positive().optional(),
+    descCurta: z.string().min(20).max(300),
+    fotoPrincipal: z.string(),
+    fotos: z.array(z.string()).default([]),
+    videoUrl: z.string().url().optional(),
+    videoLocal: z.string().optional(),
+    dataInstalacao: z.string().optional(),
+    featured: z.boolean().default(false),
+    inversorMarca: z.string().optional(),
+    inversorModelo: z.string().optional(),
+    moduloMarca: z.string().optional(),
+    bateriaKwh: z.number().optional(),
+    concessionaria: z.enum(['Neoenergia-DF', 'Equatorial-GO']).optional(),
+    tecnologiaDestaque: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, cases };

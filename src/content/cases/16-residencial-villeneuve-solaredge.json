@@ -1,0 +1,14 @@
+{
+  "slug": "residencial-villeneuve-solaredge",
+  "titulo": "Residencial Villeneuve",
+  "cidade": "Brasília",
+  "uf": "DF",
+  "tipo": "residencial",
+  "descCurta": "Condomínio premium em Águas Claras com tecnologia SolarEdge: otimizadores por painel garantem rendimento máximo mesmo com sombreamento parcial.",
+  "fotoPrincipal": "/cases/16-residencial-villeneuve-solaredge/cover.jpg",
+  "fotos": [],
+  "featured": true,
+  "concessionaria": "Neoenergia-DF",
+  "inversorMarca": "SolarEdge",
+  "tecnologiaDestaque": "SolarEdge com otimizadores"
+}

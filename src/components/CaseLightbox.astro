@@ -1,0 +1,51 @@
+---
+// Modal global pra exibir video do drone. Listener via .case-play-btn[data-video-url].
+---
+
+<div id="case-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true" aria-label="Vídeo do case">
+  <button id="case-lightbox-close" type="button" aria-label="Fechar" class="absolute right-4 top-4 text-3xl text-white">×</button>
+  <div class="w-full max-w-5xl">
+    <h3 id="case-lightbox-title" class="mb-3 text-center text-lg font-semibold text-white"></h3>
+    <video id="case-lightbox-video" controls preload="metadata" class="w-full rounded-lg shadow-2xl">
+      <track kind="captions" />
+    </video>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('case-lightbox');
+  const video = document.getElementById('case-lightbox-video') as HTMLVideoElement;
+  const title = document.getElementById('case-lightbox-title');
+  const closeBtn = document.getElementById('case-lightbox-close');
+
+  function open(url: string, caseTitle: string) {
+    if (!overlay || !video || !title) return;
+    video.src = url;
+    title.textContent = caseTitle;
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    if (!overlay || !video) return;
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.case-play-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.dataset.videoUrl;
+      const t = btn.dataset.caseTitulo ?? '';
+      if (url) open(url, t);
+    });
+  });
+
+  closeBtn?.addEventListener('click', close);
+  overlay?.addEventListener('click', e => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+</script>

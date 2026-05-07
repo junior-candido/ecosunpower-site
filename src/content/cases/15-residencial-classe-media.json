@@ -1,0 +1,12 @@
+{
+  "slug": "residencial-classe-media",
+  "titulo": "Residencial Classe Média",
+  "cidade": "Brasília",
+  "uf": "DF",
+  "tipo": "residencial",
+  "descCurta": "Sistema solar fotovoltaico em residência típica de classe média. Solução acessível com retorno financeiro rápido.",
+  "fotoPrincipal": "/cases/15-residencial-classe-media/cover.jpg",
+  "fotos": [],
+  "featured": false,
+  "concessionaria": "Neoenergia-DF"
+}

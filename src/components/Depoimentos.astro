@@ -1,0 +1,83 @@
+---
+import config from '../content/config-site.json';
+
+interface Testimonial {
+  id: string;
+  nomeCliente: string;
+  cidade: string | null;
+  texto: string | null;
+  estrelas: number;
+  formato: string;
+  mediaUrl: string | null;
+  googlePosted: boolean;
+  data: string;
+}
+
+let testimonials: Testimonial[] = [];
+const siteUrl = Astro.site?.toString() ?? 'https://ecosunpower.eng.br/';
+
+try {
+  const url = `${siteUrl}api/testimonials.json`;
+  const res = await fetch(url);
+  if (res.ok) testimonials = await res.json();
+} catch (err) {
+  // Build offline ou Supabase indisponivel — mostra fallback
+  console.warn('[Depoimentos] fetch falhou:', err);
+}
+
+const comTexto = testimonials.filter(t => t.texto && t.texto.length > 0).slice(0, 6);
+---
+
+<section class="section bg-white">
+  <div class="container-wide">
+    <div class="mb-10 text-center">
+      <h2 class="mb-3">O que nossos clientes dizem</h2>
+      <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-amber-900">
+        <span class="text-xl">⭐</span>
+        <span class="font-bold">{config.googleNota} no Google</span>
+        <span class="text-sm">· {config.googleQtdAvaliacoes} avaliações</span>
+      </div>
+    </div>
+
+    {comTexto.length === 0 ? (
+      <div class="text-center text-muted">
+        <p>Em breve, depoimentos reais dos nossos clientes aqui.</p>
+        <p class="mt-2 text-sm">Enquanto isso, veja as avaliações no Google:</p>
+        <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-primary mt-4 inline-block">
+          Ver avaliações no Google
+        </a>
+      </div>
+    ) : (
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {comTexto.map(t => (
+          <article class="card flex flex-col p-6">
+            <div class="mb-3 flex items-center gap-2">
+              {Array.from({ length: t.estrelas }).map(() => <span class="text-amber-400">⭐</span>)}
+            </div>
+            <blockquote class="mb-4 flex-1 text-base leading-relaxed">
+              "{t.texto}"
+            </blockquote>
+            <footer class="border-t border-slate-100 pt-3 text-sm">
+              <div class="font-semibold">{t.nomeCliente}</div>
+              {t.cidade && <div class="text-muted">{t.cidade}</div>}
+              {t.googlePosted && (
+                <div class="mt-2 inline-flex items-center gap-1 text-xs text-emerald-700">
+                  ✓ Verificado no Google
+                </div>
+              )}
+            </footer>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-secondary">
+        Ver todas no Google
+      </a>
+      <a href={config.googleWriteReviewUrl} target="_blank" rel="noopener" class="btn-primary">
+        Avalie a gente
+      </a>
+    </div>
+  </div>
+</section>
