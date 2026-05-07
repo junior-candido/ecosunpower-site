@@ -1,0 +1,36 @@
+# Vídeos vão pro Supabase Storage, NÃO pro repo (travam git/Cloudflare)
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.AVI
+*.mkv
+*.MKV
+*.webm
+*.WEBM
+
+# Formatos de câmera/celular pesados
+*.heic
+*.HEIC
+*.heif
+*.HEIF
+*.dng
+*.DNG
+*.raw
+*.RAW
+*.cr2
+*.CR2
+*.nef
+*.NEF
+*.arw
+*.ARW
+
+# Fotos originais (antes da otimização) — opcional, se você quiser guardar separado
+**/originais/
+**/raw/
+
+# Sistema/temporários
+Thumbs.db
+.DS_Store
+desktop.ini
