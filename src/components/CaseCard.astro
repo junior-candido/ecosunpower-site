@@ -1,0 +1,72 @@
+---
+interface Props {
+  slug: string;
+  titulo: string;
+  cidade: string;
+  uf: string;
+  tipo: string;
+  kwp?: number;
+  economiaMensalBrl?: number;
+  fotoPrincipal: string;
+  videoUrl?: string;
+  tecnologiaDestaque?: string;
+}
+
+const { titulo, cidade, uf, tipo, kwp, economiaMensalBrl, fotoPrincipal, videoUrl, tecnologiaDestaque } = Astro.props;
+
+const tipoLabels: Record<string, string> = {
+  residencial: 'Residencial',
+  comercial: 'Comercial',
+  industrial: 'Industrial',
+  rural: 'Rural',
+  hibrido: 'Híbrido (com bateria)',
+  usina: 'Usina de Investimento',
+};
+---
+
+<article class="card group flex flex-col overflow-hidden p-0 transition hover:scale-[1.02]">
+  <div class="relative h-48 overflow-hidden bg-slate-100">
+    <img
+      src={fotoPrincipal}
+      alt={`${titulo}, ${cidade}-${uf}`}
+      class="h-full w-full object-cover"
+      loading="lazy"
+      width="800"
+      height="450"
+    />
+    {kwp && (
+      <div class="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-dark backdrop-blur-sm">
+        {kwp.toString().replace('.', ',')} kWp
+      </div>
+    )}
+    {tecnologiaDestaque && (
+      <div class="absolute left-3 top-3 rounded-full bg-primary-600/95 px-3 py-1 text-xs font-bold text-white backdrop-blur-sm">
+        {tecnologiaDestaque}
+      </div>
+    )}
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <span class="mb-1 text-xs font-semibold uppercase tracking-wider text-primary-600">
+      {cidade}-{uf} · {tipoLabels[tipo] ?? tipo}
+    </span>
+    <h3 class="mb-2 mt-2 text-lg font-bold leading-tight">{titulo}</h3>
+    {economiaMensalBrl && (
+      <div class="mt-auto pt-4 border-t border-slate-100">
+        <div class="text-xs text-muted">Economia mensal</div>
+        <div class="text-base font-bold text-emerald-600">
+          R$ {economiaMensalBrl.toLocaleString('pt-BR')}/mês
+        </div>
+      </div>
+    )}
+    {videoUrl && (
+      <button
+        type="button"
+        data-video-url={videoUrl}
+        data-case-titulo={titulo}
+        class="case-play-btn mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:underline"
+      >
+        ▶ Ver vídeo do drone
+      </button>
+    )}
+  </div>
+</article>
