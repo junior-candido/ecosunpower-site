@@ -1,0 +1,19 @@
+{
+  "slug": "usina-ailson-fernandes-planaltina",
+  "titulo": "Ailson Fernandes.",
+  "cliente": "Ailson Fernandes.",
+  "cidade": "Planaltina",
+  "uf": "DF",
+  "tipo": "usina",
+  "kwp": 43.18,
+  "economiaMensalBrl": 5300,
+  "descCurta": "Sintoma comercial ,usina para arrendamento em cooperativa .",
+  "fotoPrincipal": "https://kupnsoyymulbdzakqlqc.supabase.co/storage/v1/object/public/cases-videos/17-usina-ailson-fernandes-planaltina/cover.jpg",
+  "fotos": [],
+  "videoUrl": "https://kupnsoyymulbdzakqlqc.supabase.co/storage/v1/object/public/cases-videos/17-usina-ailson-fernandes-planaltina/video.mp4",
+  "featured": false,
+  "inversorMarca": "Nep-BDM",
+  "moduloMarca": "Longi BC 635w",
+  "concessionaria": "Neoenergia-DF",
+  "dataInstalacao": "2026-05"
+}
