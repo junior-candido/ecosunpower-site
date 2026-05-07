@@ -1,31 +1,82 @@
 ---
 import config from '../content/config-site.json';
+import { supabase } from '../lib/supabase-build';
 
-interface Testimonial {
+interface ReviewCard {
   id: string;
   nomeCliente: string;
   cidade: string | null;
   texto: string | null;
   estrelas: number;
-  formato: string;
-  mediaUrl: string | null;
   googlePosted: boolean;
   data: string;
+  fonte: 'eva' | 'site';
 }
 
-let testimonials: Testimonial[] = [];
+function abreviarNome(full: string | null): string {
+  if (!full) return 'Cliente';
+  const parts = full.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0];
+  return `${parts[0]} ${parts[parts.length - 1][0]}.`;
+}
+
+const reviews: ReviewCard[] = [];
+
+// Fonte 1: depoimentos coletados pela Eva via WhatsApp (testimonials.json endpoint)
 const siteUrl = Astro.site?.toString() ?? 'https://ecosunpower.eng.br/';
-
 try {
-  const url = `${siteUrl}api/testimonials.json`;
-  const res = await fetch(url);
-  if (res.ok) testimonials = await res.json();
+  const res = await fetch(`${siteUrl}api/testimonials.json`);
+  if (res.ok) {
+    const arr: any[] = await res.json();
+    for (const t of arr) {
+      if (t.texto && t.texto.length > 0) {
+        reviews.push({
+          id: `eva-${t.id}`,
+          nomeCliente: t.nomeCliente,
+          cidade: t.cidade,
+          texto: t.texto,
+          estrelas: t.estrelas,
+          googlePosted: t.googlePosted,
+          data: t.data,
+          fonte: 'eva',
+        });
+      }
+    }
+  }
 } catch (err) {
-  // Build offline ou Supabase indisponivel — mostra fallback
-  console.warn('[Depoimentos] fetch falhou:', err);
+  console.warn('[Depoimentos] fetch testimonials.json falhou:', err);
 }
 
-const comTexto = testimonials.filter(t => t.texto && t.texto.length > 0).slice(0, 6);
+// Fonte 2: avaliacoes publicas via formulario /avaliar (tabela public_reviews)
+if (supabase) {
+  const { data, error } = await supabase
+    .from('public_reviews')
+    .select('id, cliente_nome, cliente_cidade, estrelas, texto, created_at')
+    .eq('approved_for_marketing', true)
+    .not('texto', 'is', null)
+    .order('created_at', { ascending: false })
+    .limit(20);
+
+  if (!error && data) {
+    for (const r of data as any[]) {
+      reviews.push({
+        id: `site-${r.id}`,
+        nomeCliente: abreviarNome(r.cliente_nome),
+        cidade: r.cliente_cidade,
+        texto: r.texto,
+        estrelas: r.estrelas,
+        googlePosted: false,
+        data: r.created_at,
+        fonte: 'site',
+      });
+    }
+  }
+}
+
+// Combina e ordena por mais recente, limita a 6 cards
+const comTexto = reviews
+  .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
+  .slice(0, 6);
 ---
 
 <section class="section bg-white">
@@ -73,11 +124,12 @@ const comTexto = testimonials.filter(t => t.texto && t.texto.length > 0).slice(0
 
     <div class="mt-10 flex flex-wrap justify-center gap-3">
       <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-secondary">
-        Ver todas no Google
+        Ver no Google
       </a>
-      <a href={config.googleWriteReviewUrl} target="_blank" rel="noopener" class="btn-primary">
+      <a href="/avaliar" class="btn-primary">
         Avalie a gente
       </a>
     </div>
+    <p class="mt-4 text-center text-xs text-muted">Avaliação rápida no nosso site, sem precisar de conta Google.</p>
   </div>
 </section>
