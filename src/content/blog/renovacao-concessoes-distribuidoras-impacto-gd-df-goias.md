@@ -47,7 +47,7 @@ O novo contrato é particularmente desafiador para a Equatorial-GO porque o esta
 - Forte concentração de agronegócio com demanda crescente por GD remota.
 - Indicadores DEC/FEC historicamente piores que a média nacional.
 
-Na prática, isso significa que a distribuidora terá que acelerar investimentos em **reforço de redes rurais e subestações**, o que beneficia diretamente projetos de **usinas solares em fazendas e geração compartilhada**. Para quem já pensa em projetos solo de 500 kWp a 5 MWp no interior goiano, esse é um vetor favorável nos próximos 24 meses.
+Na prática, isso significa que a distribuidora terá que acelerar investimentos em **reforço de redes rurais e subestações**, o que beneficia diretamente projetos de **usinas solares em fazendas e geração compartilhada**. Para quem já pensa em projetos solo entre 500 kWp e o **teto da minigeração distribuída fotovoltaica — 3 MWp pela Lei 14.300/2022** — no interior goiano, esse é um vetor favorável nos próximos 24 meses. Projetos acima de 3 MWp para fontes não-despacháveis como a solar fotovoltaica saem da mini-GD e migram para o Ambiente de Contratação Livre (ACL), com lógica tarifária diferente. O limite anterior de 5 MW continua valendo apenas para fontes despacháveis (biomassa, cogeração qualificada) ou para sistemas do grupo GD I, com direito adquirido protegido até 31/12/2045.
 
 Se você está planejando uma usina rural, veja nosso outro post sobre [erros na montagem de estruturas solo em Goiás](/blog/erros-montagem-estruturas-solo-goias) antes de fechar projeto.
 

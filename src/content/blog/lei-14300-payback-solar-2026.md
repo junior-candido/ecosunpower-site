@@ -129,7 +129,7 @@ Improvável no curto prazo. O cronograma até 2028 está consolidado. Pode haver
 Depende do consumo. Sistema híbrido com bateria custa 50-80% mais que on-grid. Compensa quando o cliente tem alto consumo noturno, queda frequente de luz, ou prioriza independência energética. Pra economia pura, on-grid ainda é melhor custo-benefício.
 
 **E pra comércio e indústria?**
-A Lei 14.300 vale pra MMGD (até 5 MW). Acima disso, entra no mercado livre, regra diferente. EcoSunPower atende ambos os perfis.
+A Lei 14.300 vale pra MMGD com limites por fonte: **microgeração até 75 kW**, **minigeração até 3 MW para fontes não-despacháveis como a solar fotovoltaica**, ou até 5 MW para fontes despacháveis (biomassa, cogeração qualificada). Sistemas do grupo GD I, com solicitação de acesso anterior a 07/01/2023, mantêm direito adquirido ao limite antigo de 5 MW até 31/12/2045. Acima desses tetos, o projeto sai da GD e entra no Ambiente de Contratação Livre (ACL), com regra completamente diferente. EcoSunPower atende ambos os perfis.
 
 ## Conclusão
 
