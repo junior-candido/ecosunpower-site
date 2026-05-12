@@ -3,7 +3,7 @@ title: "Créditos vencidos de GD: o que muda com a Consulta Pública 011/2026 da
 description: "Análise técnica da CP 011/2026 da ANEEL sobre créditos excedentes de MMGD vencidos e impacto no dimensionamento de sistemas solares no DF e Goiás."
 pubDate: 2026-05-06
 category: tecnico
-tags: ["ANEEL","Lei 14.300","creditos energia","dimensionamento","geracao distribuida"]
+tags: ["ANEEL","Lei 14.300","créditos energia","dimensionamento","geração distribuída"]
 readingTime: 9
 sourceAttribution: "Baseado em comunicado oficial da ANEEL de 28/04/2026 sobre a Consulta Pública 011/2026 — https://www.gov.br/aneel/pt-br/assuntos/noticias/2026/consulta-publica-vai-tratar-dos-creditos-excedentes-de-mmgd-para-modicidade-tarifaria"
 draft: false

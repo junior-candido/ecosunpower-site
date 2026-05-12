@@ -1,9 +1,9 @@
 ---
-title: "Erros na montagem de estruturas solo: guia tecnico para usinas em Goias"
-description: "Engenheiro da EcoSunPower detalha os principais erros em estruturas de solo para usinas solares no Cerrado e como evita-los em projetos de Goias e DF."
+title: "Erros na montagem de estruturas solo: guia técnico para usinas em Goiás"
+description: "Responsável Técnico CREA/CFT da EcoSunPower detalha os principais erros em estruturas de solo para usinas solares no Cerrado e como evitá-los em projetos de Goiás e DF."
 pubDate: 2026-05-06
 category: tecnico
-tags: ["estruturas solares","usinas solo","engenharia solar","Goias","dimensionamento"]
+tags: ["estruturas solares","usinas solo","engenharia solar","Goiás","dimensionamento"]
 readingTime: 9
 sourceAttribution: "Inspirado em artigo do Canal Solar publicado em 05/05/2026: https://canalsolar.com.br/principais-erros-montagem-estruturas-solo/"
 draft: false
@@ -14,7 +14,7 @@ A cada projeto de usina solar em solo que executamos no interior de Goiás ou no
 
 Neste post compartilho os erros técnicos mais frequentes que encontramos em vistorias de usinas de terceiros aqui na região Centro-Oeste, e como a EcoSunPower aborda cada um desses pontos em projetos de geração distribuída de médio e grande porte (acima de 75 kWp) em fazendas, agroindústrias e condomínios empresariais.
 
-## Erro 1: dispensar a sondagem geotecnica do terreno
+## Erro 1: dispensar a sondagem geotécnica do terreno
 
 O erro mais comum, e mais caro de remediar, é cravar estacas sem sondagem prévia. Em Goiás, especialmente nas regiões de Anápolis, Cristalina, Luziânia e Formosa, encontramos solos lateríticos com camadas variáveis de argila expansiva, cascalho e, em alguns casos, rocha alterada a menos de 1,5 m de profundidade. Cravar perfil metálico sem conhecer o subsolo significa, na prática, três cenários ruins:
 
@@ -24,7 +24,7 @@ O erro mais comum, e mais caro de remediar, é cravar estacas sem sondagem prév
 
 O custo de uma sondagem SPT em três a cinco pontos por hectare gira em torno de R$ 4.000 a R$ 8.000 e evita retrabalho que facilmente passa de R$ 50.000 numa usina de 500 kWp. Não é gasto, é seguro.
 
-## Erro 2: subdimensionar a acao do vento
+## Erro 2: subdimensionar a ação do vento
 
 A NBR 6123 estabelece a metodologia de cálculo da ação do vento em edificações, e ela se aplica integralmente a estruturas fotovoltaicas de solo. O Distrito Federal e boa parte de Goiás estão na isopleta de **velocidade básica V0 = 35 m/s**, com fator topográfico que pode chegar a 1,1 em platôs e bordas de chapada — situação comum em fazendas no Planalto Central.
 
@@ -36,7 +36,7 @@ O que vejo na prática são três simplificações perigosas:
 
 O resultado é estrutura que passa em ART mas começa a apresentar empenamento de terças e folga em parafusos já no segundo ou terceiro ano. Em projetos EcoSunPower, calculamos cada usina com modelo próprio considerando V0, S1 (topografia), S2 (rugosidade e altura) e S3 (estatística de uso) específicos do sítio.
 
-## Erro 3: nao prever drenagem e erosao
+## Erro 3: não prever drenagem e erosão
 
 Uma usina de solo de 1 MWp ocupa cerca de 1,5 hectare em layout fixo. Esse hectare e meio passa a ter o escoamento superficial completamente alterado: as mesas concentram água em linhas paralelas, e o solo entre as fileiras, antes coberto por vegetação, fica exposto durante e após a obra.
 
@@ -58,7 +58,7 @@ Parece detalhe, mas é causa frequente de chamado em garantia. Cada parafuso da 
 
 O sub-aperto gera fadiga e ruído; o sobre-aperto rompe a galvanização e inicia processo de corrosão localizada. Na EcoSunPower, toda usina entregue tem planilha de aperto assinada pelo encarregado e contraprova de torque em 10% das conexões durante o comissionamento.
 
-## Erro 5: galvanizacao incompativel com o ambiente
+## Erro 5: galvanização incompatível com o ambiente
 
 A galvanização a fogo conforme NBR 6323 prevê camadas mínimas em função da espessura do aço. Para perfis estruturais acima de 6 mm, o mínimo é **85 µm** de zinco. Em ambientes rurais do Cerrado, com baixa agressividade atmosférica (categoria C2 da ISO 9223), essa camada entrega vida útil acima de 30 anos.
 
@@ -70,7 +70,7 @@ O problema aparece quando:
 
 Sempre exija o certificado de galvanização do lote, com gramatura medida. Em projetos com risco ambiental elevado, especificamos camada de 120 µm ou pintura epóxi adicional.
 
-## Erro 6: alinhamento e tolerancias na montagem
+## Erro 6: alinhamento e tolerâncias na montagem
 
 Uma mesa fotovoltaica desalinhada não é só estética. Desvios acima de 2° na inclinação reduzem a geração da fileira inteira, e desnivelamento longitudinal cria tensão mecânica nos módulos, aumentando microfissuras nas células.
 
@@ -86,7 +86,7 @@ As tolerâncias que adotamos como aceitáveis em comissionamento:
 
 Quem monta sem topografia a laser ou estação total raramente atinge esses números. O custo de uma equipe de topografia acompanhando a cravação é diluído facilmente em uma usina acima de 200 kWp.
 
-## Erro 7: ignorar o aterramento e a equipotencializacao
+## Erro 7: ignorar o aterramento e a equipotencialização
 
 A estrutura metálica de uma usina de solo é, simultaneamente, suporte mecânico e elemento do sistema de proteção contra descargas atmosféricas. A NBR 5419 e a NBR 16690 (específica para sistemas FV) exigem continuidade elétrica entre todos os elementos metálicos e conexão ao SPDA.
 
