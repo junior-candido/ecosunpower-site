@@ -476,11 +476,13 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
           'acima-2000': 'acima de R$ 2.000',
         })[conta] || conta;
 
+        const tagType = adId.startsWith('gclid-') ? 'gad' : 'ad';
+        const tagId = adId.replace(/^gclid-/, '').slice(0, 16);
         const msg = 'Oi! Fiz a cotação rápida no site.\n\n' +
                     '📍 Cidade: ' + cidadeLabel + '\n' +
                     '⚡ Conta de luz: ' + contaLabel + '\n\n' +
                     'Quero o diagnóstico técnico e a proposta.\n\n' +
-                    '#ad-' + adId;
+                    '#' + tagType + '-' + (tagId || 'organic');
         const waLink = 'https://wa.me/5561996978781?text=' + encodeURIComponent(msg);
         ctaWa.href = waLink;
 
