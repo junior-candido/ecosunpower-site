@@ -49,9 +49,9 @@ const cidadesGO = [
 ];
 
 // Hero usa vídeo Superbom comprimido em public/videos/ (HD 1280x720, sem áudio, ~6.5MB)
-// Fallback poster: cover do case Ailson (Supabase Storage)
+// Poster: frame extraído do próprio Superbom (mostra algo certo enquanto vídeo carrega)
 const heroVideoUrl = '/videos/cotacao-hero.mp4';
-const heroPosterUrl = casoAilson.fotoPrincipal;
+const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
 ---
 
 <Layout
@@ -99,7 +99,7 @@ const heroPosterUrl = casoAilson.fotoPrincipal;
         <div class="inline-flex items-center gap-2 bg-accent-500 text-dark px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-5 shadow-lg">
           🎯 Diagnóstico Grátis · Resposta em 24h
         </div>
-        <div class="inline-block mb-3 px-3 py-1 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs text-white font-semibold">
+        <div class="inline-block mb-3 px-3 py-1 rounded-full bg-slate-900/70 backdrop-blur border border-accent-400/40 text-xs text-accent-300 font-bold uppercase tracking-wider shadow-lg">
           📍 Brasília-DF · Entorno de Goiás (RIDE)
         </div>
         <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight">
@@ -112,11 +112,11 @@ const heroPosterUrl = casoAilson.fotoPrincipal;
         <a href="#calcular" class="inline-block mt-7 bg-accent-500 hover:bg-accent-400 text-dark font-bold px-7 py-4 rounded-xl text-lg shadow-2xl transition transform hover:-translate-y-0.5">
           Calcular minha economia →
         </a>
-        <div class="mt-7 flex flex-wrap justify-center gap-2 text-xs">
-          <span class="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-white">⚡ +600 projetos entregues</span>
-          <span class="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-white">🏆 Marcas Tier 1 Bloomberg</span>
-          <span class="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-white">🛡 Garantia 12 meses</span>
-          <span class="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur text-white">📍 Base Brasília-DF</span>
+        <div class="mt-7 flex flex-wrap justify-center gap-2 text-xs font-semibold">
+          <span class="px-3 py-1.5 rounded-full bg-slate-900/70 backdrop-blur text-white border border-white/30 shadow-lg">⚡ +600 projetos entregues</span>
+          <span class="px-3 py-1.5 rounded-full bg-slate-900/70 backdrop-blur text-white border border-white/30 shadow-lg">🏆 Marcas Tier 1 Bloomberg</span>
+          <span class="px-3 py-1.5 rounded-full bg-slate-900/70 backdrop-blur text-white border border-white/30 shadow-lg">🛡 Garantia 12 meses</span>
+          <span class="px-3 py-1.5 rounded-full bg-slate-900/70 backdrop-blur text-white border border-white/30 shadow-lg">📍 Base Brasília-DF</span>
         </div>
       </div>
     </section>
