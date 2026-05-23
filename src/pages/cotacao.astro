@@ -1,0 +1,316 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Landing dedicada pra trafego pago (Google Ads / Meta CTWA / etc).
+// noChrome: sem Header/Footer, foco em conversao unica (CTA WhatsApp).
+// Form qualificador filtra <R$300 (curiosos) antes de revelar botao WA.
+---
+
+<Layout
+  title="Cotação grátis de energia solar — EcoSunPower"
+  description="Receba em 24h um diagnóstico técnico gratuito da economia que sistema solar geraria na sua conta de luz em Brasília-DF ou Goiás. Atendimento por Responsável Técnico CREA/CFT."
+  noChrome={true}
+  noIndex={true}
+>
+  <main class="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-white">
+    <!-- Header minimal sem nav -->
+    <header class="border-b border-slate-200 bg-white/80 backdrop-blur sticky top-0 z-10">
+      <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="font-bold text-lg text-slate-900">⚡ EcoSunPower</div>
+        <div class="text-xs text-slate-500">Responsável Técnico CREA/CFT</div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="max-w-3xl mx-auto px-4 pt-10 pb-6 text-center">
+      <h1 class="text-3xl md:text-5xl font-bold text-slate-900 leading-tight">
+        Sua conta de luz cara em <span class="text-orange-600">Brasília e Goiás</span>?
+      </h1>
+      <p class="mt-4 text-lg text-slate-700 max-w-2xl mx-auto">
+        Receba em 24h um <strong>diagnóstico técnico gratuito</strong> mostrando quanto sistema solar dimensionado por engenharia economizaria na sua casa ou empresa.
+      </p>
+    </section>
+
+    <!-- FORM QUALIFICADOR -->
+    <section class="max-w-2xl mx-auto px-4 py-6">
+      <div class="bg-white rounded-2xl shadow-xl border border-orange-200 p-6 md:p-8">
+        <div class="text-center mb-6">
+          <div class="inline-block bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+            Cálculo rápido · 30 segundos
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-slate-900 mt-3">
+            Calcule sua economia
+          </h2>
+        </div>
+
+        <form id="form-cotacao" class="space-y-5">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">1. Qual sua cidade?</label>
+            <select id="cidade" required class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-orange-500 outline-none text-slate-900 bg-white">
+              <option value="">Selecione...</option>
+              <optgroup label="Distrito Federal">
+                <option value="brasilia-df">Brasília</option>
+                <option value="aguas-claras-df">Águas Claras</option>
+                <option value="taguatinga-df">Taguatinga</option>
+                <option value="ceilandia-df">Ceilândia</option>
+                <option value="guara-df">Guará</option>
+                <option value="sobradinho-df">Sobradinho</option>
+                <option value="gama-df">Gama</option>
+                <option value="outra-df">Outra cidade DF</option>
+              </optgroup>
+              <optgroup label="Goiás">
+                <option value="goiania-go">Goiânia</option>
+                <option value="aparecida-go">Aparecida de Goiânia</option>
+                <option value="anapolis-go">Anápolis</option>
+                <option value="rio-verde-go">Rio Verde</option>
+                <option value="catalao-go">Catalão</option>
+                <option value="caldas-novas-go">Caldas Novas</option>
+                <option value="luziania-go">Luziânia</option>
+                <option value="outra-go">Outra cidade GO</option>
+              </optgroup>
+              <option value="fora-area">Fora de DF/GO</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">2. Quanto vem na sua conta de luz por mês?</label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-orange-300 transition text-center">
+                <input type="radio" name="conta" value="ate-300" class="sr-only" required>
+                <div class="text-xs text-slate-500">Até</div>
+                <div class="font-bold text-slate-900">R$ 300</div>
+              </label>
+              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-orange-300 transition text-center">
+                <input type="radio" name="conta" value="300-700" class="sr-only" required>
+                <div class="text-xs text-slate-500">R$ 300 a</div>
+                <div class="font-bold text-slate-900">R$ 700</div>
+              </label>
+              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-orange-300 transition text-center">
+                <input type="radio" name="conta" value="700-1500" class="sr-only" required>
+                <div class="text-xs text-slate-500">R$ 700 a</div>
+                <div class="font-bold text-slate-900">R$ 1.500</div>
+              </label>
+              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-orange-300 transition text-center">
+                <input type="radio" name="conta" value="acima-1500" class="sr-only" required>
+                <div class="text-xs text-slate-500">Acima de</div>
+                <div class="font-bold text-slate-900">R$ 1.500</div>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg transition">
+            Calcular minha economia →
+          </button>
+          <p class="text-xs text-center text-slate-500">
+            Sem cadastro, sem spam. Continuamos pelo WhatsApp.
+          </p>
+        </form>
+      </div>
+
+      <!-- Estado pós-cálculo: QUALIFICADO (>=R$300) -->
+      <div id="resultado-qualificado" class="hidden mt-6 bg-white rounded-2xl shadow-xl border-2 border-emerald-300 p-6 md:p-8 text-center">
+        <div class="text-4xl mb-3">🎯</div>
+        <h3 class="text-2xl font-bold text-slate-900 mb-2">Perfil dentro do que atendemos!</h3>
+        <p class="text-slate-700 mb-6" id="resultado-qualificado-msg">
+          Atendemos sua região com sistemas solares dimensionados por engenharia.
+        </p>
+        <a
+          id="cta-whatsapp"
+          href="#"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg text-lg shadow-xl transition"
+        >
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+          Quero falar agora no WhatsApp
+        </a>
+        <p class="mt-4 text-xs text-slate-500">
+          Atendimento por Responsável Técnico CREA/CFT em até 24h.
+        </p>
+      </div>
+
+      <!-- Estado pós-cálculo: NÃO-QUALIFICADO (<R$300) -->
+      <div id="resultado-nao-qualificado" class="hidden mt-6 bg-amber-50 rounded-2xl shadow-md border border-amber-200 p-6 md:p-8 text-center">
+        <div class="text-4xl mb-3">📋</div>
+        <h3 class="text-xl font-bold text-slate-900 mb-2">Pelo seu perfil de consumo, ainda não compensa</h3>
+        <p class="text-slate-700 mb-3">
+          Hoje atendemos sistemas onde a conta de luz é a partir de <strong>R$ 300/mês</strong> — abaixo disso o payback fica muito longo e a gente prefere ser honesto com você.
+        </p>
+        <p class="text-sm text-slate-600">
+          Quando sua conta passar dessa faixa (geralmente após aquisição de chuveiro elétrico, ar-condicionado, carro elétrico ou expansão familiar), volte aqui!
+        </p>
+      </div>
+
+      <!-- Estado pós-cálculo: FORA DA ÁREA -->
+      <div id="resultado-fora-area" class="hidden mt-6 bg-slate-50 rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 text-center">
+        <div class="text-4xl mb-3">📍</div>
+        <h3 class="text-xl font-bold text-slate-900 mb-2">Ainda não atendemos sua região</h3>
+        <p class="text-slate-700">
+          Atendemos hoje <strong>Brasília-DF</strong> e <strong>Goiás</strong> (raio até 100km de Goiânia). Estamos expandindo gradualmente — obrigado pelo interesse!
+        </p>
+      </div>
+    </section>
+
+    <!-- PROVA SOCIAL -->
+    <section class="max-w-4xl mx-auto px-4 py-12">
+      <h2 class="text-center text-2xl font-bold text-slate-900 mb-8">+600 famílias e empresas já economizam com a EcoSunPower</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-white rounded-xl shadow p-5 border border-slate-200">
+          <div class="text-sm text-slate-500 mb-1">Residencial · Brasília</div>
+          <div class="font-bold text-slate-900 mb-2">Diego, Lago Sul</div>
+          <div class="text-sm text-slate-700">"Conta caiu de R$ 1.400 pra R$ 80. Equipe técnica de verdade, sem promessa boba."</div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 border border-slate-200">
+          <div class="text-sm text-slate-500 mb-1">Comercial · Águas Claras</div>
+          <div class="font-bold text-slate-900 mb-2">AMV Engenharia</div>
+          <div class="text-sm text-slate-700">"Sistema híbrido com bateria. Continuamos rodando mesmo em apagão. Pagou em 4 anos."</div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5 border border-slate-200">
+          <div class="text-sm text-slate-500 mb-1">Rural · Luziânia-GO</div>
+          <div class="font-bold text-slate-900 mb-2">Fazenda Boa Vista</div>
+          <div class="text-sm text-slate-700">"Off-grid pra irrigação. Independência total da rede elétrica."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIFERENCIAL -->
+    <section class="max-w-3xl mx-auto px-4 py-12">
+      <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 md:p-8">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Por que somos diferentes</h2>
+        <div class="grid md:grid-cols-2 gap-4 text-sm">
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>Responsável Técnico CREA/CFT</strong> — engenharia de verdade, não vendedor de painel.</div></div>
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>Marcas premium</strong> — LONGi, SolarEdge, Sungrow, Enphase. Nada de marca chinesa qualquer.</div></div>
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>Garantia 12 meses</strong> de mão de obra + garantia de fábrica nos equipamentos.</div></div>
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>Base local em Brasília-DF</strong> — atendimento presencial quando precisar.</div></div>
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>Monitoramento em tempo real</strong> — plataforma própria pra acompanhar geração.</div></div>
+          <div class="flex gap-3"><span class="text-orange-500 text-xl">✓</span><div><strong>CNPJ ativo desde 2019</strong> — não somos picareta de fim de semana.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 text-xs text-center py-6 mt-8">
+      <div class="max-w-3xl mx-auto px-4">
+        <strong>ECOSUNPOWER ENERGIA SOLAR LTDA</strong> · CNPJ 33.020.459/0001-06 · Brasília-DF
+      </div>
+    </footer>
+  </main>
+
+  <script is:inline>
+    (function () {
+      const form = document.getElementById('form-cotacao');
+      const resQualificado = document.getElementById('resultado-qualificado');
+      const resNaoQualif = document.getElementById('resultado-nao-qualificado');
+      const resForaArea = document.getElementById('resultado-fora-area');
+      const ctaWa = document.getElementById('cta-whatsapp');
+      const resQualifMsg = document.getElementById('resultado-qualificado-msg');
+
+      // Visual feedback nas opcoes de conta
+      document.querySelectorAll('.conta-opt input').forEach((input) => {
+        input.addEventListener('change', () => {
+          document.querySelectorAll('.conta-opt').forEach((opt) => {
+            opt.classList.remove('border-orange-500', 'bg-orange-50');
+            opt.classList.add('border-slate-200');
+          });
+          const parent = input.closest('.conta-opt');
+          if (parent) {
+            parent.classList.remove('border-slate-200');
+            parent.classList.add('border-orange-500', 'bg-orange-50');
+          }
+        });
+      });
+
+      // ad_id da URL (Google Ads gclid OU utm_campaign)
+      function getAdId() {
+        const params = new URLSearchParams(window.location.search);
+        const gclid = params.get('gclid');
+        const utmCampaign = params.get('utm_campaign');
+        const utmContent = params.get('utm_content');
+        if (gclid) return 'gclid-' + gclid.slice(0, 16);
+        if (utmContent) return utmContent;
+        if (utmCampaign) return utmCampaign;
+        return 'organic';
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const cidade = document.getElementById('cidade').value;
+        const conta = document.querySelector('input[name="conta"]:checked')?.value;
+        if (!cidade || !conta) return;
+
+        // Esconde estados anteriores
+        resQualificado.classList.add('hidden');
+        resNaoQualif.classList.add('hidden');
+        resForaArea.classList.add('hidden');
+
+        // Filtro fora-area
+        if (cidade === 'fora-area') {
+          resForaArea.classList.remove('hidden');
+          resForaArea.scrollIntoView({ behavior: 'smooth' });
+          if (typeof gtag === 'function') {
+            gtag('event', 'qualificacao_fora_area', { cidade: cidade });
+          }
+          return;
+        }
+
+        // Filtro <R$300
+        if (conta === 'ate-300') {
+          resNaoQualif.classList.remove('hidden');
+          resNaoQualif.scrollIntoView({ behavior: 'smooth' });
+          if (typeof gtag === 'function') {
+            gtag('event', 'qualificacao_baixo_consumo', { cidade: cidade, conta: conta });
+          }
+          return;
+        }
+
+        // QUALIFICADO — monta link WhatsApp com tag
+        const adId = getAdId();
+        const contaLabel = ({
+          '300-700': 'R$ 300 a R$ 700',
+          '700-1500': 'R$ 700 a R$ 1.500',
+          'acima-1500': 'acima de R$ 1.500',
+        })[conta] || conta;
+        const cidadeLabel = document.querySelector('#cidade option[value="' + cidade + '"]').textContent;
+
+        const msg = 'Oi! Vi o anúncio e fiz a cotação rápida.\n\n' +
+                    '📍 Cidade: ' + cidadeLabel + '\n' +
+                    '⚡ Conta: ' + contaLabel + '\n\n' +
+                    'Quero a proposta detalhada.\n\n' +
+                    '#ad-' + adId;
+        const waLink = 'https://wa.me/5561996978781?text=' + encodeURIComponent(msg);
+        ctaWa.href = waLink;
+
+        // Personaliza mensagem
+        const isAltoTicket = (conta === '700-1500' || conta === 'acima-1500');
+        if (isAltoTicket) {
+          resQualifMsg.textContent = 'Perfil ideal pro nosso atendimento. Vamos dimensionar um sistema premium pra economizar até 95% da sua conta.';
+        } else {
+          resQualifMsg.textContent = 'Atendemos sua faixa. Vamos calcular o melhor sistema considerando seu retorno de investimento.';
+        }
+
+        resQualificado.classList.remove('hidden');
+        resQualificado.scrollIntoView({ behavior: 'smooth' });
+
+        // GA4 event — conversão soft (form completo)
+        if (typeof gtag === 'function') {
+          gtag('event', 'qualificacao_completa', {
+            cidade: cidade,
+            conta: conta,
+            ad_id: adId,
+            qualificado: true,
+          });
+        }
+      });
+
+      // CTA WhatsApp click — conversão dura (vai pro WA)
+      ctaWa.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'click_whatsapp_qualified', {
+            ad_id: getAdId(),
+            event_category: 'conversion',
+            event_label: 'cotacao_landing',
+          });
+        }
+      });
+    })();
+  </script>
+</Layout>
