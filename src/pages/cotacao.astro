@@ -504,17 +504,26 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
         }
       });
 
-      ctaWa.addEventListener('click', () => {
-        if (typeof gtag === 'function') {
-          gtag('event', 'click_whatsapp_qualified', {
-            ad_id: getAdId(),
-            event_category: 'conversion',
-            event_label: 'cotacao_landing',
-          });
-          gtag('event', 'conversion', {
-            send_to: 'AW-11322897516/tuK2CO7viuAYEOzolpcq',
-          });
-        }
+      ctaWa.addEventListener('click', (e) => {
+        if (typeof gtag !== 'function') return;
+        e.preventDefault();
+        const url = ctaWa.href;
+        let navigated = false;
+        const go = () => {
+          if (navigated) return;
+          navigated = true;
+          window.location = url;
+        };
+        gtag('event', 'click_whatsapp_qualified', {
+          ad_id: getAdId(),
+          event_category: 'conversion',
+          event_label: 'cotacao_landing',
+        });
+        gtag('event', 'conversion', {
+          send_to: 'AW-11322897516/tuK2CO7viuAYEOzolpcq',
+          event_callback: go,
+        });
+        setTimeout(go, 1000);
       });
     })();
   </script>
