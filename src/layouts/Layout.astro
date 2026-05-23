@@ -88,7 +88,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
       areaServed: ['Brasília', 'Distrito Federal', 'Goiás'],
     })} />
 
-    <!-- Google Analytics 4 (gtag.js) -->
+    <!-- Google Analytics 4 + Google Ads (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PDV2P3N0TG"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -98,6 +98,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
         anonymize_ip: true,
         send_page_view: true,
       });
+      gtag('config', 'AW-11322897516');
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
