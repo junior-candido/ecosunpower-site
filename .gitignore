@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # astro
 .astro/
+
+# fonte legível do simulador (NÃO publicar — só a versão ofuscada em public/ vai pro ar)
+src/simulador/
