@@ -183,6 +183,15 @@ const faq = [
     </div>
   </section>
 
+  <!-- Pixel: dispara "Finalizar compra" ao clicar em comprar (sinal de intenção pro Meta) -->
+  <script is:inline>
+    document.querySelectorAll('a[href*="kiwify"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.fbq) fbq('track', 'InitiateCheckout', { value: 147, currency: 'BRL' });
+      });
+    });
+  </script>
+
   <!-- FECHAMENTO -->
   <section class="py-20 lg:py-28 bg-gradient-hero text-white relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
