@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// >>> Ajuste rápido aqui <<<
+const CHECKOUT = 'https://pay.kiwify.com.br/EMgpvP4';
+const PRECO = 'R$ 147';
+
+const ensaios = [
+  { n: '1', t: 'Gerador CA', d: 'A bobina gira e a senoide é traçada em tempo real — mono e trifásico, mostrando por que 3 fases entregam energia mais constante.' },
+  { n: '2', t: 'Dois wattímetros (Aron)', d: 'Medição trifásica com W₁, W₂, P, Q, S, FP e diagrama fasorial — com alerta de leitura negativa.' },
+  { n: '3', t: 'Harmônicas e distorção', d: 'Fundamental + 3ª/5ª/7ª, presets (onda quadrada), espectro, DHT e fator de crista.' },
+  { n: '4', t: 'Fator de potência', d: 'Tensão, corrente e potência instantânea defasadas, com o triângulo P–Q–S.' },
+  { n: '5', t: 'Correção de fator de potência', d: 'Banco de capacitores em kvar, ligação Δ/Y, corrente do banco e dimensionamento por módulos comerciais.' },
+  { n: '6', t: 'Desequilíbrio de fases', d: 'FD% (PRODIST Módulo 8), VUF% (IEC), NEMA% e componentes simétricas.' },
+  { n: '7', t: 'Medidor de energia', d: 'Mono, bi e trifásico, redes 127/220 e 220/380 — com o consumo, o tempo e o custo subindo.' },
+  { n: '8', t: 'Medidor bidirecional + GD', d: 'Conta SEM solar × COM solar × economia, já com mínimo de disponibilidade, iluminação pública e Fio B (Lei 14.300).' },
+];
+
+const diferenciais = [
+  'Em português e ancorado nas normas brasileiras (PRODIST, NBR, ANEEL, Lei 14.300)',
+  'Interativo de verdade: você ajusta e vê — não é vídeo nem PDF',
+  'Funciona offline, em qualquer navegador (PC ou celular)',
+  'Pagamento único, sem assinatura',
+  'Desenvolvido por engenheiro eletricista da área de energia solar',
+];
+
+const paraQuem = [
+  { icon: '🎓', t: 'Estudante de engenharia / técnico', d: 'Entenda de verdade e vá melhor na prova — vendo a teoria funcionar.' },
+  { icon: '👨‍🏫', t: 'Professor', d: 'Material interativo pra mostrar ao aluno na aula, ao vivo.' },
+  { icon: '☀️', t: 'Integrador solar (ou você)', d: 'Mostre ao cliente, na tela, por que a conta não zera — e calcule consumo e economia.' },
+];
+
+const faq = [
+  { q: 'Preciso de internet para usar?', a: 'Não. Depois de baixar, abre no navegador e funciona offline.' },
+  { q: 'Funciona em qualquer computador?', a: 'Sim — Windows, Mac, Linux e até no celular. É só abrir o arquivo no navegador.' },
+  { q: 'Tem mensalidade?', a: 'Não. É pagamento único, com acesso imediato.' },
+  { q: 'As tarifas e percentuais já vêm prontos?', a: 'A tarifa, o Fio B e a iluminação pública são campos editáveis — você usa os valores da sua fatura, porque variam por região e ano.' },
+  { q: 'E se eu não gostar?', a: 'Você tem 7 dias de garantia. Se não for pra você, é só pedir o reembolso.' },
+];
+---
+
+<Layout
+  title="Suíte de Ensaios Interativos de Eletricidade — EcoSunPower"
+  description="8 ensaios interativos de eletricidade na norma brasileira (PRODIST, NBR, ANEEL, Lei 14.300). Offline, sem mensalidade, pagamento único. Para estudantes, professores e integradores solares."
+  ogImage="/og-image.png"
+>
+  <!-- HERO -->
+  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+        ⚡ 8 ensaios interativos · na norma brasileira
+      </span>
+      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
+        Entenda eletricidade<br class="hidden lg:block" />
+        <span class="text-accent-400">vendo acontecer.</span>
+      </h1>
+      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed mb-8">
+        Gerador, wattímetros, harmônicas, fator de potência, correção, desequilíbrio e medição de
+        energia — inclusive solar com Fio B. Tudo interativo, offline e sem mensalidade.
+      </p>
+      <a href={CHECKOUT} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
+        Quero a suíte agora
+      </a>
+      <p class="text-sm text-slate-300 mt-5">
+        Pagamento único · Pix, cartão ou boleto · Acesso imediato · Funciona offline
+      </p>
+      <p class="text-sm text-slate-200/90 mt-3">
+        Quer experimentar antes? <a href="/simulador" class="underline font-semibold text-accent-400">Teste grátis uma amostra (o medidor + Fio B) →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-6 text-center">Fórmula no quadro não mostra o que acontece</h2>
+      <p class="text-lg text-muted leading-relaxed max-w-2xl mx-auto text-center">
+        Estudar máquinas, circuitos e geração distribuída só na teoria é difícil: a fórmula não mostra
+        o que acontece quando o ângulo muda, quando a fase desequilibra ou quando o sistema solar
+        injeta na rede. E as ferramentas estrangeiras são caras, em inglês e não falam das normas
+        que a prova e o projeto cobram aqui.
+      </p>
+    </div>
+  </section>
+
+  <!-- O QUE ESTÁ DENTRO -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="container-wide">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">O que está dentro</h2>
+        <p class="text-lg text-muted">8 ensaios interativos + relatório. Você mexe e vê o resultado na hora.</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {ensaios.map((e) => (
+          <div class="flex gap-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-hero text-white font-bold flex items-center justify-center">{e.n}</div>
+            <div>
+              <h3 class="font-bold text-dark mb-1">{e.t}</h3>
+              <p class="text-sm text-muted leading-relaxed">{e.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-6 bg-white rounded-2xl border-2 border-accent-200 p-6 text-center">
+        <p class="text-dark font-semibold">📊 Mais: <strong>registro de medições</strong> com exportação em <strong>CSV</strong> (abre no Excel) e <strong>impressão</strong> — vira relatório de laboratório.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE É DIFERENTE -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Por que é diferente</h2>
+      <ul class="space-y-4 max-w-2xl mx-auto">
+        {diferenciais.map((d) => (
+          <li class="flex items-start gap-3 text-lg text-dark-soft">
+            <span class="text-accent-500 font-bold text-xl flex-shrink-0">✓</span>
+            <span>{d}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- PARA QUEM É -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="container-wide">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-12 text-center">Para quem é</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {paraQuem.map((p) => (
+          <div class="bg-white rounded-2xl border border-slate-100 p-8 text-center shadow-sm">
+            <div class="text-4xl mb-4">{p.icon}</div>
+            <h3 class="font-bold text-dark mb-2">{p.t}</h3>
+            <p class="text-sm text-muted leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREÇO -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="container-narrow">
+      <div class="max-w-md mx-auto bg-gradient-hero text-white rounded-3xl p-8 lg:p-10 text-center shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
+        <div class="relative z-10">
+          <p class="text-sm font-semibold uppercase tracking-wide text-accent-400 mb-2">Acesso completo</p>
+          <h2 class="text-2xl font-display font-bold mb-4">Suíte de Ensaios Interativos</h2>
+          <div class="mb-1 text-5xl font-display font-bold">{PRECO}</div>
+          <p class="text-slate-200 text-sm mb-6">pagamento único · ou parcelado no cartão</p>
+          <ul class="text-left space-y-2 text-sm text-slate-100 mb-8">
+            <li>✓ Os 8 ensaios + relatório (CSV e impressão)</li>
+            <li>✓ Funciona offline, no PC e no celular</li>
+            <li>✓ Acesso imediato após a compra</li>
+            <li>✓ 7 dias de garantia</li>
+          </ul>
+          <a href={CHECKOUT} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">
+            Comprar agora
+          </a>
+          <p class="text-xs text-slate-300 mt-4">Pix, cartão ou boleto · compra 100% segura pela Kiwify</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 lg:py-20 bg-slate-50">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Perguntas frequentes</h2>
+      <div class="space-y-4 max-w-2xl mx-auto">
+        {faq.map((f) => (
+          <details class="bg-white rounded-xl border border-slate-100 p-5 group">
+            <summary class="font-semibold text-dark cursor-pointer list-none flex justify-between items-center">
+              {f.q}
+              <span class="text-accent-500 group-open:rotate-45 transition-transform text-xl">+</span>
+            </summary>
+            <p class="text-muted mt-3 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FECHAMENTO -->
+  <section class="py-20 lg:py-28 bg-gradient-hero text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-primary-300/30 rounded-full blur-3xl"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <h2 class="text-3xl lg:text-5xl font-display font-bold mb-6 leading-tight">
+        Pare de imaginar a teoria.<br class="hidden lg:block" />
+        <span class="text-accent-400">Veja ela funcionando.</span>
+      </h2>
+      <a href={CHECKOUT} class="btn-primary text-lg inline-flex mt-4" target="_blank" rel="noopener">
+        Quero a suíte agora
+      </a>
+      <p class="text-sm text-slate-300 mt-6 max-w-xl mx-auto">
+        Material de apoio didático. As recomendações trazem base normativa (PRODIST, NBR, ANEEL, Lei 14.300).
+        O engenheiro responsável valida o projeto.
+      </p>
+    </div>
+  </section>
+</Layout>
