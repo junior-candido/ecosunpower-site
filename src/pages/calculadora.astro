@@ -6,6 +6,12 @@ const ACESSO = 'https://aula-aprendendo-calculadora.oigz6g.easypanel.host'; // t
 const CHECKOUT = '#'; // colar o link do produto-ASSINATURA da Kiwify quando criar
 const PRECO = 'R$ 97'; // ajuste o preço da mensalidade
 
+// Enquanto a Kiwify nao estiver pronta (CHECKOUT === '#'), o botao principal
+// vira "Acessar a calculadora" e leva ao login — sem link morto no site.
+const VENDA_ATIVA = CHECKOUT !== '#';
+const CTA_HREF = VENDA_ATIVA ? CHECKOUT : ACESSO;
+const CTA_LABEL = VENDA_ATIVA ? 'Assinar agora' : 'Acessar a calculadora';
+
 const recursos = [
   { n: '☀️', t: 'Dimensionamento solar completo', d: 'kWp, número de painéis, geração mensal, string/MPPT (com frio e calor), banco de baterias e inversor.' },
   { n: '⚡', t: 'Instalação elétrica (NBR 5410)', d: 'Cabo, disjuntor, queda de tensão, condutor de proteção (PE), DPS e aterramento de cada circuito.' },
@@ -63,12 +69,14 @@ const faq = [
         diagrama unifilar — calculados na norma, com um assistente de IA e relatório com a <strong>sua marca</strong>.
       </p>
       <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
-        <a href={CHECKOUT} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
-          Assinar agora
+        <a href={CTA_HREF} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
+          {CTA_LABEL}
         </a>
-        <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
-          Já sou assinante → Entrar
-        </a>
+        {VENDA_ATIVA && (
+          <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
+            Já sou assinante → Entrar
+          </a>
+        )}
       </div>
       <p class="text-sm text-slate-300 mt-5">
         No navegador · PC e celular · acesso imediato
@@ -157,8 +165,8 @@ const faq = [
             <li>✓ Sempre atualizada, com as melhorias contínuas</li>
             <li>✓ Acesso imediato, no PC e no celular</li>
           </ul>
-          <a href={CHECKOUT} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">
-            Assinar agora
+          <a href={CTA_HREF} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">
+            {CTA_LABEL}
           </a>
           <p class="text-xs text-slate-300 mt-4">Pix, cartão ou boleto · pela Kiwify</p>
         </div>
@@ -203,12 +211,14 @@ const faq = [
         <span class="text-accent-400">Deixe a ferramenta (e a IA) trabalharem.</span>
       </h2>
       <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mt-4">
-        <a href={CHECKOUT} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
-          Assinar agora
+        <a href={CTA_HREF} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
+          {CTA_LABEL}
         </a>
-        <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
-          Já sou assinante → Entrar
-        </a>
+        {VENDA_ATIVA && (
+          <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
+            Já sou assinante → Entrar
+          </a>
+        )}
       </div>
       <p class="text-sm text-slate-300 mt-6 max-w-xl mx-auto">
         Ferramenta de apoio ao dimensionamento, na norma (NBR 5410, NBR 17019, Lei 14.300).
