@@ -1,0 +1,219 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// >>> Ajuste rápido aqui <<<
+const ACESSO = 'https://aula-aprendendo-calculadora.oigz6g.easypanel.host'; // trocar p/ https://calculadora.ecosunpower.eng.br quando o DNS estiver pronto
+const CHECKOUT = '#'; // colar o link do produto-ASSINATURA da Kiwify quando criar
+const PRECO = 'R$ 97'; // ajuste o preço da mensalidade
+
+const recursos = [
+  { n: '☀️', t: 'Dimensionamento solar completo', d: 'kWp, número de painéis, geração mensal, string/MPPT (com frio e calor), banco de baterias e inversor.' },
+  { n: '⚡', t: 'Instalação elétrica (NBR 5410)', d: 'Cabo, disjuntor, queda de tensão, condutor de proteção (PE), DPS e aterramento de cada circuito.' },
+  { n: '🏠', t: 'Previsão de cargas por ambiente', d: 'Você descreve os cômodos e o sistema gera os circuitos de iluminação e tomadas pela norma — sem calcular na mão.' },
+  { n: '🔌', t: 'Carregador de carro elétrico', d: 'Circuito dedicado conforme NBR 17019 + NBR 5410, com o DR especial obrigatório e gerenciamento de carga.' },
+  { n: '📋', t: 'Lista de material / orçamento', d: 'A lista de cabos, disjuntores, proteções, módulos e estrutura sai automática — com preço, vira orçamento.' },
+  { n: '📐', t: 'Quadro de cargas + diagrama unifilar', d: 'Gerados automaticamente a partir dos circuitos do projeto.' },
+  { n: '🤖', t: 'Assistente de IA', d: 'Tire dúvidas e entenda o resultado do SEU projeto na hora — um engenheiro sênior do seu lado.' },
+  { n: '🏷️', t: 'Relatório com a SUA marca', d: 'White-label: o PDF sai com a sua logo e seus dados, não a nossa. Você entrega pro seu cliente com a sua identidade.' },
+];
+
+const diferenciais = [
+  'Na norma brasileira: NBR 5410, NBR 17019 e Lei 14.300 (Fio B)',
+  'Cálculo rodando no servidor — rápido e sempre atualizado, você não gerencia versão',
+  'Assistente de IA dentro da ferramenta',
+  'Relatório white-label (com a sua marca)',
+  'Funciona no navegador, no PC e no celular',
+  'Desenvolvido por profissional da área de energia solar',
+];
+
+const paraQuem = [
+  { icon: '☀️', t: 'Integrador solar', d: 'Dimensione o sistema inteiro e entregue uma proposta técnica com a sua marca, em minutos.' },
+  { icon: '🔧', t: 'Eletricista / instalador', d: 'Cabo, disjuntor, queda, DPS e quadro pela NBR 5410 — sem planilha, sem retrabalho.' },
+  { icon: '📐', t: 'Projetista / responsável técnico', d: 'Memória de cálculo, lista de material e diagrama prontos pra revisar e assinar.' },
+];
+
+const faq = [
+  { q: 'Preciso instalar algo?', a: 'Não. Funciona direto no navegador — é só entrar e usar, no PC ou no celular.' },
+  { q: 'Funciona no celular?', a: 'Sim, é responsivo. Você dimensiona em campo, na obra, pelo telefone.' },
+  { q: 'Tem mensalidade?', a: 'Sim, é por assinatura — assim você sempre tem a versão mais nova, com a IA e as melhorias contínuas incluídas.' },
+  { q: 'O relatório sai com a minha marca?', a: 'Sim. Você sobe a sua logo e seus dados uma vez, e todo relatório sai com a SUA identidade (white-label), não a nossa.' },
+  { q: 'Substitui o projeto e a ART?', a: 'Não. É uma ferramenta de apoio ao dimensionamento, na norma. O projeto final e a ART/CREA são do profissional habilitado.' },
+];
+---
+
+<Layout
+  title="Calculadora de Dimensionamento Solar + Elétrico (NBR 5410) com IA — EcoSunPower"
+  description="Dimensione sistemas solares e instalações elétricas (NBR 5410) em minutos, com assistente de IA e relatório com a sua marca. No navegador, PC e celular."
+  ogImage="/og-image.png"
+>
+  <!-- HERO -->
+  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+        ⚡ Solar + elétrica (NBR 5410) · com IA
+      </span>
+      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
+        Dimensione projetos<br class="hidden lg:block" />
+        <span class="text-accent-400">em minutos, com IA.</span>
+      </h1>
+      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed mb-8">
+        Cabo, disjuntor, queda, DPS, gerador solar, banco, inversor, carregador EV, lista de material e
+        diagrama unifilar — calculados na norma, com um assistente de IA e relatório com a <strong>sua marca</strong>.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
+        <a href={CHECKOUT} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
+          Assinar agora
+        </a>
+        <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
+          Já sou assinante → Entrar
+        </a>
+      </div>
+      <p class="text-sm text-slate-300 mt-5">
+        No navegador · PC e celular · acesso imediato
+      </p>
+    </div>
+  </section>
+
+  <!-- PROBLEMA -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-6 text-center">Dimensionar na mão é lento e arriscado</h2>
+      <p class="text-lg text-muted leading-relaxed max-w-2xl mx-auto text-center">
+        Planilha pra cada cálculo, norma pra conferir, retrabalho a cada mudança — e o risco de um cabo
+        ou disjuntor errado. A Calculadora EcoSun faz o dimensionamento completo na norma, na hora, e
+        ainda explica o resultado pra você. Você entrega mais rápido, com mais segurança e com a sua cara.
+      </p>
+    </div>
+  </section>
+
+  <!-- O QUE FAZ -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="container-wide">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">O que ela faz</h2>
+        <p class="text-lg text-muted">Do gerador solar ao quadro de cargas — tudo num lugar só.</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {recursos.map((e) => (
+          <div class="flex gap-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-hero text-white text-xl flex items-center justify-center">{e.n}</div>
+            <div>
+              <h3 class="font-bold text-dark mb-1">{e.t}</h3>
+              <p class="text-sm text-muted leading-relaxed">{e.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE É DIFERENTE -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Por que é diferente</h2>
+      <ul class="space-y-4 max-w-2xl mx-auto">
+        {diferenciais.map((d) => (
+          <li class="flex items-start gap-3 text-lg text-dark-soft">
+            <span class="text-accent-500 font-bold text-xl flex-shrink-0">✓</span>
+            <span>{d}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- PARA QUEM É -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="container-wide">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-12 text-center">Para quem é</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {paraQuem.map((p) => (
+          <div class="bg-white rounded-2xl border border-slate-100 p-8 text-center shadow-sm">
+            <div class="text-4xl mb-4">{p.icon}</div>
+            <h3 class="font-bold text-dark mb-2">{p.t}</h3>
+            <p class="text-sm text-muted leading-relaxed">{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PREÇO -->
+  <section class="py-16 lg:py-24 bg-white">
+    <div class="container-narrow">
+      <div class="max-w-md mx-auto bg-gradient-hero text-white rounded-3xl p-8 lg:p-10 text-center shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
+        <div class="relative z-10">
+          <p class="text-sm font-semibold uppercase tracking-wide text-accent-400 mb-2">Acesso completo</p>
+          <h2 class="text-2xl font-display font-bold mb-4">Calculadora EcoSun + IA</h2>
+          <div class="mb-1 text-5xl font-display font-bold">{PRECO}<span class="text-xl font-normal">/mês</span></div>
+          <p class="text-slate-200 text-sm mb-6">assinatura · cancele quando quiser</p>
+          <ul class="text-left space-y-2 text-sm text-slate-100 mb-8">
+            <li>✓ Todos os módulos (solar, elétrica, EV, lista de material, diagramas)</li>
+            <li>✓ Assistente de IA incluído</li>
+            <li>✓ Relatório com a sua marca (white-label)</li>
+            <li>✓ Sempre atualizada, com as melhorias contínuas</li>
+            <li>✓ Acesso imediato, no PC e no celular</li>
+          </ul>
+          <a href={CHECKOUT} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">
+            Assinar agora
+          </a>
+          <p class="text-xs text-slate-300 mt-4">Pix, cartão ou boleto · pela Kiwify</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 lg:py-20 bg-slate-50">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Perguntas frequentes</h2>
+      <div class="space-y-4 max-w-2xl mx-auto">
+        {faq.map((f) => (
+          <details class="bg-white rounded-xl border border-slate-100 p-5 group">
+            <summary class="font-semibold text-dark cursor-pointer list-none flex justify-between items-center">
+              {f.q}
+              <span class="text-accent-500 group-open:rotate-45 transition-transform text-xl">+</span>
+            </summary>
+            <p class="text-muted mt-3 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Pixel: sinaliza intenção de assinar ao clicar -->
+  <script is:inline>
+    document.querySelectorAll('a[href*="kiwify"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.fbq) fbq('track', 'InitiateCheckout', { currency: 'BRL' });
+      });
+    });
+  </script>
+
+  <!-- FECHAMENTO -->
+  <section class="py-20 lg:py-28 bg-gradient-hero text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-primary-300/30 rounded-full blur-3xl"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <h2 class="text-3xl lg:text-5xl font-display font-bold mb-6 leading-tight">
+        Pare de calcular na mão.<br class="hidden lg:block" />
+        <span class="text-accent-400">Deixe a ferramenta (e a IA) trabalharem.</span>
+      </h2>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mt-4">
+        <a href={CHECKOUT} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
+          Assinar agora
+        </a>
+        <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
+          Já sou assinante → Entrar
+        </a>
+      </div>
+      <p class="text-sm text-slate-300 mt-6 max-w-xl mx-auto">
+        Ferramenta de apoio ao dimensionamento, na norma (NBR 5410, NBR 17019, Lei 14.300).
+        O projeto final e a ART/CREA são do profissional habilitado.
+      </p>
+    </div>
+  </section>
+</Layout>
