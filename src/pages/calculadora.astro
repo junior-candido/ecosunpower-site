@@ -3,14 +3,24 @@ import Layout from '../layouts/Layout.astro';
 
 // >>> Ajuste rápido aqui <<<
 const ACESSO = 'https://calculadora.ecosunpower.eng.br'; // endereco proprio com cadeado Let's Encrypt
-const CHECKOUT = '#'; // colar o link do produto-ASSINATURA da Kiwify quando criar
-const PRECO = 'R$ 97'; // ajuste o preço da mensalidade
+const CHECKOUT: string = 'https://pay.kiwify.com.br/FxQiJDP'; // assinatura MENSAL (Kiwify)
+const CHECKOUT_ANUAL = 'https://pay.kiwify.com.br/KO3QKA7'; // assinatura ANUAL (Kiwify)
+const PRECO = 'R$ 57'; // mensalidade
+const PRECO_ANUAL = 'R$ 570'; // plano anual (2 meses grátis)
 
 // Enquanto a Kiwify nao estiver pronta (CHECKOUT === '#'), o botao principal
 // vira "Acessar a calculadora" e leva ao login — sem link morto no site.
 const VENDA_ATIVA = CHECKOUT !== '#';
 const CTA_HREF = VENDA_ATIVA ? CHECKOUT : ACESSO;
 const CTA_LABEL = VENDA_ATIVA ? 'Assinar agora' : 'Acessar a calculadora';
+
+// Vitrine dos diagramas (imagens geradas pela própria calculadora)
+const diagramas = [
+  { img: '/calculadora/unifilar.png', t: 'Unifilar', d: 'Visão geral do sistema, do padrão de entrada ao gerador fotovoltaico.' },
+  { img: '/calculadora/multifilar.png', t: 'Multifilar', d: 'Cada condutor (fase, neutro, terra) e cada polo das proteções desenhados.' },
+  { img: '/calculadora/trifilar.png', t: 'Trifilar', d: 'As três fases (R/S/T) + neutro + PE, com disjuntor tripolar e DPS por fase.' },
+  { img: '/calculadora/qdc.png', t: 'Quadro de Distribuição (QDC)', d: 'Elétrica predial NBR 5410: circuitos, disjuntores, DR, bitolas e cargas.' },
+];
 
 const recursos = [
   { n: '☀️', t: 'Dimensionamento solar completo', d: 'kWp, número de painéis, geração mensal, string/MPPT (com frio e calor), banco de baterias e inversor.' },
@@ -117,6 +127,39 @@ const faq = [
     </div>
   </section>
 
+  <!-- VITRINE DOS DIAGRAMAS -->
+  <section class="py-16 lg:py-24 bg-gradient-hero text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl"></div>
+    <div class="container-wide relative z-10">
+      <div class="text-center mb-12 max-w-2xl mx-auto">
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-5 text-sm font-semibold">
+          ⚡ Diferencial exclusivo
+        </span>
+        <h2 class="text-3xl lg:text-4xl font-display font-bold mb-4">Diagramas elétricos ABNT, prontos pra baixar</h2>
+        <p class="text-lg text-slate-100/90 leading-relaxed">
+          Depois de calcular, a ferramenta <strong>gera o diagrama no padrão da norma</strong> — você baixa em
+          <strong>SVG</strong> (importa no AutoCAD), vira PDF pro cliente ou pra concessionária, e o carimbo sai com a <strong>sua marca</strong>.
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {diagramas.map((g) => (
+          <div class="bg-white rounded-2xl p-4 lg:p-5 shadow-2xl">
+            <div class="rounded-xl border border-slate-200 overflow-hidden bg-white">
+              <img src={g.img} alt={`Diagrama ${g.t} gerado pela Calculadora EcoSun`} class="w-full h-auto block" loading="lazy" />
+            </div>
+            <h3 class="font-bold text-dark mt-4 text-lg">{g.t}</h3>
+            <p class="text-sm text-muted leading-relaxed mt-1">{g.d}</p>
+          </div>
+        ))}
+      </div>
+      <p class="text-center text-sm text-slate-300 mt-8 max-w-2xl mx-auto">
+        Cobre as 4 montagens (on-grid string, microinversor, híbrido e off-grid) e a elétrica predial (QDC).
+        O profissional revisa e assina (ART/CREA).
+      </p>
+    </div>
+  </section>
+
   <!-- POR QUE É DIFERENTE -->
   <section class="py-16 lg:py-20 bg-white">
     <div class="container-narrow">
@@ -148,29 +191,49 @@ const faq = [
     </div>
   </section>
 
-  <!-- PREÇO -->
+  <!-- PREÇO (2 planos) -->
   <section class="py-16 lg:py-24 bg-white">
-    <div class="container-narrow">
-      <div class="max-w-md mx-auto bg-gradient-hero text-white rounded-3xl p-8 lg:p-10 text-center shadow-2xl relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
-        <div class="relative z-10">
-          <p class="text-sm font-semibold uppercase tracking-wide text-accent-400 mb-2">Acesso completo</p>
-          <h2 class="text-2xl font-display font-bold mb-4">Calculadora EcoSun + IA</h2>
-          <div class="mb-1 text-5xl font-display font-bold">{PRECO}<span class="text-xl font-normal">/mês</span></div>
-          <p class="text-slate-200 text-sm mb-6">assinatura · cancele quando quiser</p>
-          <ul class="text-left space-y-2 text-sm text-slate-100 mb-8">
-            <li>✓ Todos os módulos (solar, elétrica, EV, lista de material, diagramas)</li>
-            <li>✓ Assistente de IA incluído</li>
-            <li>✓ Relatório com a sua marca (white-label)</li>
-            <li>✓ Sempre atualizada, com as melhorias contínuas</li>
-            <li>✓ Acesso imediato, no PC e no celular</li>
-          </ul>
-          <a href={CTA_HREF} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">
-            {CTA_LABEL}
-          </a>
-          <p class="text-xs text-slate-300 mt-4">Pix, cartão ou boleto · pela Kiwify</p>
-        </div>
+    <div class="container-wide">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Escolha seu plano</h2>
+        <p class="text-lg text-muted">Tudo incluído — IA, diagramas e a sua marca. Cancele quando quiser.</p>
       </div>
+      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+
+        <!-- MENSAL -->
+        <div class="bg-white rounded-3xl border-2 border-slate-200 p-8 flex flex-col shadow-sm">
+          <p class="text-sm font-semibold uppercase tracking-wide text-dark-soft mb-2">Mensal</p>
+          <div class="mb-1 text-5xl font-display font-bold text-dark">{PRECO}<span class="text-xl font-normal text-muted">/mês</span></div>
+          <p class="text-muted text-sm mb-6">flexível · cancele quando quiser</p>
+          <ul class="text-left space-y-2 text-sm text-dark-soft mb-8 flex-1">
+            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Todos os módulos (solar, elétrica, EV, material, diagramas)</li>
+            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Assistente de IA incluído</li>
+            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Relatório e diagramas com a SUA marca</li>
+            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Sempre atualizada · PC e celular</li>
+          </ul>
+          <a href={CHECKOUT} class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full border-2 border-slate-300 text-dark font-bold text-lg hover:bg-slate-50 transition" target="_blank" rel="noopener">Assinar mensal</a>
+        </div>
+
+        <!-- ANUAL (destaque) -->
+        <div class="bg-gradient-hero text-white rounded-3xl p-8 flex flex-col shadow-2xl relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
+          <div class="relative z-10 flex flex-col h-full">
+            <span class="self-start inline-flex items-center gap-1 px-3 py-1 bg-accent-400 text-dark rounded-full mb-3 text-xs font-bold uppercase tracking-wide">⭐ 2 meses grátis</span>
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent-400 mb-2">Anual</p>
+            <div class="mb-1 text-5xl font-display font-bold">{PRECO_ANUAL}<span class="text-xl font-normal">/ano</span></div>
+            <p class="text-slate-200 text-sm mb-6">equivale a <strong>R$ 47,50/mês</strong> · melhor custo</p>
+            <ul class="text-left space-y-2 text-sm text-slate-100 mb-8 flex-1">
+              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Tudo do plano mensal</li>
+              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> 2 meses grátis (paga 10, usa 12)</li>
+              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Preço travado por 12 meses</li>
+              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Acesso imediato, na hora</li>
+            </ul>
+            <a href={CHECKOUT_ANUAL} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">Assinar anual</a>
+          </div>
+        </div>
+
+      </div>
+      <p class="text-center text-xs text-muted mt-6">Pix, cartão ou boleto · pela Kiwify · acesso liberado na hora</p>
     </div>
   </section>
 
