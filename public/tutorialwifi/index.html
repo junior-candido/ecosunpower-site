@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tutorial Ecosunpower — Conectar Inversor ao Wi-Fi (10.10.100.253)</title>
+<meta name="description" content="Passo a passo interativo, com as telas reais do painel 10.10.100.253, para conectar a antena Wi-Fi do inversor à internet.">
+
+<!-- ============================================================
+     ECOSUNPOWER — Tutorial Wi-Fi do inversor (telas reais 10.10.100.253)
+     Contato: junior@ecosunpower.eng.br · (61) 99880-5002
+     Links do rodapé (troque aqui se mudar a URL):
+       SIMULADOR:  https://www.ecosunpower.eng.br/simulador/
+       SERVIÇOS:   https://www.ecosunpower.eng.br/#servicos
+       BLOG:       https://www.ecosunpower.eng.br/blog/
+       SITE:       https://www.ecosunpower.eng.br/
+       INSTAGRAM:  https://www.instagram.com/ecosunpowerenergia.solarjr/
+       WHATSAPP:   https://wa.me/5561998805002
+     ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --navy:#0b1220;--navy-2:#0e1729;--panel:#111d33;--panel-hi:#16243f;
+    --blue:#1ca9e0;--blue-dark:#0b6fa4;--gold:#f5b82e;
+    --text:#eaf2fb;--muted:#93a7c4;--line:rgba(255,255,255,.09);
+    --good:#34d399;--wa:#25d366;--r:18px;
+    --mono:ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--text);
+    background:
+      radial-gradient(1200px 600px at 50% -160px, rgba(245,184,46,.14), transparent 60%),
+      radial-gradient(900px 500px at 50% -60px, rgba(28,169,224,.16), transparent 55%),
+      var(--navy);
+    min-height:100vh;display:flex;justify-content:center;
+    padding:24px 14px 40px;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%;max-width:460px}
+
+  .top{text-align:center;padding:6px 4px 14px}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:rgba(28,169,224,.12);
+    border:1px solid rgba(28,169,224,.35);color:var(--blue);font-weight:600;font-size:11px;
+    letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px;margin-bottom:14px}
+  h1{font-family:'Sora',sans-serif;font-weight:800;font-size:23px;line-height:1.18}
+  h1 b{color:var(--gold)}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:8px}
+  .sub code{font-family:var(--mono);color:var(--text);background:rgba(255,255,255,.06);padding:1px 7px;border-radius:6px}
+
+  .tut{background:var(--panel);border:1px solid var(--line);border-radius:24px;
+    padding:16px 14px 14px;margin-top:16px;box-shadow:0 24px 50px -24px rgba(0,0,0,.7)}
+
+  .inputs{background:var(--navy-2);border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:14px}
+  .inputs p{font-size:12.5px;color:var(--muted);line-height:1.5;margin:0 0 10px}
+  .inputs p b{color:var(--text);font-weight:600}
+  .ilab{font-size:12px;color:var(--muted);margin:0 0 5px}
+  .inputs input{width:100%;font-size:15px;font-family:'Inter',sans-serif;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 12px;outline:none;transition:border-color .15s}
+  .inputs input:focus{border-color:var(--blue)}
+  .inputs input::placeholder{color:#5d7596}
+  .gap{height:11px}
+
+  .prog{height:6px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;margin:2px 0 6px}
+  .prog span{display:block;height:100%;width:11%;border-radius:999px;
+    background:linear-gradient(90deg,var(--blue),var(--gold));transition:width .35s ease}
+  .plab{color:var(--muted);font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;margin-bottom:14px}
+
+  .stage{min-height:360px;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .stepno{font-family:'Sora',sans-serif;font-weight:700;font-size:12px;color:var(--gold);letter-spacing:1px;margin-top:2px}
+  .stitle{font-family:'Sora',sans-serif;font-weight:700;font-size:18px;line-height:1.25;margin-top:3px}
+  .stitle .ti{color:var(--blue)}
+  .sbody{color:#cdddf0;font-size:14px;line-height:1.55;margin-top:8px;max-width:330px}
+  .sbody code{font-family:var(--mono);background:rgba(28,169,224,.16);color:var(--blue);padding:1px 6px;border-radius:6px;font-size:13px}
+  .sbody b{color:#fff;font-weight:600}
+
+  .nav{display:flex;gap:10px;margin-top:16px}
+  .nbtn{flex:1;border:0;cursor:pointer;border-radius:13px;padding:15px 12px;font-family:'Sora',sans-serif;
+    font-weight:700;font-size:14.5px;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;transition:transform .14s,filter .14s}
+  .nbtn:active{transform:scale(.98)}
+  .nbtn.ghost{flex:0 0 auto;min-width:104px;background:transparent;border:1px solid var(--line);color:var(--text)}
+  .nbtn.inv{visibility:hidden}
+  @media(hover:hover){.nbtn:hover{filter:brightness(1.06)}.nbtn.ghost:hover{border-color:var(--blue)}}
+
+  .trouble{margin-top:20px}
+  .trouble h2{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--muted);
+    letter-spacing:1px;text-transform:uppercase;margin:0 4px 12px;display:flex;align-items:center;gap:8px}
+  details{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:9px;overflow:hidden}
+  details[open]{border-color:rgba(245,184,46,.35)}
+  summary{cursor:pointer;list-style:none;padding:14px 15px;font-weight:600;font-size:13.5px;display:flex;align-items:center;gap:11px}
+  summary::-webkit-details-marker{display:none}
+  summary .q{flex:0 0 22px;height:22px;border-radius:7px;background:rgba(245,184,46,.14);color:var(--gold);display:grid;place-items:center;font-size:13px;font-weight:700}
+  summary .plus{margin-left:auto;color:var(--muted);transition:transform .2s}
+  details[open] summary .plus{transform:rotate(45deg)}
+  details .ans{padding:0 15px 14px 48px;color:#cdddf0;font-size:13px;line-height:1.55}
+  details .ans b{color:#fff}
+
+  .adsep{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin:30px 4px 16px}
+  .adsep::before,.adsep::after{content:"";flex:1;height:1px;background:var(--line)}
+  .hub{background:linear-gradient(180deg,rgba(245,184,46,.06),transparent),var(--navy-2);border:1px solid var(--line);border-radius:22px;padding:20px 16px}
+  .hubhead{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .hubhead .sun{flex:0 0 42px;height:42px;border-radius:12px;background:rgba(245,184,46,.14);display:grid;place-items:center}
+  .hubhead .t b{font-family:'Sora',sans-serif;font-weight:800;font-size:16px}
+  .hubhead .t b i{color:var(--gold);font-style:normal}
+  .hubhead .t span{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.35}
+  .cta{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--navy);
+    background:linear-gradient(135deg,var(--gold),#ffd25e);border-radius:15px;padding:15px;margin:4px 0 12px;
+    box-shadow:0 12px 26px -12px rgba(245,184,46,.55);transition:transform .15s}
+  .cta:active{transform:scale(.985)}
+  @media(hover:hover){.cta:hover{transform:translateY(-2px)}}
+  .cta .ic{flex:0 0 42px;height:42px;border-radius:11px;background:rgba(11,18,32,.14);display:grid;place-items:center}
+  .cta .tt{font-family:'Sora',sans-serif;font-weight:700;font-size:15px;line-height:1.15}
+  .cta .ds{font-size:12px;font-weight:500;opacity:.82;margin-top:2px}
+  .cta .arr{margin-left:auto;font-size:20px;font-weight:700}
+  .links{display:flex;flex-direction:column;gap:9px}
+  .lbtn{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;transition:.15s}
+  .lbtn:active{transform:scale(.985)}
+  @media(hover:hover){.lbtn:hover{background:var(--panel-hi);border-color:rgba(28,169,224,.5);transform:translateY(-2px)}}
+  .lbtn .ic{flex:0 0 38px;height:38px;border-radius:11px;background:var(--navy);display:grid;place-items:center;color:var(--blue)}
+  .lbtn .tt{font-family:'Sora',sans-serif;font-weight:600;font-size:14px}
+  .lbtn .ds{color:var(--muted);font-size:12px;margin-top:1px}
+  .lbtn .arr{margin-left:auto;color:var(--muted);font-size:16px}
+  .contact{display:flex;gap:10px;margin-top:14px}
+  .contact a{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;transition:.15s}
+  .contact a:active{transform:scale(.985)}
+  .contact .wapp:hover{border-color:rgba(37,211,102,.6)}.contact .mail:hover{border-color:rgba(28,169,224,.6)}
+  .contact .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center}
+  .contact .wapp .ic{background:rgba(37,211,102,.14);color:var(--wa)}.contact .mail .ic{background:rgba(28,169,224,.14);color:var(--blue)}
+  .contact .lb{font-family:'Sora',sans-serif;font-weight:600;font-size:13px}
+  .contact .s2{color:var(--muted);font-size:11px;word-break:break-all}
+  .foot{text-align:center;margin-top:18px;color:var(--muted);font-size:11.5px;line-height:1.7}
+  .foot b{color:var(--text)}.foot .dot{color:var(--blue-dark);margin:0 6px}
+
+  :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:8px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="top">
+    <div style="display:flex;justify-content:center;margin-bottom:14px">
+      <span style="display:inline-flex;align-items:center;justify-content:center;background:#fff;border-radius:16px;padding:10px 18px;box-shadow:0 14px 34px -14px rgba(0,0,0,.7)">
+        <img src="/logo-ecosunpower.png" alt="EcoSunPower" style="width:220px;height:82px;object-fit:cover;object-position:center;display:block">
+      </span>
+    </div>
+    <span class="badge">Tutorial Ecosunpower</span>
+    <h1>Conectar o inversor ao <b>Wi-Fi</b></h1>
+    <p class="sub">Telas reais do painel <code>10.10.100.253</code></p>
+  </header>
+
+  <section class="tut">
+    <div class="inputs">
+      <p>Preencha os 2 nomes — eles aparecem nas telas. O da antena está na <b>etiqueta</b> (AP_ + nº de série).</p>
+      <div class="ilab">Rede do inversor</div>
+      <input id="inv" type="text" placeholder="AP_17035482" value="AP_17035482" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <div class="gap"></div>
+      <div class="ilab">Wi-Fi do local (do cliente)</div>
+      <input id="loc" type="text" placeholder="Wi-Fi_do_local" value="Wi-Fi_do_local" autocomplete="off" autocapitalize="off" spellcheck="false">
+    </div>
+
+    <div class="prog"><span id="bar"></span></div>
+    <div class="plab" id="plab">Passo 1 de 9</div>
+    <div class="stage" id="stage"></div>
+    <div class="nav">
+      <button class="nbtn ghost inv" id="back">‹ Voltar</button>
+      <button class="nbtn" id="next">Próximo ›</button>
+    </div>
+  </section>
+
+  <section class="trouble">
+    <h2>Não conectou? Resolva aqui</h2>
+    <details><summary><span class="q">1</span>Senha do Wi-Fi errada<span class="plus">+</span></summary><div class="ans">Refaça a etapa da senha digitando a senha do Wi-Fi do <b>local</b> (a do cliente), não a do inversor.</div></details>
+    <details><summary><span class="q">2</span>Nome/senha com caractere especial<span class="plus">+</span></summary><div class="ans">A antena não entende espaços nem símbolos. Use só <b>letras e números</b> no Wi-Fi do local.</div></details>
+    <details><summary><span class="q">3</span>Sinal fraco (RSSI baixo)<span class="plus">+</span></summary><div class="ans">RSSI abaixo de 30% não conecta bem. Aproxime o roteador ou use <b>repetidor 2.4 GHz</b> perto do inversor.</div></details>
+    <details><summary><span class="q">4</span>Rede só 5 GHz<span class="plus">+</span></summary><div class="ans">A antena <b>não funciona em 5 GHz</b>. Peça ao provedor uma rede <b>2.4 GHz</b> separada.</div></details>
+    <details><summary><span class="q">5</span>10.10.100.253 não abre<span class="plus">+</span></summary><div class="ans">Confira que está na rede do inversor e com <b>dados móveis desligados</b>. Se não abrir, tente <b>10.10.100.254</b>.</div></details>
+    <details><summary><span class="q">6</span>LED fica piscando<span class="plus">+</span></summary><div class="ans">LED <b>fixo</b> = conectado. <b>Piscando</b> = falhou. Aguarde alguns minutos; se persistir, refaça do começo.</div></details>
+    <details><summary><span class="q">7</span>Não conecta de jeito nenhum<span class="plus">+</span></summary><div class="ans">Faça o <b>RESET</b> da antena, aguarde o Wi-Fi voltar e recomece. Inversor <b>Hoymiles (DTU)</b> usa o app S-Miles Cloud, não esse IP.</div></details>
+  </section>
+
+  <div class="adsep">Energia solar com a Ecosunpower</div>
+  <section class="hub">
+    <div class="hubhead">
+      <span class="sun"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.6" fill="#f5b82e"/><g stroke="#f5b82e" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.6" y2="19.6"/><line x1="19.6" y1="4.4" x2="17.4" y2="6.6"/><line x1="6.6" y1="17.4" x2="4.4" y2="19.6"/></g></svg></span>
+      <div class="t"><b>ECOSUN<i>POWER</i></b><span>Pensando em energia solar? Simule sua economia e fale comigo.</span></div>
+    </div>
+    <a class="cta" href="https://www.ecosunpower.eng.br/simulador/" target="_blank" rel="noopener">
+      <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="13" x2="8" y2="17"/><line x1="12" y1="13" x2="12" y2="17"/><line x1="16" y1="13" x2="16" y2="17"/></svg></span>
+      <span><span class="tt">Simulador</span><span class="ds">Veja sua economia em segundos</span></span><span class="arr">→</span>
+    </a>
+    <nav class="links">
+      <a class="lbtn" href="https://www.ecosunpower.eng.br/#servicos" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="1.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="4" x2="9" y2="17"/><line x1="15" y1="4" x2="15" y2="17"/><line x1="7" y1="21" x2="17" y2="21"/></svg></span><span><span class="tt">Serviços</span><span class="ds">On-grid, off-grid, híbrido e manutenção</span></span><span class="arr">↗</span></a>
+      <a class="lbtn" href="https://www.ecosunpower.eng.br/blog/" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg></span><span><span class="tt">Blog</span><span class="ds">Dicas e novidades sobre energia solar</span></span><span class="arr">↗</span></a>
+      <a class="lbtn" href="https://www.ecosunpower.eng.br/" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg></span><span><span class="tt">Site Ecosunpower</span><span class="ds">Conheça a empresa e o trabalho</span></span><span class="arr">↗</span></a>
+      <a class="lbtn" href="https://www.instagram.com/ecosunpowerenergia.solarjr/" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></span><span><span class="tt">Instagram</span><span class="ds">@ecosunpowerenergia.solarjr</span></span><span class="arr">↗</span></a>
+    </nav>
+    <div class="contact">
+      <a class="wapp" href="https://wa.me/5561998805002?text=Ol%C3%A1!%20Vim%20pelo%20tutorial%20da%20Ecosunpower." target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1a6.6 6.6 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.1 0-.3 0-.4l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.7.8-.9 1.7-.6 2.7.5 1.7 1.6 3.1 3.6 4.3 2.5 1.4 2.8 1 3.3.9.6-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.1z"/></svg></span><span class="lb">WhatsApp</span><span class="s2">(61) 99880-5002</span></a>
+      <a class="mail" href="mailto:junior@ecosunpower.eng.br?subject=Energia%20Solar%20-%20Ecosunpower"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span class="lb">E-mail</span><span class="s2">junior@ecosunpower.eng.br</span></a>
+    </div>
+    <div class="foot"><b>Ecosunpower Energia Solar</b><br>Brasília/DF <span class="dot">•</span> desde 2014 <span class="dot">•</span> DF e Goiás</div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  function esc(s){return (s||'').replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});}
+  function clip(s,n){s=s||'';n=n||14;return s.length>n?s.slice(0,n-1)+'…':s;}
+
+  function frame(inner){
+    return '<div style="width:300px;max-width:100%;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.14);margin:0 auto 14px;text-align:left;box-shadow:0 14px 28px -16px rgba(0,0,0,.6)">'
+      +'<div style="background:#2b3138;padding:8px;display:flex;align-items:center;gap:7px">'
+      +'<span style="display:flex;gap:4px"><b style="width:8px;height:8px;border-radius:50%;background:#ff5f57;display:block"></b><b style="width:8px;height:8px;border-radius:50%;background:#febc2e;display:block"></b><b style="width:8px;height:8px;border-radius:50%;background:#28c840;display:block"></b></span>'
+      +'<div style="flex:1;background:#11151a;border-radius:6px;padding:4px 9px;font-size:11px;color:#8fa3b5;font-family:var(--mono)">10.10.100.253</div></div>'
+      +inner+'</div>';
+  }
+  var MENU=['Status','Wizard','Quick Set','Advanced','Upgrade','Restart','Reset'];
+  function page(active,content){
+    var mn=MENU.map(function(m){var on=m===active;return '<div style="padding:7px 8px;font-size:11px;'+(on?'background:#1D9E75;color:#fff;font-weight:600;':'color:#3a3a35;')+'border-bottom:1px solid #d9d8cf">'+m+'</div>';}).join('');
+    return '<div style="background:#0F6E56;color:#fff;padding:8px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#9FE1CB;display:inline-block"></span>Solar Inverter · Datalogger</div>'
+      +'<div style="display:flex;background:#f6f5f0">'
+      +'<div style="width:86px;background:#eceae1;border-right:1px solid #d2d1c8">'+mn+'</div>'
+      +'<div style="flex:1;padding:11px 10px;min-height:178px">'+content+'</div></div>';
+  }
+  function btnP(t){return '<span style="display:inline-block;background:#1D9E75;color:#fff;font-size:11px;padding:7px 16px;border-radius:5px">'+t+'</span>';}
+  function btnS(t){return '<span style="display:inline-block;background:#e2dfd4;color:#3a3a35;font-size:11px;padding:7px 14px;border-radius:5px">'+t+'</span>';}
+  function rowBtns(a,b){return '<div style="display:flex;justify-content:space-between;margin-top:11px">'+btnS(a)+btnP(b)+'</div>';}
+  function oneBtn(t,al){return '<div style="text-align:'+(al||'right')+';margin-top:11px">'+btnP(t)+'</div>';}
+  function radio(on){return '<span style="display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid #0F6E56;position:relative;vertical-align:-2px">'+(on?'<span style="position:absolute;left:2px;top:2px;right:2px;bottom:2px;border-radius:50%;background:#0F6E56"></span>':'')+'</span>';}
+  function lead(t){return '<div style="font-size:11px;font-weight:600;color:#0F6E56;margin-bottom:7px">'+t+'</div>';}
+
+  function login(){
+    return '<div style="background:#f6f5f0;padding:18px 12px;text-align:center">'
+      +'<div style="font-size:11px;color:#5F5E5A;margin-bottom:9px">Faça login no equipamento</div>'
+      +'<div style="background:#fff;border:1px solid #cdcbc2;border-radius:7px;padding:11px;max-width:198px;margin:0 auto;text-align:left">'
+      +fieldRow('Usuário','admin')+fieldRow('Senha','admin')
+      +'<div style="text-align:right;margin-top:9px">'+btnP('Login')+'</div></div></div>';
+  }
+  function fieldRow(l,v){return '<div style="margin-bottom:8px"><div style="font-size:10px;color:#7a7972;margin-bottom:2px">'+l+'</div><div style="border:1px solid #cdcbc2;border-radius:5px;padding:6px 7px;font-size:11px;color:#2C2C2A;font-family:var(--mono);background:#fafaf6">'+v+'</div></div>';}
+
+  function status(inv){
+    var sn=(inv.replace(/^AP[_\-]?/i,'')||'17035482');
+    var rows=[['Serial number',clip(sn,12)],['Firmware','LSW3_14_270'],['Wireless AP mode','Enable'],['SSID',clip(inv,13)],['IP address','10.10.100.253'],['Remote server A','Unpingable']];
+    var tr=rows.map(function(r){return '<tr><td style="padding:4px 4px;color:#5F5E5A;border-bottom:1px solid #e0dfd6">'+r[0]+'</td><td style="padding:4px 4px;color:#2C2C2A;border-bottom:1px solid #e0dfd6;text-align:right;font-family:var(--mono)">'+esc(r[1])+'</td></tr>';}).join('');
+    return lead('Device information')+'<table style="width:100%;font-size:11px;border-collapse:collapse">'+tr+'</table>'
+      +'<div style="margin-top:9px;font-size:11px;color:#854F0B;background:#FAEEDA;padding:6px 8px;border-radius:5px">Toque em “Wizard” no menu ←</div>';
+  }
+  function wizard(){return '<div style="font-size:11px;color:#2C2C2A;line-height:1.55">Bem-vindo ao assistente de configuração. Ele guia a conexão com a internet passo a passo.</div>'+oneBtn('Start');}
+  function networks(loc){
+    var rows=[[clip(loc,13),'WPA2','100%',true],['Vizinho_2G','WPA2','62%',false],['PREDIO_NET','WPA','28%',false]];
+    var tr=rows.map(function(r){var ok=parseInt(r[2])>30;return '<tr style="border-bottom:1px solid #e0dfd6"><td style="padding:5px 3px;width:16px">'+radio(r[3])+'</td><td style="padding:5px 3px;color:#2C2C2A">'+esc(r[0])+'</td><td style="padding:5px 3px;color:#5F5E5A">'+r[1]+'</td><td style="padding:5px 3px;text-align:right;color:'+(ok?'#0F6E56':'#A32D2D')+'">'+r[2]+'</td></tr>';}).join('');
+    return lead('Selecione sua rede Wi-Fi')+'<table style="width:100%;font-size:11px;border-collapse:collapse"><tr style="color:#7a7972"><td></td><td style="padding:0 3px">SSID</td><td>AUTH</td><td style="text-align:right">RSSI</td></tr>'+tr+'</table><div style="margin-top:5px;font-size:11px;color:#5F5E5A">RSSI acima de 30% é o recomendado</div>'+rowBtns('Refresh','Next');
+  }
+  function password(loc){
+    return lead('Senha da rede')+'<div style="font-size:11px;color:#5F5E5A;margin-bottom:7px">Rede: '+esc(clip(loc,16))+'</div>'
+      +'<div style="border:1px solid #cdcbc2;border-radius:5px;padding:7px 8px;font-size:12px;letter-spacing:2px;color:#2C2C2A;background:#fafaf6">••••••••</div>'
+      +'<div style="margin-top:7px;font-size:11px;color:#3a3a35"><span style="display:inline-block;width:12px;height:12px;border:1.5px solid #0F6E56;border-radius:3px;vertical-align:-2px;margin-right:6px"></span>Show password</div>'
+      +'<div style="margin-top:6px;font-size:11px;color:#7a7972">Encryption: WPA2PSK</div>'+rowBtns('Back','Next');
+  }
+  function ipscr(){
+    return lead('Obter endereço IP')+'<div style="font-size:11px;color:#2C2C2A;line-height:2.1">'+radio(true)+' Enable (automático / DHCP)<br>'+radio(false)+' Disable (IP fixo)</div>'
+      +'<div style="margin-top:6px;font-size:11px;color:#7a7972">Recomendado: deixar em Enable</div>'+rowBtns('Back','Next');
+  }
+  function done(){
+    return '<div style="text-align:center;padding:12px 4px"><div style="width:46px;height:46px;border-radius:50%;background:#E1F5EE;margin:0 auto 10px;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F6E56" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div><div style="font-size:12px;color:#2C2C2A;font-weight:600">Configuração concluída</div><div style="font-size:11px;color:#5F5E5A;margin-top:4px;line-height:1.5">Clique em OK. O equipamento vai reiniciar e aplicar a rede.</div></div>'+oneBtn('OK','center');
+  }
+  function phoneWifi(inv){
+    function r(name,sel){return '<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:9px;margin-bottom:6px;background:'+(sel?'#E6F1FB':'#fff')+';border:1px solid '+(sel?'#85B7EB':'#e4e3db')+'"><span style="font-size:12px;color:'+(sel?'#185FA5':'#2C2C2A')+'">'+esc(clip(name,15))+'</span>'+(sel?'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>':'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/></svg>')+'</div>';}
+    return '<div style="width:188px;margin:0 auto 14px;border-radius:24px;border:1px solid rgba(255,255,255,.14);background:#f1f1ec;padding:13px 11px 15px;box-shadow:0 14px 28px -16px rgba(0,0,0,.6)">'
+      +'<div style="text-align:center;font-size:12px;color:#5F5E5A;margin:2px 0 11px;font-weight:600">‹ Wi-Fi</div>'
+      +r(inv,true)+r('Vizinho_2G',false)+r('CASA_NET',false)
+      +'<div style="margin-top:9px;background:#FAEEDA;color:#854F0B;font-size:11px;padding:7px 8px;border-radius:8px;text-align:center;line-height:1.4">Conectado, sem internet — ok</div>'
+      +'<div style="margin-top:7px;font-size:11px;color:#5F5E5A;text-align:center">Senha: <span style="font-family:var(--mono);color:#2C2C2A">12345678</span></div></div>';
+  }
+  function led(){
+    return '<div style="width:200px;margin:0 auto 14px;text-align:center">'
+      +'<svg width="158" viewBox="0 0 200 200"><circle cx="100" cy="108" r="46" fill="#34d399" opacity="0.22"/><rect x="74" y="44" width="52" height="104" rx="11" fill="#0e1729" stroke="rgba(255,255,255,.14)"/><rect x="84" y="56" width="32" height="22" rx="4" fill="#0a1424"/><path d="M82 118 a11 11 0 0 1 11 -10 a13 13 0 0 1 25 1 a9 9 0 0 1 -1 18 H88 a10 10 0 0 1 -6 -9 Z" fill="#34d399"/><circle cx="100" cy="116" r="3" fill="#0b6f4f"><animate attributeName="opacity" values="1;.4;1" dur="1.4s" repeatCount="indefinite"/></circle></svg>'
+      +'<div style="font-size:12px;color:var(--muted);margin-top:2px">LED em nuvem <b style="color:#fff">aceso fixo</b> = conectado</div></div>';
+  }
+
+  function steps(inv,loc){
+    var I=esc(inv),L=esc(loc);
+    return [
+      {ic:'📶',t:'Conectar na rede do inversor',b:'Toque na rede <code>'+I+'</code> e use a senha <code>12345678</code>. Vai ficar “sem internet” — é normal.',illo:phoneWifi(inv)},
+      {ic:'🌐',t:'Abrir 10.10.100.253 e logar',b:'No navegador digite <code>10.10.100.253</code> e entre com <code>admin</code> / <code>admin</code>.',illo:frame(login())},
+      {ic:'ℹ️',t:'Tela de Status',b:'É a tela inicial da antena. Toque em <code>Wizard</code> no menu lateral.',illo:frame(page('Status',status(inv)))},
+      {ic:'✨',t:'Iniciar o Wizard',b:'Toque em <code>Start</code> para começar o assistente.',illo:frame(page('Wizard',wizard()))},
+      {ic:'📡',t:'Selecionar a rede do local',b:'Marque a rede <code>'+L+'</code> na lista e toque em <code>Next</code>.',illo:frame(page('Wizard',networks(loc)))},
+      {ic:'🔑',t:'Senha da rede do local',b:'Digite a senha do <code>'+L+'</code> e toque em <code>Next</code>.',illo:frame(page('Wizard',password(loc)))},
+      {ic:'⚙️',t:'IP automático',b:'Deixe em <code>Enable</code> (DHCP) e toque em <code>Next</code>.',illo:frame(page('Wizard',ipscr()))},
+      {ic:'✅',t:'Concluir',b:'Toque em <code>OK</code>. A antena reinicia e aplica tudo.',illo:frame(page('Wizard',done()))},
+      {ic:'🟢',t:'Pronto! Conferir',b:'O <b>LED verde</b> deve ficar <b>fixo</b>. Se piscar, refaça. Depois confira no app de monitoramento.',illo:led()}
+    ];
+  }
+
+  var i=0;
+  var stage=document.getElementById('stage'),bar=document.getElementById('bar'),plab=document.getElementById('plab'),back=document.getElementById('back'),next=document.getElementById('next');
+  var invEl=document.getElementById('inv'),locEl=document.getElementById('loc');
+  function render(){
+    var inv=invEl.value.trim()||'AP_17035482',loc=locEl.value.trim()||'Wi-Fi_do_local';
+    var S=steps(inv,loc),s=S[i];
+    bar.style.width=Math.round((i+1)/S.length*100)+'%';
+    plab.textContent='Passo '+(i+1)+' de '+S.length;
+    stage.innerHTML=s.illo
+      +'<div class="stepno">Passo '+(i+1)+'</div>'
+      +'<div class="stitle">'+s.ic+' '+s.t+'</div>'
+      +'<div class="sbody">'+s.b+'</div>';
+    back.classList.toggle('inv',i===0);
+    next.textContent=(i===S.length-1)?'Recomeçar ↺':(i===S.length-2?'Finalizar ›':'Próximo ›');
+  }
+  next.addEventListener('click',function(){var n=9;i=(i>=n-1)?0:i+1;render();window.scrollTo({top:0,behavior:'smooth'});});
+  back.addEventListener('click',function(){if(i>0){i--;render();window.scrollTo({top:0,behavior:'smooth'});}});
+  invEl.addEventListener('input',render);
+  locEl.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>
