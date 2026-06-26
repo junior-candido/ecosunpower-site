@@ -6,7 +6,7 @@
   <button id="case-lightbox-close" type="button" aria-label="Fechar" class="absolute right-4 top-4 text-3xl text-white">×</button>
   <div class="w-full max-w-5xl">
     <h3 id="case-lightbox-title" class="mb-3 text-center text-lg font-semibold text-white"></h3>
-    <video id="case-lightbox-video" controls preload="metadata" class="w-full rounded-lg shadow-2xl">
+    <video id="case-lightbox-video" controls playsinline preload="metadata" class="w-full rounded-lg shadow-2xl">
       <track kind="captions" />
     </video>
   </div>
@@ -18,13 +18,17 @@
   const title = document.getElementById('case-lightbox-title');
   const closeBtn = document.getElementById('case-lightbox-close');
 
-  function open(url: string, caseTitle: string) {
+  function open(url: string, caseTitle: string, cover?: string) {
     if (!overlay || !video || !title) return;
+    // Poster = capa do case: aparece na hora enquanto os primeiros bytes do video chegam (nunca quadrado preto)
+    if (cover) video.poster = cover; else video.removeAttribute('poster');
     video.src = url;
     title.textContent = caseTitle;
     overlay.classList.remove('hidden');
     overlay.classList.add('flex');
     document.body.style.overflow = 'hidden';
+    // Como veio de um clique do usuario, o navegador permite tocar ja com som (faststart deixa engatar rapido)
+    video.play().catch(() => {/* se o navegador bloquear, fica nos controles manuais */});
   }
 
   function close() {
@@ -41,7 +45,8 @@
     btn.addEventListener('click', () => {
       const url = btn.dataset.videoUrl;
       const t = btn.dataset.caseTitulo ?? '';
-      if (url) open(url, t);
+      const cover = btn.dataset.caseCover;
+      if (url) open(url, t, cover);
     });
   });
 
