@@ -1,0 +1,171 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// A lista de vagas vem AO VIVO do servidor (GET /rh/vagas) via script no
+// navegador — vaga aberta/fechada no dashboard aparece/some daqui na hora.
+// Se a API estiver fora, a seção de vagas some e fica só o Banco de Talentos.
+const API = 'https://propostas.ecosunpower.eng.br';
+---
+
+<Layout
+  title="Trabalhe Conosco — EcoSunPower Energia Solar"
+  description="Vagas na EcoSunPower Energia Solar (Brasília-DF e região). Candidate-se ou deixe seu currículo no nosso banco de talentos."
+  ogImage="/og-image.png"
+>
+  <!-- HERO -->
+  <section class="bg-gradient-hero text-white py-20 lg:py-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+        ☀️ Time EcoSunPower
+      </span>
+      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
+        Vem trabalhar<br class="hidden lg:block" />
+        <span class="text-accent-400">com energia.</span>
+      </h1>
+      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed">
+        Somos uma empresa de energia solar de Brasília-DF em crescimento.
+        Veja as vagas abertas ou deixe seu currículo no nosso banco de talentos.
+      </p>
+    </div>
+  </section>
+
+  <!-- VAGAS ABERTAS (preenchida pelo navegador) -->
+  <section id="secao-vagas" class="py-16 lg:py-20 bg-white hidden">
+    <div class="container-wide">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Vagas abertas</h2>
+        <p class="text-lg text-muted">Clique em "Candidatar-se" e preencha o formulário abaixo.</p>
+      </div>
+      <div id="lista-vagas" class="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto"></div>
+    </div>
+  </section>
+
+  <!-- FORMULÁRIO -->
+  <section class="py-16 lg:py-24 bg-slate-50">
+    <div class="container-narrow">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Envie seu currículo</h2>
+        <p class="text-lg text-muted">Não achou a sua vaga? Sem problema — entre pro nosso <strong>Banco de Talentos</strong> e te chamamos quando abrir.</p>
+      </div>
+
+      <form id="form-candidatura" class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 lg:p-10 max-w-2xl mx-auto space-y-5">
+        <div>
+          <label for="c-nome" class="block text-sm font-bold text-dark mb-2">Nome completo *</label>
+          <input id="c-nome" name="nome" required minlength="3" autocomplete="name"
+            class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="Seu nome" />
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label for="c-telefone" class="block text-sm font-bold text-dark mb-2">WhatsApp (com DDD) *</label>
+            <input id="c-telefone" name="telefone" required inputmode="tel" autocomplete="tel"
+              class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="(61) 9 9999-9999" />
+          </div>
+          <div>
+            <label for="c-email" class="block text-sm font-bold text-dark mb-2">E-mail</label>
+            <input id="c-email" name="email" type="email" autocomplete="email"
+              class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="voce@email.com" />
+          </div>
+        </div>
+        <div>
+          <label for="c-vaga" class="block text-sm font-bold text-dark mb-2">Vaga</label>
+          <select id="c-vaga" name="vaga_id"
+            class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500 bg-white">
+            <option value="">🗂 Banco de Talentos (sem vaga específica)</option>
+          </select>
+        </div>
+        <div>
+          <label for="c-curriculo" class="block text-sm font-bold text-dark mb-2">Currículo em PDF (até 5 MB) *</label>
+          <input id="c-curriculo" name="curriculo" type="file" accept="application/pdf" required
+            class="w-full text-sm text-dark file:mr-4 file:py-2.5 file:px-5 file:rounded-full file:border-0 file:bg-primary-600 file:text-white file:font-semibold hover:file:bg-primary-700 file:cursor-pointer" />
+        </div>
+        <!-- honeypot anti-robô: humano não vê nem preenche -->
+        <div class="hp-field" aria-hidden="true">
+          <label>Não preencha este campo<input name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <label class="flex items-start gap-3 text-sm text-muted cursor-pointer">
+          <input id="c-consentimento" name="consentimento" type="checkbox" required class="mt-1 w-5 h-5 rounded border-slate-300" />
+          <span>Autorizo a EcoSunPower a guardar meus dados e currículo por até <strong>12 meses</strong>, usados só em processos seletivos. *</span>
+        </label>
+        <button id="btn-enviar" type="submit" class="btn-primary w-full justify-center text-lg">Enviar candidatura</button>
+        <p id="msg-erro" class="hidden text-center text-sm font-semibold text-red-600"></p>
+      </form>
+
+      <div id="sucesso" class="hidden bg-white rounded-3xl border border-slate-100 shadow-sm p-10 max-w-2xl mx-auto text-center">
+        <div class="text-6xl mb-4">✅</div>
+        <h3 class="text-2xl font-display font-bold text-dark mb-2">Recebemos seu currículo!</h3>
+        <p class="text-muted leading-relaxed">Obrigado pelo interesse em fazer parte do time. Se o seu perfil combinar com uma vaga, a gente te chama pelo WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .hp-field { position: absolute; left: -9999px; top: -9999px; height: 0; overflow: hidden; }
+  </style>
+
+  <script is:inline define:vars={{ API }}>
+    // Vagas abertas ao vivo. API fora do ar? Seção some, Banco de Talentos segue.
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    fetch(API + '/rh/vagas')
+      .then((r) => r.json())
+      .then(({ vagas }) => {
+        if (!Array.isArray(vagas) || vagas.length === 0) return;
+        const lista = document.getElementById('lista-vagas');
+        const select = document.getElementById('c-vaga');
+        for (const v of vagas) {
+          const card = document.createElement('div');
+          card.className = 'bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col';
+          card.innerHTML =
+            '<h3 class="font-bold text-dark text-lg mb-1">' + esc(v.titulo) + '</h3>' +
+            '<p class="text-sm text-muted mb-1">📍 ' + esc(v.cidade) + ' · ' + esc(v.tipo) + '</p>' +
+            (v.descricao ? '<p class="text-sm text-dark-soft leading-relaxed mb-4 flex-1">' + esc(v.descricao) + '</p>' : '<span class="flex-1"></span>') +
+            '<button type="button" data-vaga="' + esc(v.id) + '" class="btn-vaga self-start inline-flex items-center px-5 py-2.5 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm transition">Candidatar-se</button>';
+          lista.appendChild(card);
+          const opt = document.createElement('option');
+          opt.value = v.id;
+          opt.textContent = v.titulo + ' — ' + v.cidade;
+          select.appendChild(opt);
+        }
+        document.getElementById('secao-vagas').classList.remove('hidden');
+        lista.addEventListener('click', (e) => {
+          const btn = e.target.closest('.btn-vaga');
+          if (!btn) return;
+          select.value = btn.dataset.vaga;
+          document.getElementById('form-candidatura').scrollIntoView({ behavior: 'smooth' });
+        });
+      })
+      .catch(() => { /* sem vagas ao vivo — só banco de talentos */ });
+
+    // Envio do formulário
+    const form = document.getElementById('form-candidatura');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btn-enviar');
+      const msgErro = document.getElementById('msg-erro');
+      msgErro.classList.add('hidden');
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      try {
+        const dados = new FormData(form);
+        dados.set('consentimento', document.getElementById('c-consentimento').checked ? '1' : '');
+        const resp = await fetch(API + '/rh/candidatura', { method: 'POST', body: dados });
+        const json = await resp.json().catch(() => ({}));
+        if (resp.ok && json.ok) {
+          form.classList.add('hidden');
+          document.getElementById('sucesso').classList.remove('hidden');
+          document.getElementById('sucesso').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        msgErro.textContent = json.erro || 'Não deu certo agora — confere os campos e tenta de novo.';
+        msgErro.classList.remove('hidden');
+      } catch {
+        msgErro.textContent = 'Falha de conexão — tenta de novo em instantes.';
+        msgErro.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Enviar candidatura';
+      }
+    });
+  </script>
+</Layout>
