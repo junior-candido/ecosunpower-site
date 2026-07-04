@@ -80,19 +80,21 @@ const API = 'https://propostas.ecosunpower.eng.br';
           <input id="c-curriculo" name="curriculo" type="file" accept="application/pdf" required
             class="w-full text-sm text-dark file:mr-4 file:py-2.5 file:px-5 file:rounded-full file:border-0 file:bg-primary-600 file:text-white file:font-semibold hover:file:bg-primary-700 file:cursor-pointer" />
         </div>
-        <!-- honeypot anti-robô: humano não vê nem preenche -->
+        <!-- honeypot anti-robô: humano não vê nem preenche. Nome NEUTRO de
+             propósito ("website" o autofill do Chrome preenchia sozinho e a
+             candidatura de gente real era descartada como spam). -->
         <div class="hp-field" aria-hidden="true">
-          <label>Não preencha este campo<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <label>Não preencha este campo<input name="extra_info" tabindex="-1" autocomplete="off" /></label>
         </div>
         <label class="flex items-start gap-3 text-sm text-muted cursor-pointer">
           <input id="c-consentimento" name="consentimento" type="checkbox" required class="mt-1 w-5 h-5 rounded border-slate-300" />
           <span>Autorizo a EcoSunPower a guardar meus dados e currículo por até <strong>12 meses</strong>, usados só em processos seletivos. *</span>
         </label>
         <button id="btn-enviar" type="submit" class="btn-primary w-full justify-center text-lg">Enviar candidatura</button>
-        <p id="msg-erro" class="hidden text-center text-sm font-semibold text-red-600"></p>
+        <p id="msg-erro" role="alert" class="hidden text-center text-sm font-semibold text-red-600"></p>
       </form>
 
-      <div id="sucesso" class="hidden bg-white rounded-3xl border border-slate-100 shadow-sm p-10 max-w-2xl mx-auto text-center">
+      <div id="sucesso" tabindex="-1" class="hidden bg-white rounded-3xl border border-slate-100 shadow-sm p-10 max-w-2xl mx-auto text-center">
         <div class="text-6xl mb-4">✅</div>
         <h3 class="text-2xl font-display font-bold text-dark mb-2">Recebemos seu currículo!</h3>
         <p class="text-muted leading-relaxed">Obrigado pelo interesse em fazer parte do time. Se o seu perfil combinar com uma vaga, a gente te chama pelo WhatsApp.</p>
@@ -119,7 +121,8 @@ const API = 'https://propostas.ecosunpower.eng.br';
           card.innerHTML =
             '<h3 class="font-bold text-dark text-lg mb-1">' + esc(v.titulo) + '</h3>' +
             '<p class="text-sm text-muted mb-1">📍 ' + esc(v.cidade) + ' · ' + esc(v.tipo) + '</p>' +
-            (v.descricao ? '<p class="text-sm text-dark-soft leading-relaxed mb-4 flex-1">' + esc(v.descricao) + '</p>' : '<span class="flex-1"></span>') +
+            (v.descricao ? '<p class="text-sm text-dark-soft leading-relaxed mb-2" style="white-space:pre-line">' + esc(v.descricao) + '</p>' : '') +
+            (v.requisitos ? '<p class="text-sm text-muted leading-relaxed mb-4 flex-1" style="white-space:pre-line"><strong>Requisitos:</strong>\n' + esc(v.requisitos) + '</p>' : '<span class="flex-1"></span>') +
             '<button type="button" data-vaga="' + esc(v.id) + '" class="btn-vaga self-start inline-flex items-center px-5 py-2.5 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm transition">Candidatar-se</button>';
           lista.appendChild(card);
           const opt = document.createElement('option');
@@ -135,7 +138,7 @@ const API = 'https://propostas.ecosunpower.eng.br';
           document.getElementById('form-candidatura').scrollIntoView({ behavior: 'smooth' });
         });
       })
-      .catch(() => { /* sem vagas ao vivo — só banco de talentos */ });
+      .catch((e) => { console.warn('[trabalhe-conosco] vagas indisponíveis:', e); });
 
     // Envio do formulário
     const form = document.getElementById('form-candidatura');
@@ -144,6 +147,13 @@ const API = 'https://propostas.ecosunpower.eng.br';
       const btn = document.getElementById('btn-enviar');
       const msgErro = document.getElementById('msg-erro');
       msgErro.classList.add('hidden');
+      // Arquivo grande demais: erro na hora, sem esperar upload inteiro falhar.
+      const arq = document.getElementById('c-curriculo').files[0];
+      if (arq && arq.size > 5 * 1024 * 1024) {
+        msgErro.textContent = 'Seu PDF tem mais de 5 MB — diminua o arquivo e tenta de novo.';
+        msgErro.classList.remove('hidden');
+        return;
+      }
       btn.disabled = true;
       btn.textContent = 'Enviando…';
       try {
@@ -153,8 +163,10 @@ const API = 'https://propostas.ecosunpower.eng.br';
         const json = await resp.json().catch(() => ({}));
         if (resp.ok && json.ok) {
           form.classList.add('hidden');
-          document.getElementById('sucesso').classList.remove('hidden');
-          document.getElementById('sucesso').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const sucesso = document.getElementById('sucesso');
+          sucesso.classList.remove('hidden');
+          sucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          sucesso.focus({ preventScroll: true });
           return;
         }
         msgErro.textContent = json.erro || 'Não deu certo agora — confere os campos e tenta de novo.';
