@@ -8,8 +8,6 @@ const CHECKOUT_ANUAL = 'https://pay.kiwify.com.br/KO3QKA7'; // assinatura ANUAL 
 const PRECO = 'R$ 57'; // mensalidade
 const PRECO_ANUAL = 'R$ 570'; // plano anual (2 meses grátis)
 
-// Enquanto a Kiwify nao estiver pronta (CHECKOUT === '#'), o botao principal
-// vira "Acessar a calculadora" e leva ao login — sem link morto no site.
 const VENDA_ATIVA = CHECKOUT !== '#';
 const CTA_HREF = VENDA_ATIVA ? CHECKOUT : ACESSO;
 const CTA_LABEL = VENDA_ATIVA ? 'Assinar agora' : 'Acessar a calculadora';
@@ -22,245 +20,247 @@ const diagramas = [
   { img: '/calculadora/qdc.png', t: 'Quadro de Distribuição (QDC)', d: 'Elétrica predial NBR 5410: circuitos, disjuntores, DR, bitolas e cargas.' },
 ];
 
-const recursos = [
-  { n: '☀️', t: 'Dimensionamento solar completo', d: 'kWp, número de painéis, geração mensal, string/MPPT (com frio e calor), banco de baterias e inversor.' },
-  { n: '⚡', t: 'Instalação elétrica (NBR 5410)', d: 'Cabo, disjuntor, queda de tensão, condutor de proteção (PE), DPS e aterramento de cada circuito.' },
-  { n: '🏠', t: 'Previsão de cargas por ambiente', d: 'Você descreve os cômodos e o sistema gera os circuitos de iluminação e tomadas pela norma — sem calcular na mão.' },
-  { n: '🔌', t: 'Carregador de carro elétrico', d: 'Circuito dedicado conforme NBR 17019 + NBR 5410, com o DR especial obrigatório e gerenciamento de carga.' },
-  { n: '📋', t: 'Lista de material / orçamento', d: 'A lista de cabos, disjuntores, proteções, módulos e estrutura sai automática — com preço, vira orçamento.' },
-  { n: '📐', t: 'Quadro de cargas + diagrama unifilar', d: 'Gerados automaticamente a partir dos circuitos do projeto.' },
-  { n: '🤖', t: 'Assistente de IA', d: 'Tire dúvidas e entenda o resultado do SEU projeto na hora — um engenheiro sênior do seu lado.' },
-  { n: '🏷️', t: 'Relatório com a SUA marca', d: 'White-label: o PDF sai com a sua logo e seus dados, não a nossa. Você entrega pro seu cliente com a sua identidade.' },
+// A EVOLUÇÃO — sequência real de como a ferramenta cresceu (a ordem carrega informação)
+const evolucao = [
+  { fase: 'Começou', t: 'Dimensionamento solar', d: 'kWp, painéis, geração, string/MPPT, banco e inversor — a conta do sistema, na hora.' },
+  { fase: 'Cresceu', t: 'Instalação elétrica NBR 5410', d: 'Cargas por ambiente, circuitos, cabo, disjuntor, queda, DR e aterramento — sem planilha.' },
+  { fase: 'Ganhou desenho', t: 'Diagramas ABNT prontos', d: 'Unifilar, multifilar, trifilar e QDC gerados do cálculo — baixa em SVG/DXF pro AutoCAD.' },
+  { fase: 'Ficou completa', t: 'Cabos CC + CA + eletroduto', d: 'Cabo de string (NBR 16612), ramal do inversor e eletroduto com trechos misturados por ambiente.' },
+  { fase: 'Hoje', t: 'O motor entrega o projeto pronto', d: 'A bitola dimensionada já cai no diagrama. O engenheiro deixa de digitar e passa a analisar e assinar.' },
 ];
 
-const diferenciais = [
-  'Na norma brasileira: NBR 5410, NBR 17019 e Lei 14.300 (Fio B)',
-  'Cálculo rodando no servidor — rápido e sempre atualizado, você não gerencia versão',
-  'Assistente de IA dentro da ferramenta',
-  'Relatório white-label (com a sua marca)',
-  'Funciona no navegador, no PC e no celular',
-  'Desenvolvido por profissional da área de energia solar',
+// O QUE ELA FAZ AGORA — com as novidades em destaque (novo:true)
+const recursos = [
+  { n: '🔌', t: 'Dimensionamento de cabos CC + CA', d: 'Cabo de string (NBR 16612, queda ≤ 5%), ramal do inversor (NBR 5410), string box e proteções — o motor escolhe a bitola certa.', novo: true },
+  { n: '⚫', t: 'Eletroduto por trechos (mix)', d: 'Some vários trechos por ambiente e misture corrugado, aço, PVC rígido e eletrocalha. A lista soma tudo por tipo.', novo: true },
+  { n: '📐', t: 'Diagrama que sai pronto do motor', d: 'A bitola dimensionada preenche o unifilar/multifilar sozinha. Você revisa e ajusta — não digita cabo na mão.', novo: true },
+  { n: '🤖', t: 'Engenheira que cita a norma', d: 'Clique em “por quê?” e a IA justifica cada número buscando na NBR e nos manuais — ela explica, o motor calcula, você confere.', novo: true },
+  { n: '📄', t: 'Lê o datasheet por você', d: 'Aponta o PDF do módulo/inversor e a ferramenta puxa as características elétricas pro dimensionamento.', novo: true },
+  { n: '🗂️', t: 'Biblioteca + Meus Projetos', d: 'Salve inversores e módulos, reabra projetos e continue de onde parou — sem recomeçar do zero.', novo: true },
+  { n: '☀️', t: 'Sistema solar completo', d: 'kWp, painéis, geração mensal, string/MPPT (frio e calor), banco de baterias e inversor mínimo.' },
+  { n: '🏠', t: 'Cargas e circuitos por ambiente', d: 'Descreva os cômodos e o sistema gera os circuitos de iluminação e tomadas pela norma.' },
+  { n: '🚗', t: 'Carregador de carro elétrico', d: 'Circuito dedicado (NBR 17019 + 5410) com o DR especial obrigatório e gerenciamento de carga.' },
+  { n: '📋', t: 'Lista de material / orçamento', d: 'Cabos, disjuntores, proteções, módulos e estrutura saem automáticos — com preço, vira orçamento.' },
+  { n: '🏷️', t: 'Prancha e relatório com a SUA marca', d: 'White-label: o PDF e a prancha saem com a sua logo e seus dados — você entrega com a sua identidade.' },
+  { n: '📊', t: 'Prancha paramétrica ABNT', d: 'Trafos, cores, N inversores, carimbo e folhas — a prancha se monta a partir dos dados do projeto.' },
 ];
 
 const paraQuem = [
   { icon: '☀️', t: 'Integrador solar', d: 'Dimensione o sistema inteiro e entregue uma proposta técnica com a sua marca, em minutos.' },
   { icon: '🔧', t: 'Eletricista / instalador', d: 'Cabo, disjuntor, queda, DPS e quadro pela NBR 5410 — sem planilha, sem retrabalho.' },
-  { icon: '📐', t: 'Projetista / responsável técnico', d: 'Memória de cálculo, lista de material e diagrama prontos pra revisar e assinar.' },
+  { icon: '📐', t: 'Projetista / responsável técnico', d: 'Memória de cálculo, lista de material e diagrama prontos pra analisar e assinar.' },
 ];
 
 const faq = [
   { q: 'Preciso instalar algo?', a: 'Não. Funciona direto no navegador — é só entrar e usar, no PC ou no celular.' },
+  { q: 'Quem escolhe a bitola do cabo, a IA ou a calculadora?', a: 'O motor de cálculo, sempre pela norma (NBR 16612 no CC, NBR 5410 no CA). A IA nunca inventa número — ela só justifica e cita a norma. Você, como responsável técnico, confere e assina.' },
   { q: 'Funciona no celular?', a: 'Sim, é responsivo. Você dimensiona em campo, na obra, pelo telefone.' },
-  { q: 'Tem mensalidade?', a: 'Sim, é por assinatura — assim você sempre tem a versão mais nova, com a IA e as melhorias contínuas incluídas.' },
-  { q: 'O relatório sai com a minha marca?', a: 'Sim. Você sobe a sua logo e seus dados uma vez, e todo relatório sai com a SUA identidade (white-label), não a nossa.' },
+  { q: 'O relatório sai com a minha marca?', a: 'Sim. Você sobe a sua logo e seus dados uma vez, e todo relatório e prancha saem com a SUA identidade (white-label), não a nossa.' },
+  { q: 'Tem mensalidade?', a: 'Sim, por assinatura — assim você sempre tem a versão mais nova, com a IA e as melhorias contínuas incluídas.' },
   { q: 'Substitui o projeto e a ART?', a: 'Não. É uma ferramenta de apoio ao dimensionamento, na norma. O projeto final e a ART/CREA são do profissional habilitado.' },
 ];
 ---
 
 <Layout
   title="Calculadora de Dimensionamento Solar + Elétrico (NBR 5410) com IA — EcoSunPower"
-  description="Dimensione sistemas solares e instalações elétricas (NBR 5410) em minutos, com assistente de IA e relatório com a sua marca. No navegador, PC e celular."
+  description="Dimensione sistemas solares e instalações elétricas (NBR 5410/16612) em minutos. O motor calcula a bitola pela norma e o diagrama já sai pronto — o engenheiro analisa e assina. Com IA e relatório com a sua marca."
   ogImage="/og-image.png"
 >
-  <!-- HERO -->
-  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
-    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
-    <div class="container-narrow relative z-10 text-center">
-      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
-        ⚡ Solar + elétrica (NBR 5410) · com IA
-      </span>
-      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
-        Dimensione projetos<br class="hidden lg:block" />
-        <span class="text-accent-400">em minutos, com IA.</span>
-      </h1>
-      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed mb-8">
-        Cabo, disjuntor, queda, DPS, gerador solar, banco, inversor, carregador EV, lista de material e
-        diagrama unifilar — calculados na norma, com um assistente de IA e relatório com a <strong>sua marca</strong>.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center">
-        <a href={CTA_HREF} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
-          {CTA_LABEL}
-        </a>
-        {VENDA_ATIVA && (
-          <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
-            Já sou assinante → Entrar
-          </a>
-        )}
-      </div>
-      <p class="text-sm text-slate-300 mt-5">
-        No navegador · PC e celular · acesso imediato
-      </p>
-    </div>
-  </section>
+  <div class="calc-lp">
 
-  <!-- PROBLEMA -->
-  <section class="py-16 lg:py-20 bg-white">
-    <div class="container-wide">
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div>
-          <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-6">Dimensionar na mão é lento e arriscado</h2>
-          <p class="text-lg text-muted leading-relaxed">
-            Planilha pra cada cálculo, norma pra conferir, retrabalho a cada mudança — e o risco de um cabo
-            ou disjuntor errado. A Calculadora EcoSun faz o dimensionamento completo na norma, na hora, e
-            ainda explica o resultado pra você. Você entrega mais rápido, com mais segurança e com a sua cara.
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Solar · Elétrica NBR 5410 · Diagramas · IA</span>
+          <h1 class="hero-h1">
+            O motor faz a conta.<br />
+            <span class="grad">Você analisa e assina.</span>
+          </h1>
+          <p class="hero-sub">
+            A Calculadora EcoSun dimensiona o projeto inteiro <strong>pela norma</strong> — do painel ao cabo,
+            do disjuntor ao diagrama. A bitola certa já cai na prancha, e a Engenheira de IA justifica cada número
+            citando a NBR. O responsável técnico deixa de digitar e passa a <strong>revisar e assinar</strong>.
+          </p>
+          <div class="hero-cta">
+            <a href={CTA_HREF} class="btn btn-solid" target="_blank" rel="noopener">{CTA_LABEL}</a>
+            {VENDA_ATIVA && (
+              <a href={ACESSO} class="btn btn-ghost" target="_blank" rel="noopener">Já sou assinante → Entrar</a>
+            )}
+          </div>
+          <p class="hero-foot">No navegador · PC e celular · acesso imediato</p>
+        </div>
+
+        <!-- ASSINATURA: card "resultado do motor" na linguagem real do produto -->
+        <div class="console" role="img" aria-label="Exemplo de resultado dimensionado pela calculadora">
+          <div class="console-top">
+            <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+            <span class="console-title">resultado do motor</span>
+          </div>
+          <div class="console-body">
+            <div class="line"><span class="k">Cabo CC (string)</span><span class="v">6&nbsp;mm² solar 1,8kV</span></div>
+            <div class="sub">queda 1,8% · Iz ≥ 1,25·Isc · <span class="ok">NBR 16612 ✓</span> <span class="motor">📐 do motor</span></div>
+            <div class="line"><span class="k">Cabo CA (ramal)</span><span class="v">3#6&nbsp;mm² (F+N+T)</span></div>
+            <div class="sub">disjuntor 40 A · queda 0,8% · <span class="ok">NBR 5410 ✓</span> <span class="motor">📐 do motor</span></div>
+            <div class="line"><span class="k">Eletroduto</span><span class="v">PVC 25mm · aço 3/4"</span></div>
+            <div class="sub">ocupação 32% · trechos por ambiente</div>
+            <div class="console-cta">→ vira unifilar, lista de material e prancha com a sua marca</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- A EVOLUÇÃO -->
+    <section class="evo">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow blue">A evolução</span>
+          <h2 class="h2">De uma calculadora solar a um projetista que trabalha por você</h2>
+          <p class="lead">Ela não parou de crescer. Cada etapa tirou mais trabalho manual das suas mãos.</p>
+        </div>
+        <ol class="timeline">
+          {evolucao.map((e, i) => (
+            <li class="tl-item">
+              <span class="tl-node">{String(i + 1).padStart(2, '0')}</span>
+              <div class="tl-card">
+                <span class="tl-fase">{e.fase}</span>
+                <h3 class="tl-t">{e.t}</h3>
+                <p class="tl-d">{e.d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- O QUE FAZ AGORA -->
+    <section class="feats">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">O que ela faz agora</span>
+          <h2 class="h2">Um projeto completo, do sol ao diagrama</h2>
+          <p class="lead">Novidades em destaque — o que entrou de mais recente.</p>
+        </div>
+        <div class="feat-grid">
+          {recursos.map((e) => (
+            <div class={`feat ${e.novo ? 'is-new' : ''}`}>
+              {e.novo && <span class="badge">novo</span>}
+              <div class="feat-ico">{e.n}</div>
+              <h3 class="feat-t">{e.t}</h3>
+              <p class="feat-d">{e.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- VITRINE DOS DIAGRAMAS -->
+    <section class="diag">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow blue">Diferencial exclusivo</span>
+          <h2 class="h2">Diagramas ABNT, prontos pra baixar</h2>
+          <p class="lead">
+            Depois de calcular, a ferramenta gera o diagrama no padrão da norma — baixa em <strong>SVG/DXF</strong>
+            (importa no AutoCAD), vira PDF pro cliente ou pra concessionária, com o carimbo da <strong>sua marca</strong>.
           </p>
         </div>
-        <div class="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-          <img src="/calculadora/instaladores.jpg" alt="Instaladores montando painéis solares no telhado" class="w-full h-full object-cover" loading="lazy" />
+        <div class="diag-grid">
+          {diagramas.map((g) => (
+            <figure class="diag-card">
+              <div class="diag-img"><img src={g.img} alt={`Diagrama ${g.t} gerado pela Calculadora EcoSun`} loading="lazy" /></div>
+              <figcaption>
+                <h3 class="diag-t">{g.t}</h3>
+                <p class="diag-d">{g.d}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="diag-foot">Cobre on-grid string, microinversor, híbrido e off-grid + a elétrica predial (QDC). O profissional revisa e assina (ART/CREA).</p>
+      </div>
+    </section>
+
+    <!-- PARA QUEM É -->
+    <section class="who">
+      <div class="wrap">
+        <div class="sec-head"><span class="eyebrow">Para quem é</span><h2 class="h2">Feita por quem projeta, pra quem projeta</h2></div>
+        <div class="who-grid">
+          {paraQuem.map((p) => (
+            <div class="who-card">
+              <div class="who-ico">{p.icon}</div>
+              <h3 class="who-t">{p.t}</h3>
+              <p class="who-d">{p.d}</p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- O QUE FAZ -->
-  <section class="py-16 lg:py-24 bg-slate-50">
-    <div class="container-wide">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">O que ela faz</h2>
-        <p class="text-lg text-muted">Do gerador solar ao quadro de cargas — tudo num lugar só.</p>
-      </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        {recursos.map((e) => (
-          <div class="flex gap-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-            <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-hero text-white text-xl flex items-center justify-center">{e.n}</div>
-            <div>
-              <h3 class="font-bold text-dark mb-1">{e.t}</h3>
-              <p class="text-sm text-muted leading-relaxed">{e.d}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- VITRINE DOS DIAGRAMAS -->
-  <section class="py-16 lg:py-24 bg-gradient-hero text-white relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
-    <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl"></div>
-    <div class="container-wide relative z-10">
-      <div class="text-center mb-12 max-w-2xl mx-auto">
-        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-5 text-sm font-semibold">
-          ⚡ Diferencial exclusivo
-        </span>
-        <h2 class="text-3xl lg:text-4xl font-display font-bold mb-4">Diagramas elétricos ABNT, prontos pra baixar</h2>
-        <p class="text-lg text-slate-100/90 leading-relaxed">
-          Depois de calcular, a ferramenta <strong>gera o diagrama no padrão da norma</strong> — você baixa em
-          <strong>SVG</strong> (importa no AutoCAD), vira PDF pro cliente ou pra concessionária, e o carimbo sai com a <strong>sua marca</strong>.
-        </p>
-      </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        {diagramas.map((g) => (
-          <div class="bg-white rounded-2xl p-4 lg:p-5 shadow-2xl">
-            <div class="rounded-xl border border-slate-200 overflow-hidden bg-white">
-              <img src={g.img} alt={`Diagrama ${g.t} gerado pela Calculadora EcoSun`} class="w-full h-auto block" loading="lazy" />
-            </div>
-            <h3 class="font-bold text-dark mt-4 text-lg">{g.t}</h3>
-            <p class="text-sm text-muted leading-relaxed mt-1">{g.d}</p>
-          </div>
-        ))}
-      </div>
-      <p class="text-center text-sm text-slate-300 mt-8 max-w-2xl mx-auto">
-        Cobre as 4 montagens (on-grid string, microinversor, híbrido e off-grid) e a elétrica predial (QDC).
-        O profissional revisa e assina (ART/CREA).
-      </p>
-    </div>
-  </section>
-
-  <!-- POR QUE É DIFERENTE -->
-  <section class="py-16 lg:py-20 bg-white">
-    <div class="container-narrow">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Por que é diferente</h2>
-      <ul class="space-y-4 max-w-2xl mx-auto">
-        {diferenciais.map((d) => (
-          <li class="flex items-start gap-3 text-lg text-dark-soft">
-            <span class="text-accent-500 font-bold text-xl flex-shrink-0">✓</span>
-            <span>{d}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <!-- PARA QUEM É -->
-  <section class="py-16 lg:py-24 bg-slate-50">
-    <div class="container-wide">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-12 text-center">Para quem é</h2>
-      <div class="grid gap-6 md:grid-cols-3">
-        {paraQuem.map((p) => (
-          <div class="bg-white rounded-2xl border border-slate-100 p-8 text-center shadow-sm">
-            <div class="text-4xl mb-4">{p.icon}</div>
-            <h3 class="font-bold text-dark mb-2">{p.t}</h3>
-            <p class="text-sm text-muted leading-relaxed">{p.d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- PREÇO (2 planos) -->
-  <section class="py-16 lg:py-24 bg-white">
-    <div class="container-wide">
-      <div class="text-center mb-12">
-        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Escolha seu plano</h2>
-        <p class="text-lg text-muted">Tudo incluído — IA, diagramas e a sua marca. Cancele quando quiser.</p>
-      </div>
-      <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
-
-        <!-- MENSAL -->
-        <div class="bg-white rounded-3xl border-2 border-slate-200 p-8 flex flex-col shadow-sm">
-          <p class="text-sm font-semibold uppercase tracking-wide text-dark-soft mb-2">Mensal</p>
-          <div class="mb-1 text-5xl font-display font-bold text-dark">{PRECO}<span class="text-xl font-normal text-muted">/mês</span></div>
-          <p class="text-muted text-sm mb-6">flexível · cancele quando quiser</p>
-          <ul class="text-left space-y-2 text-sm text-dark-soft mb-8 flex-1">
-            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Todos os módulos (solar, elétrica, EV, material, diagramas)</li>
-            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Assistente de IA incluído</li>
-            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Relatório e diagramas com a SUA marca</li>
-            <li class="flex gap-2"><span class="text-accent-500 font-bold">✓</span> Sempre atualizada · PC e celular</li>
-          </ul>
-          <a href={CHECKOUT} class="inline-flex items-center justify-center w-full px-6 py-3 rounded-full border-2 border-slate-300 text-dark font-bold text-lg hover:bg-slate-50 transition" target="_blank" rel="noopener">Assinar mensal</a>
-        </div>
-
-        <!-- ANUAL (destaque) -->
-        <div class="bg-gradient-hero text-white rounded-3xl p-8 flex flex-col shadow-2xl relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
-          <div class="relative z-10 flex flex-col h-full">
-            <span class="self-start inline-flex items-center gap-1 px-3 py-1 bg-accent-400 text-dark rounded-full mb-3 text-xs font-bold uppercase tracking-wide">⭐ 2 meses grátis</span>
-            <p class="text-sm font-semibold uppercase tracking-wide text-accent-400 mb-2">Anual</p>
-            <div class="mb-1 text-5xl font-display font-bold">{PRECO_ANUAL}<span class="text-xl font-normal">/ano</span></div>
-            <p class="text-slate-200 text-sm mb-6">equivale a <strong>R$ 47,50/mês</strong> · melhor custo</p>
-            <ul class="text-left space-y-2 text-sm text-slate-100 mb-8 flex-1">
-              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Tudo do plano mensal</li>
-              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> 2 meses grátis (paga 10, usa 12)</li>
-              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Preço travado por 12 meses</li>
-              <li class="flex gap-2"><span class="text-accent-400 font-bold">✓</span> Acesso imediato, na hora</li>
+    <!-- PREÇO -->
+    <section class="pricing">
+      <div class="wrap">
+        <div class="sec-head"><span class="eyebrow blue">Planos</span><h2 class="h2">Tudo incluído. Cancele quando quiser.</h2><p class="lead">IA, diagramas, cabos, prancha e a sua marca — em qualquer plano.</p></div>
+        <div class="plans">
+          <div class="plan">
+            <p class="plan-tag">Mensal</p>
+            <div class="plan-price">{PRECO}<span>/mês</span></div>
+            <p class="plan-note">flexível · cancele quando quiser</p>
+            <ul class="plan-list">
+              <li>Todos os módulos (solar, elétrica, cabos, EV, material, diagramas)</li>
+              <li>Engenheira de IA que cita a norma</li>
+              <li>Prancha e relatório com a SUA marca</li>
+              <li>Sempre atualizada · PC e celular</li>
             </ul>
-            <a href={CHECKOUT_ANUAL} class="btn-primary w-full justify-center text-lg" target="_blank" rel="noopener">Assinar anual</a>
+            <a href={CHECKOUT} class="btn btn-outline" target="_blank" rel="noopener">Assinar mensal</a>
+          </div>
+          <div class="plan plan-hi">
+            <span class="plan-ribbon">⭐ 2 meses grátis</span>
+            <p class="plan-tag gold">Anual</p>
+            <div class="plan-price">{PRECO_ANUAL}<span>/ano</span></div>
+            <p class="plan-note">equivale a <strong>R$ 47,50/mês</strong> · melhor custo</p>
+            <ul class="plan-list">
+              <li>Tudo do plano mensal</li>
+              <li>2 meses grátis (paga 10, usa 12)</li>
+              <li>Preço travado por 12 meses</li>
+              <li>Acesso imediato, na hora</li>
+            </ul>
+            <a href={CHECKOUT_ANUAL} class="btn btn-solid" target="_blank" rel="noopener">Assinar anual</a>
           </div>
         </div>
-
+        <p class="pay-note">Pix, cartão ou boleto · pela Kiwify · acesso liberado na hora</p>
       </div>
-      <p class="text-center text-xs text-muted mt-6">Pix, cartão ou boleto · pela Kiwify · acesso liberado na hora</p>
-    </div>
-  </section>
+    </section>
 
-  <!-- FAQ -->
-  <section class="py-16 lg:py-20 bg-slate-50">
-    <div class="container-narrow">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Perguntas frequentes</h2>
-      <div class="space-y-4 max-w-2xl mx-auto">
-        {faq.map((f) => (
-          <details class="bg-white rounded-xl border border-slate-100 p-5 group">
-            <summary class="font-semibold text-dark cursor-pointer list-none flex justify-between items-center">
-              {f.q}
-              <span class="text-accent-500 group-open:rotate-45 transition-transform text-xl">+</span>
-            </summary>
-            <p class="text-muted mt-3 leading-relaxed">{f.a}</p>
-          </details>
-        ))}
+    <!-- FAQ -->
+    <section class="faq">
+      <div class="wrap narrow">
+        <div class="sec-head"><span class="eyebrow">Dúvidas</span><h2 class="h2">Perguntas frequentes</h2></div>
+        <div class="faq-list">
+          {faq.map((f) => (
+            <details class="faq-item">
+              <summary>{f.q}<span class="plus">+</span></summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- FECHAMENTO -->
+    <section class="close">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="wrap narrow close-inner">
+        <h2 class="close-h">Pare de calcular na mão.<br /><span class="grad">Deixe o motor entregar o projeto.</span></h2>
+        <div class="hero-cta center">
+          <a href={CTA_HREF} class="btn btn-solid" target="_blank" rel="noopener">{CTA_LABEL}</a>
+          {VENDA_ATIVA && (<a href={ACESSO} class="btn btn-ghost" target="_blank" rel="noopener">Já sou assinante → Entrar</a>)}
+        </div>
+        <p class="close-note">Ferramenta de apoio ao dimensionamento, na norma (NBR 5410, 16612, 17019 e Lei 14.300). O projeto final e a ART/CREA são do profissional habilitado.</p>
+      </div>
+    </section>
+  </div>
 
   <!-- Pixel: sinaliza intenção de assinar ao clicar -->
   <script is:inline>
@@ -271,29 +271,142 @@ const faq = [
     });
   </script>
 
-  <!-- FECHAMENTO -->
-  <section class="py-20 lg:py-28 bg-gradient-hero text-white relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
-    <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-primary-300/30 rounded-full blur-3xl"></div>
-    <div class="container-narrow relative z-10 text-center">
-      <h2 class="text-3xl lg:text-5xl font-display font-bold mb-6 leading-tight">
-        Pare de calcular na mão.<br class="hidden lg:block" />
-        <span class="text-accent-400">Deixe a ferramenta (e a IA) trabalharem.</span>
-      </h2>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mt-4">
-        <a href={CTA_HREF} class="btn-primary text-lg inline-flex" target="_blank" rel="noopener">
-          {CTA_LABEL}
-        </a>
-        {VENDA_ATIVA && (
-          <a href={ACESSO} class="text-accent-400 underline font-semibold" target="_blank" rel="noopener">
-            Já sou assinante → Entrar
-          </a>
-        )}
-      </div>
-      <p class="text-sm text-slate-300 mt-6 max-w-xl mx-auto">
-        Ferramenta de apoio ao dimensionamento, na norma (NBR 5410, NBR 17019, Lei 14.300).
-        O projeto final e a ART/CREA são do profissional habilitado.
-      </p>
-    </div>
-  </section>
+  <style>
+    /* ===== Landing dark — cara da calculadora (navy + azul glow + dourado) ===== */
+    .calc-lp{
+      --bg:#0b1220; --surf:#101a2e; --surf2:#132139; --line:#22304a;
+      --blue:#1FB8E8; --blue-deep:#0E7CB8; --gold:#FFC72C; --green:#2ecc9b;
+      --txt:#eef3f9; --mut:#9fb4cc;
+      background:var(--bg); color:var(--txt);
+      font-family:'Inter',system-ui,sans-serif; line-height:1.6;
+    }
+    .calc-lp .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+    .calc-lp .wrap.narrow{max-width:760px}
+    .calc-lp h1,.calc-lp h2,.calc-lp h3{font-family:'Space Grotesk','Inter',sans-serif;line-height:1.12;letter-spacing:-0.01em;color:var(--txt)}
+    .calc-lp .grad{background:linear-gradient(100deg,var(--blue),var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .calc-lp .eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+    .calc-lp .eyebrow.blue{color:var(--blue)}
+    .calc-lp .sec-head{max-width:720px;margin:0 auto 40px;text-align:center}
+    .calc-lp .h2{font-size:clamp(26px,4vw,40px);font-weight:700;margin:0 0 10px}
+    .calc-lp .lead{color:var(--mut);font-size:17px;margin:0}
+
+    .calc-lp .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:16px;padding:14px 26px;border-radius:999px;text-decoration:none;transition:.2s;border:1px solid transparent;cursor:pointer}
+    .calc-lp .btn-solid{background:linear-gradient(100deg,var(--blue),var(--blue-deep));color:#02121b;box-shadow:0 0 40px rgba(31,184,232,.35)}
+    .calc-lp .btn-solid:hover{transform:translateY(-2px);box-shadow:0 0 54px rgba(31,184,232,.5)}
+    .calc-lp .btn-ghost{color:var(--blue);border-color:var(--line);background:rgba(31,184,232,.06)}
+    .calc-lp .btn-ghost:hover{background:rgba(31,184,232,.12)}
+    .calc-lp .btn-outline{color:var(--txt);border-color:var(--line);background:transparent}
+    .calc-lp .btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+
+    /* HERO */
+    .calc-lp .hero{position:relative;overflow:hidden;padding:84px 0 76px}
+    .calc-lp .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;opacity:.14;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 30%,transparent 75%)}
+    .calc-lp .hero-glow{position:absolute;top:-140px;right:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(31,184,232,.28),transparent 62%);filter:blur(30px);pointer-events:none}
+    .calc-lp .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;max-width:1120px;margin:0 auto;padding:0 20px}
+    .calc-lp .hero-h1{font-size:clamp(34px,5.4vw,60px);font-weight:700;margin:0 0 18px}
+    .calc-lp .hero-sub{color:var(--mut);font-size:18px;max-width:560px;margin:0 0 26px}
+    .calc-lp .hero-sub strong{color:var(--txt)}
+    .calc-lp .hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .calc-lp .hero-cta.center{justify-content:center}
+    .calc-lp .hero-foot{color:var(--mut);font-size:13.5px;margin-top:16px}
+
+    /* Console (assinatura) */
+    .calc-lp .console{background:linear-gradient(180deg,var(--surf),var(--bg));border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 80px -30px rgba(0,0,0,.7),0 0 0 1px rgba(31,184,232,.06);overflow:hidden}
+    .calc-lp .console-top{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+    .calc-lp .dot{width:11px;height:11px;border-radius:50%}
+    .calc-lp .d1{background:#ef5a59}.calc-lp .d2{background:var(--gold)}.calc-lp .d3{background:var(--green)}
+    .calc-lp .console-title{margin-left:8px;font-size:12.5px;color:var(--mut);font-family:'Space Grotesk',sans-serif;letter-spacing:.04em}
+    .calc-lp .console-body{padding:18px 18px 20px;font-size:14.5px}
+    .calc-lp .console .line{display:flex;justify-content:space-between;gap:12px;margin-top:12px}
+    .calc-lp .console .line:first-child{margin-top:0}
+    .calc-lp .console .k{color:var(--mut)}
+    .calc-lp .console .v{color:var(--txt);font-weight:700;font-family:'Space Grotesk',sans-serif}
+    .calc-lp .console .sub{font-size:12.5px;color:var(--mut);margin-top:3px}
+    .calc-lp .console .ok{color:var(--green);font-weight:600}
+    .calc-lp .console .motor{color:var(--blue);font-weight:600;margin-left:4px}
+    .calc-lp .console-cta{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);color:var(--blue);font-size:13px}
+
+    /* EVOLUÇÃO — timeline */
+    .calc-lp .evo{padding:76px 0;border-top:1px solid var(--line)}
+    .calc-lp .timeline{list-style:none;margin:0;padding:0;position:relative;max-width:820px;margin-inline:auto}
+    .calc-lp .timeline::before{content:"";position:absolute;left:23px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--blue),transparent)}
+    .calc-lp .tl-item{position:relative;display:flex;gap:20px;padding-left:2px;margin-bottom:18px}
+    .calc-lp .tl-node{flex:0 0 auto;width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--blue);background:var(--surf);border:1px solid var(--line);z-index:1}
+    .calc-lp .tl-item:last-child .tl-node{color:#02121b;background:linear-gradient(100deg,var(--blue),var(--green));border-color:transparent}
+    .calc-lp .tl-card{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:16px 18px;flex:1}
+    .calc-lp .tl-fase{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+    .calc-lp .tl-t{font-size:18px;margin:4px 0 6px}
+    .calc-lp .tl-d{color:var(--mut);font-size:14.5px;margin:0}
+
+    /* FEATURES */
+    .calc-lp .feats{padding:76px 0;background:var(--surf);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .calc-lp .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .calc-lp .feat{position:relative;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:22px;transition:.2s}
+    .calc-lp .feat:hover{transform:translateY(-3px);border-color:rgba(31,184,232,.5)}
+    .calc-lp .feat.is-new{border-color:rgba(31,184,232,.4);box-shadow:0 0 0 1px rgba(31,184,232,.12) inset}
+    .calc-lp .badge{position:absolute;top:14px;right:14px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#02121b;background:var(--gold);padding:3px 8px;border-radius:999px}
+    .calc-lp .feat-ico{font-size:26px;width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:rgba(31,184,232,.1);border:1px solid var(--line);margin-bottom:14px}
+    .calc-lp .feat-t{font-size:16.5px;margin:0 0 6px}
+    .calc-lp .feat-d{color:var(--mut);font-size:14px;margin:0}
+
+    /* DIAGRAMAS */
+    .calc-lp .diag{padding:76px 0}
+    .calc-lp .diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .calc-lp .diag-card{margin:0;background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:14px}
+    .calc-lp .diag-img{border-radius:10px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+    .calc-lp .diag-img img{width:100%;height:auto;display:block}
+    .calc-lp .diag-t{font-size:17px;margin:14px 0 4px}
+    .calc-lp .diag-d{color:var(--mut);font-size:14px;margin:0}
+    .calc-lp .diag-foot{text-align:center;color:var(--mut);font-size:13.5px;margin-top:24px}
+
+    /* PARA QUEM */
+    .calc-lp .who{padding:76px 0;background:var(--surf);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .calc-lp .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .calc-lp .who-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:26px;text-align:center}
+    .calc-lp .who-ico{font-size:34px;margin-bottom:12px}
+    .calc-lp .who-t{font-size:18px;margin:0 0 6px}
+    .calc-lp .who-d{color:var(--mut);font-size:14.5px;margin:0}
+
+    /* PREÇO */
+    .calc-lp .pricing{padding:76px 0}
+    .calc-lp .plans{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:840px;margin:0 auto;align-items:stretch}
+    .calc-lp .plan{position:relative;background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:30px;display:flex;flex-direction:column}
+    .calc-lp .plan-hi{border-color:rgba(31,184,232,.55);box-shadow:0 0 60px -20px rgba(31,184,232,.5)}
+    .calc-lp .plan-ribbon{position:absolute;top:-12px;left:30px;font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#02121b;background:var(--gold);padding:5px 12px;border-radius:999px}
+    .calc-lp .plan-tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin:0 0 8px}
+    .calc-lp .plan-tag.gold{color:var(--gold)}
+    .calc-lp .plan-price{font-family:'Space Grotesk',sans-serif;font-size:46px;font-weight:700}
+    .calc-lp .plan-price span{font-size:18px;font-weight:400;color:var(--mut)}
+    .calc-lp .plan-note{color:var(--mut);font-size:14px;margin:2px 0 20px}
+    .calc-lp .plan-note strong{color:var(--txt)}
+    .calc-lp .plan-list{list-style:none;margin:0 0 24px;padding:0;flex:1;display:flex;flex-direction:column;gap:10px}
+    .calc-lp .plan-list li{position:relative;padding-left:26px;color:var(--txt);font-size:14.5px}
+    .calc-lp .plan-list li::before{content:"✓";position:absolute;left:0;top:0;color:var(--green);font-weight:800}
+    .calc-lp .plan .btn{width:100%}
+    .calc-lp .pay-note{text-align:center;color:var(--mut);font-size:12.5px;margin-top:18px}
+
+    /* FAQ */
+    .calc-lp .faq{padding:76px 0;background:var(--surf);border-top:1px solid var(--line)}
+    .calc-lp .faq-list{display:flex;flex-direction:column;gap:12px}
+    .calc-lp .faq-item{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:6px 18px}
+    .calc-lp .faq-item summary{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;list-style:none;font-weight:600;padding:14px 0;font-size:15.5px}
+    .calc-lp .faq-item summary::-webkit-details-marker{display:none}
+    .calc-lp .faq-item .plus{color:var(--blue);font-size:22px;transition:.2s;flex:0 0 auto}
+    .calc-lp .faq-item[open] .plus{transform:rotate(45deg)}
+    .calc-lp .faq-item p{color:var(--mut);margin:0 0 14px;font-size:14.5px}
+
+    /* FECHAMENTO */
+    .calc-lp .close{position:relative;overflow:hidden;padding:90px 0;text-align:center;border-top:1px solid var(--line)}
+    .calc-lp .close .hero-glow{top:auto;bottom:-160px;left:-120px;right:auto}
+    .calc-lp .close-inner{position:relative;z-index:1}
+    .calc-lp .close-h{font-size:clamp(28px,4.6vw,46px);font-weight:700;margin:0 0 24px}
+    .calc-lp .close-note{color:var(--mut);font-size:13.5px;max-width:560px;margin:22px auto 0}
+
+    @media (max-width:880px){
+      .calc-lp .hero-inner{grid-template-columns:1fr;gap:34px}
+      .calc-lp .feat-grid,.calc-lp .who-grid{grid-template-columns:1fr}
+      .calc-lp .diag-grid,.calc-lp .plans{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion:reduce){.calc-lp *{transition:none!important}}
+  </style>
 </Layout>
