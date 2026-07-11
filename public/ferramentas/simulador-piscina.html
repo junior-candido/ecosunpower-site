@@ -586,13 +586,46 @@
   // COP = quantos kWh de calor a bomba entrega por kWh elétrico. Valores de
   // catálogo (física, não chute): bomba de calor 5–6; resistência elétrica 1.
   // Editável — se você tiver o COP do manual da bomba, é só digitar.
-  const BOMBAS={
-    "bc-inverter":{nome:"Bomba de calor inverter", cop:6.0},
-    "bc-padrao":  {nome:"Bomba de calor (padrão)", cop:5.5},
-    "bc-onoff":   {nome:"Bomba de calor on/off",   cop:5.0},
-    "resistencia":{nome:"Aquecedor elétrico (resistência)", cop:1.0},
-    "outra":      {nome:"Outra / do manual (edite o COP)", cop:5.5}
-  };
+  // Biblioteca de bombas — specs REAIS dos manuais (Brustec, Sodramar, TIV).
+  // Onde o manual não traz um valor, ele fica de fora e a pessoa digita na ficha.
+  // est:true = COP estimado pelo tipo (manual não publica COP) → selo "confira".
+  // potW = potência elétrica máxima (dimensiona disjuntor). Inverter: COP a plena carga.
+  const BOMBAS=[
+    {g:"Genérico",              k:"bc-inverter", nome:"Bomba de calor inverter (genérico)", cop:6.0, est:true},
+    {g:"Genérico",              k:"bc-padrao",   nome:"Bomba de calor padrão (genérico)",   cop:5.5, est:true},
+    {g:"Genérico",              k:"bc-onoff",    nome:"Bomba de calor on/off (genérico)",   cop:5.0, est:true},
+    {g:"Genérico",              k:"resistencia", nome:"Aquecedor elétrico (resistência)",   cop:1.0},
+    {g:"Genérico",              k:"outra",       nome:"Outra / digitar do manual",          cop:null},
+    {g:"Brustec BR (on-off)",   k:"br03",  nome:"Brustec BR-03+", cop:3.34, potW:1600, btu:11384, fases:"mono"},
+    {g:"Brustec BR (on-off)",   k:"br05",  nome:"Brustec BR-05+", cop:4.48, potW:1900, btu:19555, fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br30",  nome:"Brustec BR-30",  cop:6.3,  potW:1700,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br40",  nome:"Brustec BR-40",  cop:6.4,  potW:1800, btu:32415, fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br50",  nome:"Brustec BR-50",  cop:6.3,  potW:2600,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br60",  nome:"Brustec BR-60",  cop:6.3,  potW:3200,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br80",  nome:"Brustec BR-80",  cop:6.2,  potW:3900,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br110", nome:"Brustec BR-110", cop:5.35, potW:4600,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br140", nome:"Brustec BR-140", cop:5.43, potW:6400,  fases:"mono"},
+    {g:"Brustec BR (inverter)", k:"br175", nome:"Brustec BR-175", cop:5.81, potW:10660, fases:"tri"},
+    {g:"Brustec BR (inverter)", k:"br225", nome:"Brustec BR-225", cop:4.88, potW:13620, fases:"tri"},
+    {g:"Brustec ResiHeat",      k:"br05p", nome:"Brustec BR-05P", cop:5.1,  potW:600,   fases:"mono"},
+    {g:"Brustec ResiHeat",      k:"br09p", nome:"Brustec BR-09P", cop:5.43, potW:1150,  fases:"mono"},
+    {g:"Brustec ResiHeat",      k:"br12p", nome:"Brustec BR-12P", cop:5.1,  potW:2600,  fases:"mono"},
+    {g:"Sodramar TH",           k:"th25",  nome:"Sodramar TH-25", cop:4.5, est:true, potW:1500, btu:24500, fases:"bi"},
+    {g:"Sodramar TH",           k:"th40",  nome:"Sodramar TH-40", cop:4.5, est:true, potW:1700, btu:39000, fases:"bi"},
+    {g:"Sodramar TH",           k:"th60",  nome:"Sodramar TH-60", cop:4.5, est:true, potW:2800, btu:59000, fases:"bi"},
+    {g:"Sodramar TH",           k:"th80",  nome:"Sodramar TH-80", cop:4.5, est:true, potW:3500, btu:78538, fases:"bi"},
+    {g:"Sodramar NEW SDI",      k:"sdi25", nome:"Sodramar NEW SDI 25",  cop:5.5, est:true, potW:1500, btu:30000,  fases:"mono"},
+    {g:"Sodramar NEW SDI",      k:"sdi40", nome:"Sodramar NEW SDI 40",  cop:5.5, est:true, potW:1700, btu:45000,  fases:"mono"},
+    {g:"Sodramar NEW SDI",      k:"sdi60", nome:"Sodramar NEW SDI 60",  cop:5.5, est:true, potW:2800, btu:65000,  fases:"mono"},
+    {g:"Sodramar NEW SDI",      k:"sdi80", nome:"Sodramar NEW SDI 80",  cop:5.5, est:true, potW:3500, btu:86000,  fases:"mono"},
+    {g:"Sodramar NEW SDI",      k:"sdi120",nome:"Sodramar NEW SDI 120", cop:5.5, est:true, potW:5500, btu:120000, fases:"mono"},
+    {g:"TIV",                   k:"tiv25", nome:"TIV 25", cop:5.0, est:true, potW:2200, btu:25000, fases:"mono"},
+    {g:"TIV",                   k:"tiv35", nome:"TIV 35", cop:5.0, est:true, potW:2600, btu:35000, fases:"mono"},
+    {g:"TIV",                   k:"tiv45", nome:"TIV 45", cop:5.0, est:true, potW:2800, btu:45000, fases:"mono"},
+    {g:"TIV",                   k:"tiv65", nome:"TIV 65", cop:5.0, est:true, potW:4200, btu:61000, fases:"mono"},
+    {g:"TIV",                   k:"tiv75", nome:"TIV 75", cop:5.0, est:true, potW:5300, btu:75000, fases:"mono"}
+  ];
+  function bombaByKey(k){ for(var i=0;i<BOMBAS.length;i++){ if(BOMBAS[i].k===k) return BOMBAS[i]; } return null; }
 
   // ---------- CONCESSIONÁRIAS ----------
   // Padrão comum de baixa tensão: monofásico 220 V (F+N), trifásico 380/220 V,
@@ -915,8 +948,12 @@
   }
   function fillBombaSelect(){
     var sel=$("bombaSel"); if(!sel) return;
-    var html="";
-    for(var k in BOMBAS){ if(!BOMBAS.hasOwnProperty(k)) continue; html+='<option value="'+k+'">'+BOMBAS[k].nome+'</option>'; }
+    var html="", curG=null;
+    for(var i=0;i<BOMBAS.length;i++){ var b=BOMBAS[i];
+      if(b.g!==curG){ if(curG!==null) html+="</optgroup>"; html+='<optgroup label="'+b.g+'">'; curG=b.g; }
+      html+='<option value="'+b.k+'">'+b.nome+'</option>';
+    }
+    if(curG!==null) html+="</optgroup>";
     sel.innerHTML=html; sel.value="bc-padrao";
   }
   function initExtras(){
@@ -936,16 +973,25 @@
 
     // ---- ficha da bomba: potência alimenta a carga (→ cabo/disjuntor), COP alimenta o consumo ----
     function heatLoad(){ for(var i=0;i<loads.length;i++){ if(loads[i].heat) return loads[i]; } return null; }
+    function syncPadraoSeg(){
+      var ps=$("padraoSeg"); if(!ps) return;
+      [].forEach.call(ps.children,function(x){ x.classList.toggle("sel", x.dataset.p===padraoMode); });
+    }
     function updateBombaHint(){
       var hint=$("bombaHint"); if(!hint) return;
       var h=heatLoad(), pot=h?h.w:0, cop=getCOP(), btu=parseNum($("btuInput")&&$("btuInput").value);
       var calor=pot*cop/1000;
-      hint.innerHTML="Motor absorveu: <b>"+(pot/1000).toLocaleString("pt-BR",{maximumFractionDigits:2})+" kW</b> elétricos × COP <b>"+cop.toLocaleString("pt-BR",{maximumFractionDigits:1})+"</b> → ~<b>"+calor.toLocaleString("pt-BR",{maximumFractionDigits:1})+" kW de calor</b>"+(btu>0?(" · "+Math.round(btu).toLocaleString("pt-BR")+" BTU/h"):"");
+      var sel=$("bombaSel"), b=sel?bombaByKey(sel.value):null;
+      var est=(b&&b.est&&b.cop!=null)?' — <span style="color:var(--gold)">⚠️ COP estimado por tipo, confira no manual</span>':'';
+      hint.innerHTML="Motor absorveu: <b>"+(pot/1000).toLocaleString("pt-BR",{maximumFractionDigits:2})+" kW</b> elétricos × COP <b>"+cop.toLocaleString("pt-BR",{maximumFractionDigits:1})+"</b> → ~<b>"+calor.toLocaleString("pt-BR",{maximumFractionDigits:1})+" kW de calor</b>"+(btu>0?(" · "+Math.round(btu).toLocaleString("pt-BR")+" BTU/h"):"")+est;
     }
     fillBombaSelect();
     var bs=$("bombaSel"); if(bs) bs.addEventListener("change",function(){
-      var b=BOMBAS[bs.value]||BOMBAS["bc-padrao"];
-      var cop=$("copInput"); if(cop) cop.value=b.cop.toFixed(1).replace(".",",");
+      var b=bombaByKey(bs.value); if(!b) return;
+      var cop=$("copInput"); if(cop && b.cop!=null) cop.value=String(b.cop).replace(".",",");
+      var pot=$("potInput"); if(pot && b.potW!=null){ pot.value=String(b.potW); var h=heatLoad(); if(h){ h.w=b.potW; renderLoads(); } }
+      var btuf=$("btuInput"); if(btuf && b.btu!=null) btuf.value=Number(b.btu).toLocaleString("pt-BR");
+      if(b.fases){ padraoMode=b.fases; syncPadraoSeg(); }
       recalc(); calcConsumo(); updateBombaHint();
     });
     var cop=$("copInput"); if(cop) cop.addEventListener("input",function(){recalc();calcConsumo();updateBombaHint();});
@@ -958,9 +1004,7 @@
     var ps=$("padraoSeg");
     if(ps) ps.addEventListener("click",function(e){
       var b=e.target.closest("button"); if(!b) return;
-      padraoMode=b.dataset.p;
-      [].forEach.call(ps.children,function(x){x.classList.toggle("sel",x===b);});
-      recalc();
+      padraoMode=b.dataset.p; syncPadraoSeg(); recalc();
     });
     refreshDims(); updateBombaHint();
   }
