@@ -64,13 +64,13 @@ const hasAnyPost = allPosts.length > 0;
               type="text"
               id="blog-search"
               placeholder="Buscar artigo (digite título, palavra-chave ou tema)..."
-              class="w-full px-6 py-4 pl-14 pr-12 bg-white text-dark placeholder-slate-400 rounded-2xl shadow-xl focus:outline-none focus:ring-4 focus:ring-accent-400/40 text-base"
+              class="w-full px-6 py-4 pl-14 pr-12 bg-navy-700 text-ink placeholder-ink-mut2 border border-navy-line2 rounded-2xl shadow-xl focus:outline-none focus:ring-4 focus:ring-accent-400/40 text-base"
               autocomplete="off"
             />
             <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
             </svg>
-            <button id="blog-search-clear" type="button" class="hidden absolute right-4 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500" aria-label="Limpar busca">
+            <button id="blog-search-clear" type="button" class="hidden absolute right-4 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-navy-600 hover:bg-navy-500 flex items-center justify-center text-ink-mut" aria-label="Limpar busca">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           </div>
@@ -80,12 +80,12 @@ const hasAnyPost = allPosts.length > 0;
   </section>
 
   {!hasAnyPost && (
-    <section class="section bg-surface-alt">
+    <section class="section bg-navy border-t border-navy-line">
       <div class="container-wide">
-        <div class="max-w-2xl mx-auto text-center bg-white rounded-3xl p-12 shadow-card">
+        <div class="max-w-2xl mx-auto text-center bg-navy-600 rounded-3xl p-12 border border-navy-line">
           <div class="text-6xl mb-6">📝</div>
-          <h2 class="text-3xl mb-4">Em construção</h2>
-          <p class="text-muted leading-relaxed mb-8">
+          <h2 class="text-3xl mb-4 font-display font-bold text-ink">Em construção</h2>
+          <p class="text-ink-mut leading-relaxed mb-8">
             Estamos preparando conteúdo de alto nível sobre energia solar, baterias, Grid Zero,
             autoconsumo e mercado livre. Em breve, publicações regulares.
           </p>
@@ -98,7 +98,7 @@ const hasAnyPost = allPosts.length > 0;
   )}
 
   {hasAnyPost && (
-    <section class="section bg-surface-alt">
+    <section class="section bg-navy border-t border-navy-line">
       <div class="container-wide">
         <!-- Filtros de categoria -->
         <div class="flex items-center gap-2 mb-10 overflow-x-auto pb-2 -mx-4 px-4" id="blog-filters">
@@ -116,10 +116,10 @@ const hasAnyPost = allPosts.length > 0;
         </div>
 
         <!-- Empty state da busca -->
-        <div id="blog-no-results" class="hidden text-center py-16 bg-white rounded-2xl shadow-card mb-12">
+        <div id="blog-no-results" class="hidden text-center py-16 bg-navy-600 rounded-2xl border border-navy-line mb-12">
           <div class="text-5xl mb-4">🔍</div>
-          <h3 class="text-2xl font-bold mb-2">Nenhum artigo encontrado</h3>
-          <p class="text-muted">Tenta outra palavra-chave ou limpa a busca.</p>
+          <h3 class="text-2xl font-bold mb-2 text-ink">Nenhum artigo encontrado</h3>
+          <p class="text-ink-mut">Tenta outra palavra-chave ou limpa a busca.</p>
         </div>
 
         <!-- Featured post -->
@@ -130,7 +130,7 @@ const hasAnyPost = allPosts.length > 0;
             data-cat={featured.data.category}
             data-search={`${featured.data.title} ${featured.data.description} ${featured.data.tags.join(' ')} ${categoryLabel[featured.data.category]}`.toLowerCase()}
           >
-            <div class="bg-white rounded-3xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300">
+            <div class="bg-navy-600 rounded-3xl overflow-hidden border border-navy-line hover:border-navy-line2 transition-all duration-300">
               <div class="grid md:grid-cols-2 gap-0">
                 {featured.data.heroImage ? (
                   <div class="aspect-[4/3] md:aspect-auto md:h-full bg-dark relative overflow-hidden">
@@ -160,12 +160,12 @@ const hasAnyPost = allPosts.length > 0;
                       {categoryLabel[featured.data.category]}
                     </span>
                   </div>
-                  <h2 class="text-2xl md:text-3xl font-bold mb-4 group-hover:text-primary-600 transition-colors leading-tight">
+                  <h2 class="text-2xl md:text-3xl font-bold mb-4 text-ink group-hover:text-primary-400 transition-colors leading-tight">
                     {featured.data.title}
                   </h2>
-                  <p class="text-muted leading-relaxed mb-6">{featured.data.description}</p>
+                  <p class="text-ink-mut leading-relaxed mb-6">{featured.data.description}</p>
                   <div class="flex items-center justify-between flex-wrap gap-3">
-                    <div class="flex items-center gap-3 text-xs text-muted">
+                    <div class="flex items-center gap-3 text-xs text-ink-mut">
                       <time datetime={featured.data.pubDate.toISOString()}>{dateFmt(featured.data.pubDate)}</time>
                       {featured.data.readingTime && (
                         <>
@@ -191,7 +191,7 @@ const hasAnyPost = allPosts.length > 0;
             {rest.map((post) => (
               <a
                 href={`/blog/${post.slug}`}
-                class="blog-card group block bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                class="blog-card group block bg-navy-600 rounded-2xl overflow-hidden border border-navy-line hover:border-navy-line2 transition-all duration-300 hover:-translate-y-1 flex flex-col"
                 data-cat={post.data.category}
                 data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')} ${categoryLabel[post.data.category]}`.toLowerCase()}
               >
@@ -219,14 +219,14 @@ const hasAnyPost = allPosts.length > 0;
                   <span class="inline-flex items-center w-fit px-2 py-0.5 bg-primary-100 text-primary-700 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
                     {categoryLabel[post.data.category]}
                   </span>
-                  <h3 class="text-lg font-bold mb-2 group-hover:text-primary-600 transition-colors leading-tight line-clamp-2">
+                  <h3 class="text-lg font-bold mb-2 text-ink group-hover:text-primary-400 transition-colors leading-tight line-clamp-2">
                     {post.data.title}
                   </h3>
-                  <p class="text-sm text-muted leading-relaxed mb-4 line-clamp-3 flex-1">
+                  <p class="text-sm text-ink-mut leading-relaxed mb-4 line-clamp-3 flex-1">
                     {post.data.description}
                   </p>
-                  <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                    <div class="flex items-center gap-2 text-xs text-muted">
+                  <div class="flex items-center justify-between pt-4 border-t border-navy-line">
+                    <div class="flex items-center gap-2 text-xs text-ink-mut">
                       <time datetime={post.data.pubDate.toISOString()}>{dateFmt(post.data.pubDate)}</time>
                       {post.data.readingTime && (
                         <>
@@ -248,7 +248,7 @@ const hasAnyPost = allPosts.length > 0;
 
         <!-- CTA bottom -->
         <div class="mt-16 text-center">
-          <p class="text-muted text-sm mb-4">Tem dúvida sobre energia solar? A gente responde rápido no zap.</p>
+          <p class="text-ink-mut text-sm mb-4">Tem dúvida sobre energia solar? A gente responde rápido no zap.</p>
           <a href="https://wa.me/5561998805002?text=Oi!%20Vi%20o%20blog%20da%20EcoSunPower%20e%20gostei%2C%20queria%20conversar" target="_blank" rel="noopener" class="btn-primary">
             Falar com a EcoSunPower
           </a>
@@ -273,13 +273,13 @@ const hasAnyPost = allPosts.length > 0;
   }
   /* Filter button states */
   .blog-filter-btn {
-    background: white;
-    color: #64748B;
-    border-color: #E2E8F0;
+    background: #132139;
+    color: #9fb4cc;
+    border-color: #22304a;
   }
   .blog-filter-btn:hover {
-    border-color: #1FB8E8;
-    color: #0E7CB8;
+    border-color: #1ca9e0;
+    color: #eef3f9;
   }
   .blog-filter-btn.active {
     background: linear-gradient(135deg, #1FB8E8 0%, #0E7CB8 100%);
