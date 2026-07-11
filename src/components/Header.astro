@@ -111,7 +111,7 @@ const PAINEL_URL = 'https://propostas.ecosunpower.eng.br/dashboard';
   </div>
 
   <!-- Mobile menu (vertical: lista completa cabe) -->
-  <nav id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+  <nav id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100 max-h-[calc(100dvh-6rem)] overflow-y-auto overscroll-contain">
     <div class="container-wide py-4 flex flex-col gap-2">
       {navLinks.map((link) => (
         <a
