@@ -7,19 +7,19 @@ const todos = await getCollection('cases');
 const featured = todos.filter(c => c.data.featured).slice(0, 3);
 ---
 
-<section class="section bg-surface">
+<section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
   <div class="container-wide">
-    <div class="mb-12 text-center">
-      <h2 class="mb-3 text-3xl lg:text-4xl">Veja quem já confiou</h2>
-      <p class="text-muted">600+ obras entregues em Brasília e Goiás.</p>
+    <div class="mb-10 text-center">
+      <h2 class="mb-3 text-3xl lg:text-4xl font-display font-bold text-ink">Veja quem já confiou</h2>
+      <p class="text-ink-mut">600+ obras entregues em Brasília e Goiás.</p>
     </div>
 
-    <div class="mb-10 flex flex-col items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 sm:flex-row sm:gap-8">
+    <div class="mb-10 flex flex-col items-center justify-center gap-4 rounded-2xl border border-navy-line bg-navy-700 p-6 sm:flex-row sm:gap-8">
       <div class="flex items-center gap-3">
         <div class="text-4xl">⭐</div>
         <div>
-          <div class="text-2xl font-bold text-dark">{config.googleNota} no Google</div>
-          <div class="text-sm text-muted">{config.googleQtdAvaliacoes} avaliações verificadas</div>
+          <div class="text-2xl font-bold text-ink">{config.googleNota} no Google</div>
+          <div class="text-sm text-ink-mut">{config.googleQtdAvaliacoes} avaliações verificadas</div>
         </div>
       </div>
       <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-secondary">
@@ -45,17 +45,17 @@ const featured = todos.filter(c => c.data.featured).slice(0, 3);
     </div>
 
     <div class="mt-12 text-center">
-      <a href="/portfolio" class="btn-primary text-lg">Veja mais casos de sucesso →</a>
+      <a href="/portfolio" class="btn-primary text-base">Veja mais casos de sucesso →</a>
 
       <div class="mt-6">
-        <p class="mb-3 text-sm text-muted">Veja mais sobre nosso trabalho:</p>
+        <p class="mb-3 text-sm text-ink-mut">Veja mais sobre nosso trabalho:</p>
         <div class="flex flex-wrap items-center justify-center gap-3">
           <a href={config.googleUrl} target="_blank" rel="noopener"
-             class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold transition hover:border-primary-600 hover:text-primary-600">
+             class="inline-flex items-center gap-2 rounded-full border border-navy-line bg-navy-700 px-4 py-2 text-sm font-semibold text-ink transition hover:border-primary-500 hover:text-primary-400">
             🔍 Google Meu Negócio
           </a>
           <a href={config.instagramUrl} target="_blank" rel="noopener"
-             class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold transition hover:border-primary-600 hover:text-primary-600">
+             class="inline-flex items-center gap-2 rounded-full border border-navy-line bg-navy-700 px-4 py-2 text-sm font-semibold text-ink transition hover:border-primary-500 hover:text-primary-400">
             📷 Instagram
           </a>
         </div>
