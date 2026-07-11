@@ -2,31 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 
 const valores = [
-  {
-    icon: '🛡️',
-    titulo: 'Segurança e Conformidade',
-    desc: 'Atuamos em conformidade com a NBR 5410, NR-10 e normas aplicáveis, garantindo sistemas seguros e confiáveis.',
-  },
-  {
-    icon: '🤝',
-    titulo: 'Transparência e Ética',
-    desc: 'Trabalhamos com clareza, honestidade e responsabilidade em todas as etapas do serviço.',
-  },
-  {
-    icon: '🏆',
-    titulo: 'Qualidade e Responsabilidade',
-    desc: 'Utilizamos materiais certificados e seguimos boas práticas de engenharia em cada projeto.',
-  },
-  {
-    icon: '🎯',
-    titulo: 'Foco no Cliente',
-    desc: 'Desenvolvemos soluções eficientes, alinhadas às reais necessidades e objetivos de cada cliente.',
-  },
-  {
-    icon: '🚀',
-    titulo: 'Evolução Contínua',
-    desc: 'Buscamos constante atualização técnica e adoção de tecnologias que gerem mais valor.',
-  },
+  { icon: '🛡️', titulo: 'Segurança e Conformidade', desc: 'Atuamos em conformidade com a NBR 5410, NR-10 e normas aplicáveis, garantindo sistemas seguros e confiáveis.' },
+  { icon: '🤝', titulo: 'Transparência e Ética', desc: 'Trabalhamos com clareza, honestidade e responsabilidade em todas as etapas do serviço.' },
+  { icon: '🏆', titulo: 'Qualidade e Responsabilidade', desc: 'Utilizamos materiais certificados e seguimos boas práticas de engenharia em cada projeto.' },
+  { icon: '🎯', titulo: 'Foco no Cliente', desc: 'Desenvolvemos soluções eficientes, alinhadas às reais necessidades e objetivos de cada cliente.' },
+  { icon: '🚀', titulo: 'Evolução Contínua', desc: 'Buscamos constante atualização técnica e adoção de tecnologias que gerem mais valor.' },
 ];
 
 const certificacoes = [
@@ -41,23 +21,21 @@ const certificacoes = [
 ---
 
 <Layout
-  title="Sobre a EcoSunPower — Engenharia Solar com Propósito"
-  description="Conheça a história da EcoSunPower: 10 anos de engenharia solar especializada em Brasília e Goiás. Missão, visão, valores e diferenciais técnicos."
+  title="Sobre a EcoSunPower — Engenharia Elétrica com Propósito"
+  description="Conheça a EcoSunPower: 10 anos de engenharia elétrica e solar em Brasília e Goiás. Missão, visão, valores e diferenciais técnicos."
 >
   <!-- Hero -->
-  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
-    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
-
+  <section class="relative overflow-hidden bg-navy py-20 lg:py-28">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(55% 60% at 50% -10%, rgba(28,169,224,.28), transparent 60%), radial-gradient(40% 40% at 85% 10%, rgba(245,184,46,.10), transparent 60%)"></div>
     <div class="container-narrow relative z-10 text-center">
-      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-navy-line2 rounded-full mb-6 text-sm font-semibold text-ink">
         ⚡ 10 anos · 600+ projetos · Engenharia própria
       </span>
-      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
-        Engenharia solar<br />
-        com <span class="text-accent-400">propósito</span>.
+      <h1 class="text-4xl lg:text-6xl font-display font-bold text-ink mb-6 leading-tight text-balance">
+        Engenharia elétrica<br />
+        com <span class="text-accent-500">propósito</span>.
       </h1>
-      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed">
+      <p class="text-lg lg:text-xl text-ink-mut max-w-2xl mx-auto leading-relaxed">
         Há 10 anos transformando contas de luz em economia,
         segurança e independência energética em Brasília e Goiás.
       </p>
@@ -65,31 +43,32 @@ const certificacoes = [
   </section>
 
   <!-- História -->
-  <section class="section bg-white">
+  <section class="py-16 lg:py-24 bg-navy border-t border-navy-line">
     <div class="container-narrow">
       <div class="grid lg:grid-cols-3 gap-10 items-start">
         <div class="lg:col-span-1">
-          <span class="tag-accent">Nossa história</span>
-          <h2 class="text-4xl mt-4">10 anos transformando energia em liberdade</h2>
+          <span class="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] uppercase text-accent-500">
+            <span class="w-5 h-px bg-accent-500"></span> Nossa história
+          </span>
+          <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mt-4 text-balance">10 anos transformando energia em liberdade</h2>
         </div>
-        <div class="lg:col-span-2 space-y-5 text-lg text-muted leading-relaxed">
+        <div class="lg:col-span-2 space-y-5 text-lg text-ink-mut leading-relaxed">
           <p>
-            A <strong class="text-dark">EcoSunPower</strong> nasceu da convicção de que energia solar
-            não é só uma alternativa — é a <strong class="text-primary-600">solução definitiva</strong>
+            A <strong class="text-ink">EcoSunPower</strong> nasceu da convicção de que energia solar
+            não é só uma alternativa — é a <strong class="text-primary-400">solução definitiva</strong>
             pra quem quer liberdade financeira, segurança elétrica e responsabilidade ambiental.
           </p>
           <p>
-            Há 10 anos atuamos no mercado de energia solar fotovoltaica
-            no Distrito Federal e Goiás, entregando mais de
-            <strong class="text-dark">600 projetos</strong> entre residenciais,
+            Há 10 anos atuamos com energia solar e engenharia elétrica no Distrito Federal e Goiás,
+            entregando mais de <strong class="text-ink">600 projetos</strong> entre residenciais,
             comerciais, rurais e industriais (Grupo A).
           </p>
           <p>
-            Nossa diferença está na <strong class="text-dark">engenharia própria</strong>:
+            Nossa diferença está na <strong class="text-ink">engenharia própria</strong>:
             do projeto técnico à instalação, tudo é executado pelo nosso time qualificado.
             Não terceirizamos a parte crítica. É por isso que clientes nos escolhem
-            pra projetos complexos com baterias, Grid Zero, sistemas híbridos e
-            mercado livre de energia.
+            pra projetos complexos com baterias (BESS), Grid Zero, sistemas híbridos,
+            aquecimento e projeto elétrico completo.
           </p>
         </div>
       </div>
@@ -97,41 +76,34 @@ const certificacoes = [
   </section>
 
   <!-- Missão / Visão -->
-  <section class="section bg-surface-alt">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-wide">
       <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        <!-- Missão -->
-        <div class="card border-2 border-primary-100 hover:border-primary-300 transition-all">
+        <div class="rounded-2xl p-7 bg-navy-700 border border-navy-line hover:border-primary-500/50 transition-all">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-primary-500 text-white flex items-center justify-center text-2xl">
-              🎯
-            </div>
-            <h3 class="text-2xl font-bold">Missão</h3>
+            <div class="w-12 h-12 rounded-xl bg-primary-500 text-white flex items-center justify-center text-2xl">🎯</div>
+            <h3 class="text-2xl font-bold text-ink">Missão</h3>
           </div>
-          <p class="text-muted leading-relaxed">
-            Entregar soluções completas em energia solar fotovoltaica que gerem
-            <strong class="text-dark">economia real, segurança elétrica e retorno sustentável</strong>
-            para nossos clientes, atuando com excelência técnica, transparência e total
+          <p class="text-ink-mut leading-relaxed">
+            Entregar soluções completas em energia e elétrica que gerem
+            <strong class="text-ink">economia real, segurança elétrica e retorno sustentável</strong>
+            para nossos clientes, com excelência técnica, transparência e total
             conformidade com as normas brasileiras (NBR 5410, NR-10) e padrões das
-            concessionárias de energia, do projeto à operação do sistema.
+            concessionárias, do projeto à operação do sistema.
           </p>
         </div>
 
-        <!-- Visão -->
-        <div class="card border-2 border-accent-100 hover:border-accent-300 transition-all">
+        <div class="rounded-2xl p-7 bg-navy-700 border border-navy-line hover:border-accent-500/50 transition-all">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 rounded-xl bg-accent-500 text-dark flex items-center justify-center text-2xl">
-              🌟
-            </div>
-            <h3 class="text-2xl font-bold">Visão</h3>
+            <div class="w-12 h-12 rounded-xl bg-accent-500 text-navy flex items-center justify-center text-2xl">🌟</div>
+            <h3 class="text-2xl font-bold text-ink">Visão</h3>
           </div>
-          <p class="text-muted leading-relaxed">
-            Ser <strong class="text-dark">referência regional em energia solar</strong>
+          <p class="text-ink-mut leading-relaxed">
+            Ser <strong class="text-ink">referência regional em energia e engenharia elétrica</strong>
             pela qualidade dos projetos, confiabilidade das instalações e excelência
-            no pós-venda, acompanhando a evolução tecnológica do setor elétrico
-            e contribuindo para que a energia solar seja uma escolha
-            <strong class="text-dark">segura, acessível e estrategicamente inteligente</strong>
-            para pessoas e empresas.
+            no pós-venda, acompanhando a evolução do setor e contribuindo para que a
+            energia seja uma escolha
+            <strong class="text-ink">segura, acessível e estrategicamente inteligente</strong>.
           </p>
         </div>
       </div>
@@ -139,24 +111,22 @@ const certificacoes = [
   </section>
 
   <!-- Valores -->
-  <section class="section bg-white">
+  <section class="py-16 lg:py-24 bg-navy border-t border-navy-line">
     <div class="container-wide">
-      <div class="text-center max-w-2xl mx-auto mb-14">
-        <span class="tag">O que nos move</span>
-        <h2 class="text-4xl lg:text-5xl mt-4 mb-5">Nossos <span class="text-gradient">valores</span></h2>
-        <p class="text-lg text-muted leading-relaxed">
-          5 princípios que guiam cada decisão, projeto e relacionamento da EcoSunPower.
-        </p>
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] uppercase text-primary-400">
+          <span class="w-5 h-px bg-primary-400"></span> O que nos move <span class="w-5 h-px bg-primary-400"></span>
+        </span>
+        <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mt-4 mb-4">Nossos <span class="bg-gradient-to-r from-primary-400 to-green-500 bg-clip-text text-transparent">valores</span></h2>
+        <p class="text-lg text-ink-mut leading-relaxed">5 princípios que guiam cada decisão, projeto e relacionamento da EcoSunPower.</p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
         {valores.map((v) => (
-          <div class="card group hover:-translate-y-1 hover:border-primary-200">
+          <div class="group rounded-2xl p-6 bg-navy-600 border border-navy-line hover:border-navy-line2 hover:-translate-y-1 transition-all">
             <div class="text-4xl mb-4">{v.icon}</div>
-            <h3 class="font-bold text-lg mb-2 group-hover:text-primary-600 transition-colors">
-              {v.titulo}
-            </h3>
-            <p class="text-sm text-muted leading-relaxed">{v.desc}</p>
+            <h3 class="font-bold text-lg text-ink mb-2 group-hover:text-primary-400 transition-colors">{v.titulo}</h3>
+            <p class="text-sm text-ink-mut leading-relaxed">{v.desc}</p>
           </div>
         ))}
       </div>
@@ -164,17 +134,17 @@ const certificacoes = [
   </section>
 
   <!-- Certificações / Compliance -->
-  <section class="section bg-dark text-white">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-wide">
       <div class="max-w-5xl mx-auto">
-        <div class="text-center mb-12">
-          <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-sm font-semibold backdrop-blur-sm">
+        <div class="text-center mb-10">
+          <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-navy-line2 rounded-full text-sm font-semibold text-ink backdrop-blur-sm">
             🏛️ Conformidade técnica
           </span>
-          <h2 class="text-4xl lg:text-5xl text-white mt-5 mb-5">
-            Trabalhamos com <span class="text-accent-400">normas e responsabilidade</span>
+          <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mt-5 mb-4">
+            Trabalhamos com <span class="text-accent-500">normas e responsabilidade</span>
           </h2>
-          <p class="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p class="text-lg text-ink-mut max-w-2xl mx-auto leading-relaxed">
             Cada projeto da EcoSunPower é executado em conformidade total com
             normas técnicas brasileiras e padrões das concessionárias.
           </p>
@@ -182,9 +152,9 @@ const certificacoes = [
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {certificacoes.map((c) => (
-            <div class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 text-center hover:bg-white/10 transition-all">
-              <div class="text-2xl font-display font-bold text-accent-400 mb-2">{c.sigla}</div>
-              <div class="text-xs text-slate-400 leading-tight">{c.nome}</div>
+            <div class="bg-navy-600 border border-navy-line rounded-2xl p-5 text-center hover:border-navy-line2 transition-all">
+              <div class="text-xl font-display font-bold text-accent-500 mb-2">{c.sigla}</div>
+              <div class="text-xs text-ink-mut2 leading-tight">{c.nome}</div>
             </div>
           ))}
         </div>
@@ -193,20 +163,19 @@ const certificacoes = [
   </section>
 
   <!-- CTA -->
-  <section class="section bg-gradient-tech">
-    <div class="container-narrow text-center">
-      <h2 class="text-4xl lg:text-5xl mb-5">Pronto pra ser o próximo case?</h2>
-      <p class="text-lg text-muted max-w-xl mx-auto mb-10">
+  <section class="relative overflow-hidden py-16 lg:py-24 bg-navy border-t border-navy-line">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(60% 120% at 50% 118%, rgba(28,169,224,.20), transparent 60%)"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mb-4 text-balance">Pronto pra ser o próximo case?</h2>
+      <p class="text-lg text-ink-mut max-w-xl mx-auto mb-9">
         Agende uma conversa sem compromisso. Nossa equipe avalia
         seu caso e propõe a solução que faz sentido pra você.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="https://wa.me/5561998805002?text=Oi!%20Vi%20a%20p%C3%A1gina%20Sobre%20da%20EcoSunPower%20e%20quero%20conhecer%20a%20empresa" target="_blank" rel="noopener" class="btn-primary text-lg">
+      <div class="flex flex-col sm:flex-row gap-3.5 justify-center">
+        <a href="https://wa.me/5561998805002?text=Oi!%20Vi%20a%20p%C3%A1gina%20Sobre%20da%20EcoSunPower%20e%20quero%20conhecer%20a%20empresa" target="_blank" rel="noopener" class="btn-primary text-base">
           Falar com especialista
         </a>
-        <a href="/portfolio" class="btn-secondary text-lg">
-          Ver cases reais
-        </a>
+        <a href="/portfolio" class="btn-secondary text-base">Ver cases reais</a>
       </div>
     </div>
   </section>
