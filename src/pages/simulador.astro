@@ -8,19 +8,17 @@ import CTA from '../components/CTA.astro';
   description="Simule na prática como funciona o medidor de energia, o medidor bidirecional da geração solar e o Fio B (Lei 14.300). Veja quanto você gera, injeta e economiza."
 >
   <!-- Hero -->
-  <section class="bg-gradient-hero text-white py-16 lg:py-24 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
-    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
-
+  <section class="relative overflow-hidden bg-navy py-16 lg:py-24">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(55% 60% at 50% -10%, rgba(28,169,224,.28), transparent 60%), radial-gradient(40% 40% at 85% 10%, rgba(245,184,46,.10), transparent 60%)"></div>
     <div class="container-narrow relative z-10 text-center">
-      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-navy-line2 rounded-full mb-6 text-sm font-semibold text-ink">
         ⚡ Ferramenta interativa · grátis
       </span>
-      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
-        Entenda sua conta e o <span class="text-accent-400">Fio B</span><br class="hidden lg:block" />
+      <h1 class="text-4xl lg:text-6xl font-display font-bold text-ink mb-6 leading-tight text-balance">
+        Entenda sua conta e o <span class="text-accent-500">Fio B</span><br class="hidden lg:block" />
         na prática.
       </h1>
-      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed">
+      <p class="text-lg lg:text-xl text-ink-mut max-w-2xl mx-auto leading-relaxed">
         Mexa nos controles e veja ao vivo como o medidor registra seu consumo, como o medidor
         bidirecional conta a energia solar que você injeta na rede e como o Fio B (Lei 14.300)
         afeta seus créditos até 2029.
@@ -29,48 +27,48 @@ import CTA from '../components/CTA.astro';
   </section>
 
   <!-- Como usar -->
-  <section class="py-12 lg:py-14 bg-white">
+  <section class="py-12 lg:py-14 bg-navy border-t border-navy-line">
     <div class="container-narrow">
-      <h2 class="text-2xl lg:text-3xl font-display font-bold text-dark text-center mb-3">Como usar</h2>
-      <p class="text-center text-muted max-w-2xl mx-auto mb-10">
+      <h2 class="text-2xl lg:text-3xl font-display font-bold text-ink text-center mb-3">Como usar</h2>
+      <p class="text-center text-ink-mut max-w-2xl mx-auto mb-10">
         É só arrastar os controles — tudo acontece ao vivo, sem precisar de conta de luz em mãos.
       </p>
       <div class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
+        <div class="rounded-2xl border border-navy-line bg-navy-600 p-6">
           <div class="text-3xl mb-3">🎚️</div>
-          <h3 class="font-bold text-dark mb-1">1. Mexa nos controles</h3>
-          <p class="text-sm text-muted leading-relaxed">
+          <h3 class="font-bold text-ink mb-1">1. Mexa nos controles</h3>
+          <p class="text-sm text-ink-mut leading-relaxed">
             Ajuste a potência, a geração solar, o consumo da casa e a tarifa. Os números e o
             desenho reagem na hora.
           </p>
         </div>
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
+        <div class="rounded-2xl border border-navy-line bg-navy-600 p-6">
           <div class="text-3xl mb-3">☀️</div>
-          <h3 class="font-bold text-dark mb-1">2. Veja a energia fluir</h3>
-          <p class="text-sm text-muted leading-relaxed">
+          <h3 class="font-bold text-ink mb-1">2. Veja a energia fluir</h3>
+          <p class="text-sm text-ink-mut leading-relaxed">
             Acompanhe o caminho painéis → casa → rede e o medidor girando nos dois sentidos:
             verde quando você injeta, vermelho quando consome.
           </p>
         </div>
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
+        <div class="rounded-2xl border border-navy-line bg-navy-600 p-6">
           <div class="text-3xl mb-3">💰</div>
-          <h3 class="font-bold text-dark mb-1">3. Entenda o Fio B</h3>
-          <p class="text-sm text-muted leading-relaxed">
+          <h3 class="font-bold text-ink mb-1">3. Entenda o Fio B</h3>
+          <p class="text-sm text-ink-mut leading-relaxed">
             Escolha o ano e veja o desconto do Fio B (Lei 14.300) crescer até 100% em 2029 — e
             quanto sobra de crédito líquido no fim.
           </p>
         </div>
       </div>
-      <p class="text-center text-sm text-muted mt-8">
-        👇 Comece a mexer no simulador abaixo. Use o botão <strong>⏸</strong> pra pausar a qualquer momento.
+      <p class="text-center text-sm text-ink-mut mt-8">
+        👇 Comece a mexer no simulador abaixo. Use o botão <strong class="text-ink">⏸</strong> pra pausar a qualquer momento.
       </p>
     </div>
   </section>
 
   <!-- Simulador embutido -->
-  <section class="pb-12 lg:pb-16 bg-slate-50">
+  <section class="pb-12 lg:pb-16 bg-navy-800">
     <div class="container-narrow">
-      <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-slate-900/10 bg-[#0b1220]">
+      <div class="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-navy-line bg-[#0b1220]">
         <iframe
           id="sim-frame"
           src="/simulador/medidores-ecosun.html"
@@ -80,7 +78,7 @@ import CTA from '../components/CTA.astro';
           style="width:100%; height:2600px; border:0; display:block;"
         ></iframe>
       </div>
-      <p class="text-center text-sm text-muted mt-6 max-w-2xl mx-auto">
+      <p class="text-center text-sm text-ink-mut mt-6 max-w-2xl mx-auto">
         Simulador didático. A compensação de energia segue a REN 1.000/2021 e a Lei 14.300/2022;
         tarifas e o valor do Fio B variam por distribuidora.
       </p>

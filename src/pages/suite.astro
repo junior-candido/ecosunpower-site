@@ -73,10 +73,10 @@ const faq = [
   </section>
 
   <!-- PROBLEMA -->
-  <section class="py-16 lg:py-20 bg-white">
+  <section class="py-16 lg:py-20 bg-navy border-t border-navy-line">
     <div class="container-narrow">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-6 text-center">Fórmula no quadro não mostra o que acontece</h2>
-      <p class="text-lg text-muted leading-relaxed max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-6 text-center">Fórmula no quadro não mostra o que acontece</h2>
+      <p class="text-lg text-ink-mut leading-relaxed max-w-2xl mx-auto text-center">
         Estudar máquinas, circuitos e geração distribuída só na teoria é difícil: a fórmula não mostra
         o que acontece quando o ângulo muda, quando a fase desequilibra ou quando o sistema solar
         injeta na rede. E as ferramentas estrangeiras são caras, em inglês e não falam das normas
@@ -86,36 +86,36 @@ const faq = [
   </section>
 
   <!-- O QUE ESTÁ DENTRO -->
-  <section class="py-16 lg:py-24 bg-slate-50">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-wide">
       <div class="text-center mb-12">
-        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">O que está dentro</h2>
-        <p class="text-lg text-muted">8 ensaios interativos + relatório. Você mexe e vê o resultado na hora.</p>
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-3">O que está dentro</h2>
+        <p class="text-lg text-ink-mut">8 ensaios interativos + relatório. Você mexe e vê o resultado na hora.</p>
       </div>
       <div class="grid gap-6 md:grid-cols-2">
         {ensaios.map((e) => (
-          <div class="flex gap-4 bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+          <div class="flex gap-4 bg-navy-600 rounded-2xl border border-navy-line p-6 shadow-sm">
             <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-hero text-white font-bold flex items-center justify-center">{e.n}</div>
             <div>
-              <h3 class="font-bold text-dark mb-1">{e.t}</h3>
-              <p class="text-sm text-muted leading-relaxed">{e.d}</p>
+              <h3 class="font-bold text-ink mb-1">{e.t}</h3>
+              <p class="text-sm text-ink-mut leading-relaxed">{e.d}</p>
             </div>
           </div>
         ))}
       </div>
-      <div class="mt-6 bg-white rounded-2xl border-2 border-accent-200 p-6 text-center">
-        <p class="text-dark font-semibold">📊 Mais: <strong>registro de medições</strong> com exportação em <strong>CSV</strong> (abre no Excel) e <strong>impressão</strong> — vira relatório de laboratório.</p>
+      <div class="mt-6 bg-navy-600 rounded-2xl border-2 border-accent-500/30 p-6 text-center">
+        <p class="text-ink font-semibold">📊 Mais: <strong>registro de medições</strong> com exportação em <strong>CSV</strong> (abre no Excel) e <strong>impressão</strong> — vira relatório de laboratório.</p>
       </div>
     </div>
   </section>
 
   <!-- POR QUE É DIFERENTE -->
-  <section class="py-16 lg:py-20 bg-white">
+  <section class="py-16 lg:py-20 bg-navy border-t border-navy-line">
     <div class="container-narrow">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Por que é diferente</h2>
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-10 text-center">Por que é diferente</h2>
       <ul class="space-y-4 max-w-2xl mx-auto">
         {diferenciais.map((d) => (
-          <li class="flex items-start gap-3 text-lg text-dark-soft">
+          <li class="flex items-start gap-3 text-lg text-ink-mut">
             <span class="text-accent-500 font-bold text-xl flex-shrink-0">✓</span>
             <span>{d}</span>
           </li>
@@ -125,15 +125,15 @@ const faq = [
   </section>
 
   <!-- PARA QUEM É -->
-  <section class="py-16 lg:py-24 bg-slate-50">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-wide">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-12 text-center">Para quem é</h2>
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-12 text-center">Para quem é</h2>
       <div class="grid gap-6 md:grid-cols-3">
         {paraQuem.map((p) => (
-          <div class="bg-white rounded-2xl border border-slate-100 p-8 text-center shadow-sm">
+          <div class="bg-navy-600 rounded-2xl border border-navy-line p-8 text-center shadow-sm">
             <div class="text-4xl mb-4">{p.icon}</div>
-            <h3 class="font-bold text-dark mb-2">{p.t}</h3>
-            <p class="text-sm text-muted leading-relaxed">{p.d}</p>
+            <h3 class="font-bold text-ink mb-2">{p.t}</h3>
+            <p class="text-sm text-ink-mut leading-relaxed">{p.d}</p>
           </div>
         ))}
       </div>
@@ -141,7 +141,7 @@ const faq = [
   </section>
 
   <!-- PREÇO -->
-  <section class="py-16 lg:py-24 bg-white">
+  <section class="py-16 lg:py-24 bg-navy border-t border-navy-line">
     <div class="container-narrow">
       <div class="max-w-md mx-auto bg-gradient-hero text-white rounded-3xl p-8 lg:p-10 text-center shadow-2xl relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-sun opacity-40"></div>
@@ -166,17 +166,17 @@ const faq = [
   </section>
 
   <!-- FAQ -->
-  <section class="py-16 lg:py-20 bg-slate-50">
+  <section class="py-16 lg:py-20 bg-navy-800 border-t border-navy-line">
     <div class="container-narrow">
-      <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-10 text-center">Perguntas frequentes</h2>
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-10 text-center">Perguntas frequentes</h2>
       <div class="space-y-4 max-w-2xl mx-auto">
         {faq.map((f) => (
-          <details class="bg-white rounded-xl border border-slate-100 p-5 group">
-            <summary class="font-semibold text-dark cursor-pointer list-none flex justify-between items-center">
+          <details class="bg-navy-600 rounded-xl border border-navy-line p-5 group">
+            <summary class="font-semibold text-ink cursor-pointer list-none flex justify-between items-center">
               {f.q}
               <span class="text-accent-500 group-open:rotate-45 transition-transform text-xl">+</span>
             </summary>
-            <p class="text-muted mt-3 leading-relaxed">{f.a}</p>
+            <p class="text-ink-mut mt-3 leading-relaxed">{f.a}</p>
           </details>
         ))}
       </div>
