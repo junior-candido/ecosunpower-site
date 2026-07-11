@@ -145,6 +145,20 @@ const tecnologias: Tecnologia[] = [
     quandoEscolher: 'SEMPRE pra residencial e comercial. É a química padrão atual pra armazenamento estacionário (instalação fixa em casa/empresa).',
     marcasQueOferecem: ['Deye', 'FoxESS', 'Unipower', 'Dyness', 'Soluna (Huawei)', 'SolarEdge'],
   },
+  {
+    nome: 'Bomba de Calor',
+    icon: '♨️',
+    oQueE: 'Trocador de calor que aquece a piscina usando a energia do ar. Pra cada 1 kWh elétrico, entrega 5 a 6 kWh de calor (COP alto) — muito mais eficiente que aquecedor de resistência.',
+    vantagens: [
+      'COP 5–6: gasta cerca de 5× menos energia que resistência elétrica',
+      'Aquece a piscina o ano todo, inclusive no inverno de Brasília',
+      'Casa perfeito com solar: roda de dia com a energia do painel',
+      'Inverter modula a potência — mais silenciosa e econômica',
+      'Trocador de titânio resiste ao cloro; vida útil longa',
+    ],
+    quandoEscolher: 'Pra quem tem piscina e quer água aquecida sem explodir a conta. Dimensionada pela metragem da piscina e casada com o solar, o custo de aquecer despenca.',
+    marcasQueOferecem: ['Brustec', 'Sodramar', 'Nautilus', 'Fluidra / AstralPool'],
+  },
 ];
 
 const categorias: Categoria[] = [
@@ -608,17 +622,19 @@ const categorias: Categoria[] = [
 ];
 ---
 
-<section class="bg-gradient-tech py-20 lg:py-24 border-y border-slate-200">
+<section class="bg-navy-800 py-16 lg:py-24 border-y border-navy-line">
   <div class="container-wide">
     <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto mb-14">
-      <span class="tag-accent">Tecnologia premium</span>
-      <h2 class="text-3xl lg:text-5xl mt-4 mb-5">
-        Trabalhamos só com <span class="text-gradient">o melhor do mercado</span>
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] uppercase text-accent-500">
+        <span class="w-5 h-px bg-accent-500"></span> Tecnologia premium <span class="w-5 h-px bg-accent-500"></span>
+      </span>
+      <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mt-4 mb-4 text-balance">
+        Trabalhamos só com <span class="bg-gradient-to-r from-primary-400 to-green-500 bg-clip-text text-transparent">o melhor do mercado</span>
       </h2>
-      <p class="text-base lg:text-lg text-muted leading-relaxed">
+      <p class="text-base lg:text-lg text-ink-mut leading-relaxed">
         Fornecedores Tier 1 com tecnologia de ponta — TOPCon, N-Type, Half-cell, Bifacial,
-        otimizadores e híbridos. <strong>Clica em qualquer marca</strong> pra saber mais.
+        baterias e Bomba de Calor. <strong class="text-ink">Clica em qualquer marca</strong> pra saber mais.
       </p>
     </div>
 
@@ -628,8 +644,8 @@ const categorias: Categoria[] = [
         <div>
           <div class="flex items-center gap-3 mb-4 px-2">
             <span class="text-2xl">{cat.icon}</span>
-            <h3 class="font-display font-bold text-dark text-lg">{cat.titulo}</h3>
-            <div class="flex-1 h-px bg-slate-200"></div>
+            <h3 class="font-display font-bold text-ink text-lg">{cat.titulo}</h3>
+            <div class="flex-1 h-px bg-navy-line"></div>
           </div>
 
           <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-2">
@@ -660,8 +676,8 @@ const categorias: Categoria[] = [
 
     <!-- Bottom: tecnologias clicáveis -->
     <div class="text-center mt-14">
-      <p class="text-xs uppercase tracking-widest text-muted font-bold mb-4">
-        Tecnologias premium em todos os projetos · <span class="text-primary-600">Clica pra entender</span>
+      <p class="text-xs uppercase tracking-widest text-ink-mut font-bold mb-4">
+        Tecnologias premium em todos os projetos · <span class="text-primary-400">Clica pra entender</span>
       </p>
       <div class="inline-flex flex-wrap items-center justify-center gap-2 px-2 max-w-4xl">
         {tecnologias.map((t) => (
