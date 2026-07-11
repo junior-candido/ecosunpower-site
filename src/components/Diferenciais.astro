@@ -1,71 +1,39 @@
 ---
+// Diferenciais — tema dark. Mercado Livre trocado por Aquecimento/Bomba de Calor.
 const diferenciais = [
-  {
-    icon: '⚡',
-    title: 'Baterias e BESS',
-    desc: 'Armazenamento de energia que funciona. Independência da rede 24h.',
-    tag: 'Diferencial',
-  },
-  {
-    icon: '🌞',
-    title: 'Grid Zero',
-    desc: 'Sistema sem injeção na rede — autoconsumo total. Ideal pra empresas.',
-    tag: 'Avançado',
-  },
-  {
-    icon: '🔄',
-    title: 'Sistema Híbrido',
-    desc: 'Solar + bateria + rede. O melhor de cada mundo, sem comprometer nada.',
-    tag: 'Premium',
-  },
-  {
-    icon: '🏭',
-    title: 'Grupo A (Indústria)',
-    desc: 'Projetos de média tensão pra indústrias. Engenharia robusta.',
-    tag: 'Especializado',
-  },
-  {
-    icon: '📐',
-    title: 'Engenharia Própria',
-    desc: 'Projeto, ART, memorial, instalação — tudo feito pelo nosso time.',
-    tag: 'Garantia',
-  },
-  {
-    icon: '🔌',
-    title: 'Mercado Livre',
-    desc: 'Migração pro Mercado Livre de Energia com solar — economia máxima.',
-    tag: 'Estratégico',
-  },
+  { icon: '⚡', title: 'Baterias e BESS', desc: 'Armazenamento de energia que funciona. Independência da rede 24h.', tag: 'Diferencial' },
+  { icon: '🌞', title: 'Grid Zero', desc: 'Sistema sem injeção na rede — autoconsumo total. Ideal pra empresas.', tag: 'Avançado' },
+  { icon: '🔄', title: 'Sistema Híbrido', desc: 'Solar + bateria + rede. O melhor de cada mundo, sem comprometer nada.', tag: 'Premium' },
+  { icon: '⚙️', title: 'Projeto Elétrico', desc: 'Planta, circuitos e quadro por norma — do residencial ao industrial.', tag: 'Engenharia' },
+  { icon: '📐', title: 'Engenharia Própria', desc: 'Projeto, ART, memorial, instalação — tudo feito pelo nosso time.', tag: 'Garantia' },
+  { icon: '♨️', title: 'Aquecimento & Bomba de Calor', desc: 'Aquecimento de piscina dimensionado de verdade — novo no portfólio.', tag: 'Novo' },
 ];
 ---
 
-<section id="diferenciais" class="section bg-surface-alt">
+<section id="diferenciais" class="py-16 lg:py-24 bg-navy border-t border-navy-line">
   <div class="container-wide">
-    <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <span class="tag">Por que EcoSunPower</span>
-      <h2 class="text-4xl lg:text-5xl mt-4 mb-5">
-        Tecnologia que vai <span class="text-gradient">além do painel</span>
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] uppercase text-primary-400">
+        <span class="w-5 h-px bg-primary-400"></span> Por que EcoSunPower <span class="w-5 h-px bg-primary-400"></span>
+      </span>
+      <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mt-4 mb-4 text-balance">
+        Tecnologia que vai <span class="bg-gradient-to-r from-primary-400 to-green-500 bg-clip-text text-transparent">além do painel</span>
       </h2>
-      <p class="text-lg text-muted leading-relaxed">
-        Nossa diferença não está em vender solar — está em projetar a solução certa
-        com baterias, automação e engenharia profunda. É por isso que clientes
-        nos escolhem pra projetos complexos.
+      <p class="text-lg text-ink-mut leading-relaxed">
+        Nossa diferença não está em vender solar — está em projetar a solução certa,
+        com baterias, engenharia e a elétrica completa da sua casa ou empresa.
       </p>
     </div>
 
-    <!-- Grid -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
       {diferenciais.map((d) => (
-        <div class="card group hover:-translate-y-1">
+        <div class="group rounded-2xl p-6 bg-navy-600 border border-navy-line hover:border-navy-line2 hover:-translate-y-1 transition-all">
           <div class="flex items-start justify-between mb-4">
             <div class="text-4xl">{d.icon}</div>
-            <span class="tag-accent">{d.tag}</span>
+            <span class="font-mono text-[10px] font-bold uppercase tracking-wide text-accent-500 bg-accent-500/10 border border-accent-500/25 px-2.5 py-1 rounded-full">{d.tag}</span>
           </div>
-          <h3 class="text-xl font-bold mb-2 group-hover:text-primary-600 transition-colors">
-            {d.title}
-          </h3>
-          <p class="text-muted text-sm leading-relaxed">{d.desc}</p>
+          <h3 class="text-xl font-bold text-ink mb-2 group-hover:text-primary-400 transition-colors">{d.title}</h3>
+          <p class="text-ink-mut text-sm leading-relaxed">{d.desc}</p>
         </div>
       ))}
     </div>
