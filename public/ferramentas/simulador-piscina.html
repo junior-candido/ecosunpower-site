@@ -153,6 +153,10 @@
     font-weight:700; font-size:14px; text-align:right}
   .bomba-row .cf-in input:focus{outline:none}
   .bomba-row .cf-in .u{font-size:11px; color:var(--muted)}
+  #potInput{width:60px !important}
+  #btuInput{width:74px !important}
+  .bomba-hint{margin-top:9px; font-size:12px; line-height:1.45; color:var(--muted); font-family:'IBM Plex Mono',monospace}
+  .bomba-hint b{color:var(--blue)}
   .padrao{margin-top:16px; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:14px 16px}
   .padrao-top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px}
   .padrao-top .lbl{font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--muted)}
@@ -492,11 +496,14 @@
         </div>
       </div>
       <div class="ctrl" style="grid-column:1/-1">
-        <label style="margin-bottom:9px">Tipo de bomba <span style="font-weight:400;color:var(--muted)">— COP do manual, editável</span></label>
+        <label style="margin-bottom:9px">Ficha da bomba <span style="font-weight:400;color:var(--muted)">— copie do manual; o motor absorve e recalcula</span></label>
         <div class="bomba-row">
           <select id="bombaSel"></select>
+          <div class="cf-in"><span class="u">Pot.</span><input id="potInput" type="text" inputmode="numeric" value="5000"><span class="u">W</span></div>
           <div class="cf-in"><span class="u">COP</span><input id="copInput" type="text" inputmode="decimal" value="5,5"></div>
+          <div class="cf-in"><span class="u">Capac.</span><input id="btuInput" type="text" inputmode="numeric" value="100.000"><span class="u">BTU</span></div>
         </div>
+        <div class="bomba-hint" id="bombaHint"></div>
       </div>
     </div>
 
@@ -926,13 +933,28 @@
       var el=$(id); if(el) el.addEventListener("input",function(){refreshDims();recalc();calcConsumo();});
     });
     var ci=$("cipInput"); if(ci) ci.addEventListener("input",function(){recalc();calcConsumo();});
+
+    // ---- ficha da bomba: potência alimenta a carga (→ cabo/disjuntor), COP alimenta o consumo ----
+    function heatLoad(){ for(var i=0;i<loads.length;i++){ if(loads[i].heat) return loads[i]; } return null; }
+    function updateBombaHint(){
+      var hint=$("bombaHint"); if(!hint) return;
+      var h=heatLoad(), pot=h?h.w:0, cop=getCOP(), btu=parseNum($("btuInput")&&$("btuInput").value);
+      var calor=pot*cop/1000;
+      hint.innerHTML="Motor absorveu: <b>"+(pot/1000).toLocaleString("pt-BR",{maximumFractionDigits:2})+" kW</b> elétricos × COP <b>"+cop.toLocaleString("pt-BR",{maximumFractionDigits:1})+"</b> → ~<b>"+calor.toLocaleString("pt-BR",{maximumFractionDigits:1})+" kW de calor</b>"+(btu>0?(" · "+Math.round(btu).toLocaleString("pt-BR")+" BTU/h"):"");
+    }
     fillBombaSelect();
     var bs=$("bombaSel"); if(bs) bs.addEventListener("change",function(){
       var b=BOMBAS[bs.value]||BOMBAS["bc-padrao"];
       var cop=$("copInput"); if(cop) cop.value=b.cop.toFixed(1).replace(".",",");
-      recalc(); calcConsumo();
+      recalc(); calcConsumo(); updateBombaHint();
     });
-    var cop=$("copInput"); if(cop) cop.addEventListener("input",function(){recalc();calcConsumo();});
+    var cop=$("copInput"); if(cop) cop.addEventListener("input",function(){recalc();calcConsumo();updateBombaHint();});
+    var pin=$("potInput");
+    if(pin){ var h0=heatLoad(); if(h0) pin.value=String(h0.w);
+      pin.addEventListener("input",function(){ var h=heatLoad(); if(h){ h.w=parseNum(pin.value)||0; renderLoads(); updateBombaHint(); } });
+    }
+    var btu=$("btuInput"); if(btu) btu.addEventListener("input",updateBombaHint);
+
     var ps=$("padraoSeg");
     if(ps) ps.addEventListener("click",function(e){
       var b=e.target.closest("button"); if(!b) return;
@@ -940,7 +962,7 @@
       [].forEach.call(ps.children,function(x){x.classList.toggle("sel",x===b);});
       recalc();
     });
-    refreshDims();
+    refreshDims(); updateBombaHint();
   }
 
   // ---------- INIT ----------
