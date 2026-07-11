@@ -3,101 +3,96 @@ import Layout from '../layouts/Layout.astro';
 
 // A lista de vagas vem AO VIVO do servidor (GET /rh/vagas) via script no
 // navegador — vaga aberta/fechada no dashboard aparece/some daqui na hora.
-// Se a API estiver fora, a seção de vagas some e fica só o Banco de Talentos.
 const API = 'https://propostas.ecosunpower.eng.br';
 ---
 
 <Layout
-  title="Trabalhe Conosco — EcoSunPower Energia Solar"
-  description="Vagas na EcoSunPower Energia Solar (Brasília-DF e região). Candidate-se ou deixe seu currículo no nosso banco de talentos."
+  title="Trabalhe Conosco — EcoSunPower"
+  description="Vagas na EcoSunPower (Brasília-DF e região). Candidate-se ou deixe seu currículo no nosso banco de talentos."
   ogImage="/og-image.png"
 >
   <!-- HERO -->
-  <section class="bg-gradient-hero text-white py-20 lg:py-24 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
-    <div class="absolute -top-20 -right-20 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-pulse-soft"></div>
+  <section class="relative overflow-hidden bg-navy py-20 lg:py-24">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(55% 60% at 50% -10%, rgba(28,169,224,.28), transparent 60%), radial-gradient(40% 40% at 85% 10%, rgba(245,184,46,.10), transparent 60%)"></div>
     <div class="container-narrow relative z-10 text-center">
-      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-navy-line2 rounded-full mb-6 text-sm font-semibold text-ink">
         ☀️ Time EcoSunPower
       </span>
-      <h1 class="text-4xl lg:text-6xl mb-6 leading-tight">
+      <h1 class="text-4xl lg:text-6xl font-display font-bold text-ink mb-6 leading-tight text-balance">
         Vem trabalhar<br class="hidden lg:block" />
-        <span class="text-accent-400">com energia.</span>
+        <span class="text-accent-500">com energia.</span>
       </h1>
-      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto leading-relaxed">
-        Somos uma empresa de energia solar de Brasília-DF em crescimento.
+      <p class="text-lg lg:text-xl text-ink-mut max-w-2xl mx-auto leading-relaxed">
+        Somos uma empresa de energia e engenharia elétrica de Brasília-DF em crescimento.
         Veja as vagas abertas ou deixe seu currículo no nosso banco de talentos.
       </p>
     </div>
   </section>
 
   <!-- VAGAS ABERTAS (preenchida pelo navegador) -->
-  <section id="secao-vagas" class="py-16 lg:py-20 bg-white hidden">
+  <section id="secao-vagas" class="py-16 lg:py-20 bg-navy border-t border-navy-line hidden">
     <div class="container-wide">
       <div class="text-center mb-10">
-        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Vagas abertas</h2>
-        <p class="text-lg text-muted">Clique em "Candidatar-se" e preencha o formulário abaixo.</p>
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-3">Vagas abertas</h2>
+        <p class="text-lg text-ink-mut">Clique em "Candidatar-se" e preencha o formulário abaixo.</p>
       </div>
       <div id="lista-vagas" class="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto"></div>
     </div>
   </section>
 
   <!-- FORMULÁRIO -->
-  <section class="py-16 lg:py-24 bg-slate-50">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-narrow">
       <div class="text-center mb-10">
-        <h2 class="text-3xl lg:text-4xl font-display font-bold text-dark mb-3">Envie seu currículo</h2>
-        <p class="text-lg text-muted">Não achou a sua vaga? Sem problema — entre pro nosso <strong>Banco de Talentos</strong> e te chamamos quando abrir.</p>
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink mb-3">Envie seu currículo</h2>
+        <p class="text-lg text-ink-mut">Não achou a sua vaga? Sem problema — entre pro nosso <strong class="text-ink">Banco de Talentos</strong> e te chamamos quando abrir.</p>
       </div>
 
-      <form id="form-candidatura" class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 lg:p-10 max-w-2xl mx-auto space-y-5">
+      <form id="form-candidatura" class="bg-navy-700 rounded-3xl border border-navy-line p-6 lg:p-10 max-w-2xl mx-auto space-y-5">
         <div>
-          <label for="c-nome" class="block text-sm font-bold text-dark mb-2">Nome completo *</label>
+          <label for="c-nome" class="block text-sm font-bold text-ink mb-2">Nome completo *</label>
           <input id="c-nome" name="nome" required minlength="3" autocomplete="name"
-            class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="Seu nome" />
+            class="w-full px-4 py-3 bg-navy-600 text-ink border-2 border-navy-line2 rounded-xl focus:outline-none focus:border-primary-500" placeholder="Seu nome" />
         </div>
         <div class="grid md:grid-cols-2 gap-5">
           <div>
-            <label for="c-telefone" class="block text-sm font-bold text-dark mb-2">WhatsApp (com DDD) *</label>
+            <label for="c-telefone" class="block text-sm font-bold text-ink mb-2">WhatsApp (com DDD) *</label>
             <input id="c-telefone" name="telefone" required inputmode="tel" autocomplete="tel"
-              class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="(61) 9 9999-9999" />
+              class="w-full px-4 py-3 bg-navy-600 text-ink border-2 border-navy-line2 rounded-xl focus:outline-none focus:border-primary-500" placeholder="(61) 9 9999-9999" />
           </div>
           <div>
-            <label for="c-email" class="block text-sm font-bold text-dark mb-2">E-mail</label>
+            <label for="c-email" class="block text-sm font-bold text-ink mb-2">E-mail</label>
             <input id="c-email" name="email" type="email" autocomplete="email"
-              class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500" placeholder="voce@email.com" />
+              class="w-full px-4 py-3 bg-navy-600 text-ink border-2 border-navy-line2 rounded-xl focus:outline-none focus:border-primary-500" placeholder="voce@email.com" />
           </div>
         </div>
         <div>
-          <label for="c-vaga" class="block text-sm font-bold text-dark mb-2">Vaga</label>
+          <label for="c-vaga" class="block text-sm font-bold text-ink mb-2">Vaga</label>
           <select id="c-vaga" name="vaga_id"
-            class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-primary-500 bg-white">
+            class="w-full px-4 py-3 bg-navy-600 text-ink border-2 border-navy-line2 rounded-xl focus:outline-none focus:border-primary-500">
             <option value="">🗂 Banco de Talentos (sem vaga específica)</option>
           </select>
         </div>
         <div>
-          <label for="c-curriculo" class="block text-sm font-bold text-dark mb-2">Currículo em PDF (até 5 MB) *</label>
+          <label for="c-curriculo" class="block text-sm font-bold text-ink mb-2">Currículo em PDF (até 5 MB) *</label>
           <input id="c-curriculo" name="curriculo" type="file" accept="application/pdf" required
-            class="w-full text-sm text-dark file:mr-4 file:py-2.5 file:px-5 file:rounded-full file:border-0 file:bg-primary-600 file:text-white file:font-semibold hover:file:bg-primary-700 file:cursor-pointer" />
+            class="w-full text-sm text-ink-mut file:mr-4 file:py-2.5 file:px-5 file:rounded-full file:border-0 file:bg-primary-600 file:text-white file:font-semibold hover:file:bg-primary-700 file:cursor-pointer" />
         </div>
-        <!-- honeypot anti-robô: humano não vê nem preenche. Nome NEUTRO de
-             propósito ("website" o autofill do Chrome preenchia sozinho e a
-             candidatura de gente real era descartada como spam). -->
         <div class="hp-field" aria-hidden="true">
           <label>Não preencha este campo<input name="extra_info" tabindex="-1" autocomplete="off" /></label>
         </div>
-        <label class="flex items-start gap-3 text-sm text-muted cursor-pointer">
-          <input id="c-consentimento" name="consentimento" type="checkbox" required class="mt-1 w-5 h-5 rounded border-slate-300" />
-          <span>Autorizo a EcoSunPower a guardar meus dados e currículo por até <strong>12 meses</strong>, usados só em processos seletivos. *</span>
+        <label class="flex items-start gap-3 text-sm text-ink-mut cursor-pointer">
+          <input id="c-consentimento" name="consentimento" type="checkbox" required class="mt-1 w-5 h-5 rounded border-navy-line2 bg-navy-600" />
+          <span>Autorizo a EcoSunPower a guardar meus dados e currículo por até <strong class="text-ink">12 meses</strong>, usados só em processos seletivos. *</span>
         </label>
         <button id="btn-enviar" type="submit" class="btn-primary w-full justify-center text-lg">Enviar candidatura</button>
-        <p id="msg-erro" role="alert" class="hidden text-center text-sm font-semibold text-red-600"></p>
+        <p id="msg-erro" role="alert" class="hidden text-center text-sm font-semibold text-red-400"></p>
       </form>
 
-      <div id="sucesso" tabindex="-1" class="hidden bg-white rounded-3xl border border-slate-100 shadow-sm p-10 max-w-2xl mx-auto text-center">
+      <div id="sucesso" tabindex="-1" class="hidden bg-navy-700 rounded-3xl border border-navy-line p-10 max-w-2xl mx-auto text-center">
         <div class="text-6xl mb-4">✅</div>
-        <h3 class="text-2xl font-display font-bold text-dark mb-2">Recebemos seu currículo!</h3>
-        <p class="text-muted leading-relaxed">Obrigado pelo interesse em fazer parte do time. Se o seu perfil combinar com uma vaga, a gente te chama pelo WhatsApp.</p>
+        <h3 class="text-2xl font-display font-bold text-ink mb-2">Recebemos seu currículo!</h3>
+        <p class="text-ink-mut leading-relaxed">Obrigado pelo interesse em fazer parte do time. Se o seu perfil combinar com uma vaga, a gente te chama pelo WhatsApp.</p>
       </div>
     </div>
   </section>
@@ -107,7 +102,6 @@ const API = 'https://propostas.ecosunpower.eng.br';
   </style>
 
   <script is:inline define:vars={{ API }}>
-    // Vagas abertas ao vivo. API fora do ar? Seção some, Banco de Talentos segue.
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     fetch(API + '/rh/vagas')
       .then((r) => r.json())
@@ -117,12 +111,12 @@ const API = 'https://propostas.ecosunpower.eng.br';
         const select = document.getElementById('c-vaga');
         for (const v of vagas) {
           const card = document.createElement('div');
-          card.className = 'bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col';
+          card.className = 'bg-navy-600 rounded-2xl border border-navy-line p-6 flex flex-col';
           card.innerHTML =
-            '<h3 class="font-bold text-dark text-lg mb-1">' + esc(v.titulo) + '</h3>' +
-            '<p class="text-sm text-muted mb-1">📍 ' + esc(v.cidade) + ' · ' + esc(v.tipo) + '</p>' +
-            (v.descricao ? '<p class="text-sm text-dark-soft leading-relaxed mb-2" style="white-space:pre-line">' + esc(v.descricao) + '</p>' : '') +
-            (v.requisitos ? '<p class="text-sm text-muted leading-relaxed mb-4 flex-1" style="white-space:pre-line"><strong>Requisitos:</strong>\n' + esc(v.requisitos) + '</p>' : '<span class="flex-1"></span>') +
+            '<h3 class="font-bold text-ink text-lg mb-1">' + esc(v.titulo) + '</h3>' +
+            '<p class="text-sm text-ink-mut mb-1">📍 ' + esc(v.cidade) + ' · ' + esc(v.tipo) + '</p>' +
+            (v.descricao ? '<p class="text-sm text-ink-mut leading-relaxed mb-2" style="white-space:pre-line">' + esc(v.descricao) + '</p>' : '') +
+            (v.requisitos ? '<p class="text-sm text-ink-mut leading-relaxed mb-4 flex-1" style="white-space:pre-line"><strong class="text-ink">Requisitos:</strong>\n' + esc(v.requisitos) + '</p>' : '<span class="flex-1"></span>') +
             '<button type="button" data-vaga="' + esc(v.id) + '" class="btn-vaga self-start inline-flex items-center px-5 py-2.5 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm transition">Candidatar-se</button>';
           lista.appendChild(card);
           const opt = document.createElement('option');
@@ -140,14 +134,12 @@ const API = 'https://propostas.ecosunpower.eng.br';
       })
       .catch((e) => { console.warn('[trabalhe-conosco] vagas indisponíveis:', e); });
 
-    // Envio do formulário
     const form = document.getElementById('form-candidatura');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const btn = document.getElementById('btn-enviar');
       const msgErro = document.getElementById('msg-erro');
       msgErro.classList.add('hidden');
-      // Arquivo grande demais: erro na hora, sem esperar upload inteiro falhar.
       const arq = document.getElementById('c-curriculo').files[0];
       if (arq && arq.size > 5 * 1024 * 1024) {
         msgErro.textContent = 'Seu PDF tem mais de 5 MB — diminua o arquivo e tenta de novo.';
