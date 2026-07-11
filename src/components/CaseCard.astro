@@ -24,8 +24,8 @@ const tipoLabels: Record<string, string> = {
 };
 ---
 
-<article class="card group flex flex-col overflow-hidden p-0 transition hover:scale-[1.02]">
-  <div class="relative h-48 overflow-hidden bg-slate-100">
+<article class="group flex flex-col overflow-hidden rounded-2xl bg-navy-600 border border-navy-line transition hover:scale-[1.02] hover:border-navy-line2">
+  <div class="relative h-48 overflow-hidden bg-navy-700">
     <img
       src={fotoPrincipal}
       alt={`${titulo}, ${cidade}-${uf}`}
@@ -46,14 +46,14 @@ const tipoLabels: Record<string, string> = {
     )}
   </div>
   <div class="flex flex-1 flex-col p-6">
-    <span class="mb-1 text-xs font-semibold uppercase tracking-wider text-primary-600">
+    <span class="mb-1 text-xs font-semibold uppercase tracking-wider text-primary-400">
       {cidade}-{uf} · {tipoLabels[tipo] ?? tipo}
     </span>
-    <h3 class="mb-2 mt-2 text-lg font-bold leading-tight">{titulo}</h3>
+    <h3 class="mb-2 mt-2 text-lg font-bold leading-tight text-ink">{titulo}</h3>
     {economiaMensalBrl && (
-      <div class="mt-auto pt-4 border-t border-slate-100">
-        <div class="text-xs text-muted">Economia mensal</div>
-        <div class="text-base font-bold text-emerald-600">
+      <div class="mt-auto pt-4 border-t border-navy-line">
+        <div class="text-xs text-ink-mut">Economia mensal</div>
+        <div class="text-base font-bold text-green-500">
           R$ {economiaMensalBrl.toLocaleString('pt-BR')}/mês
         </div>
       </div>
@@ -64,7 +64,7 @@ const tipoLabels: Record<string, string> = {
         data-video-url={videoUrl}
         data-case-titulo={titulo}
         data-case-cover={fotoPrincipal}
-        class="case-play-btn mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:underline"
+        class="case-play-btn mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary-400 hover:underline"
       >
         ▶ Ver vídeo do drone
       </button>

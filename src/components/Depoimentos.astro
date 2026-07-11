@@ -79,19 +79,19 @@ const comTexto = reviews
   .slice(0, 6);
 ---
 
-<section class="section bg-white">
+<section class="py-16 lg:py-24 bg-navy border-t border-navy-line">
   <div class="container-wide">
     <div class="mb-10 text-center">
-      <h2 class="mb-3">O que nossos clientes dizem</h2>
-      <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-2 text-amber-900">
+      <h2 class="mb-3 text-3xl lg:text-4xl font-display font-bold text-ink">O que nossos clientes dizem</h2>
+      <div class="inline-flex items-center gap-2 rounded-full bg-accent-500/10 border border-accent-500/25 px-4 py-2 text-accent-500">
         <span class="text-xl">⭐</span>
         <span class="font-bold">{config.googleNota} no Google</span>
-        <span class="text-sm">· {config.googleQtdAvaliacoes} avaliações</span>
+        <span class="text-sm text-ink-mut">· {config.googleQtdAvaliacoes} avaliações</span>
       </div>
     </div>
 
     {comTexto.length === 0 ? (
-      <div class="text-center text-muted">
+      <div class="text-center text-ink-mut">
         <p>Em breve, depoimentos reais dos nossos clientes aqui.</p>
         <p class="mt-2 text-sm">Enquanto isso, veja as avaliações no Google:</p>
         <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-primary mt-4 inline-block">
@@ -101,18 +101,18 @@ const comTexto = reviews
     ) : (
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {comTexto.map(t => (
-          <article class="card flex flex-col p-6">
+          <article class="flex flex-col rounded-2xl p-6 bg-navy-600 border border-navy-line">
             <div class="mb-3 flex items-center gap-2">
               {Array.from({ length: t.estrelas }).map(() => <span class="text-amber-400">⭐</span>)}
             </div>
-            <blockquote class="mb-4 flex-1 text-base leading-relaxed">
+            <blockquote class="mb-4 flex-1 text-base leading-relaxed text-ink-mut">
               "{t.texto}"
             </blockquote>
-            <footer class="border-t border-slate-100 pt-3 text-sm">
-              <div class="font-semibold">{t.nomeCliente}</div>
-              {t.cidade && <div class="text-muted">{t.cidade}</div>}
+            <footer class="border-t border-navy-line pt-3 text-sm">
+              <div class="font-semibold text-ink">{t.nomeCliente}</div>
+              {t.cidade && <div class="text-ink-mut2">{t.cidade}</div>}
               {t.googlePosted && (
-                <div class="mt-2 inline-flex items-center gap-1 text-xs text-emerald-700">
+                <div class="mt-2 inline-flex items-center gap-1 text-xs text-green-500">
                   ✓ Verificado no Google
                 </div>
               )}
@@ -123,13 +123,9 @@ const comTexto = reviews
     )}
 
     <div class="mt-10 flex flex-wrap justify-center gap-3">
-      <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-secondary">
-        Ver no Google
-      </a>
-      <a href="/avaliar" class="btn-primary">
-        Avalie a gente
-      </a>
+      <a href={config.googleUrl} target="_blank" rel="noopener" class="btn-secondary">Ver no Google</a>
+      <a href="/avaliar" class="btn-primary">Avalie a gente</a>
     </div>
-    <p class="mt-4 text-center text-xs text-muted">Avaliação rápida no nosso site, sem precisar de conta Google.</p>
+    <p class="mt-4 text-center text-xs text-ink-mut2">Avaliação rápida no nosso site, sem precisar de conta Google.</p>
   </div>
 </section>

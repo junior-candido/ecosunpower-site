@@ -13,20 +13,20 @@ const cases = todos.sort((a, b) => a.id.localeCompare(b.id));
   title="Cases de Sucesso — EcoSunPower"
   description="600+ projetos de energia solar entregues em Brasília e Goiás. Cases reais de residencial, comercial, industrial, rural e híbrido com bateria."
 >
-  <section class="bg-gradient-hero text-white py-20 lg:py-28 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-sun opacity-50"></div>
+  <section class="relative overflow-hidden bg-navy py-20 lg:py-28">
+    <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(55% 60% at 50% -10%, rgba(28,169,224,.28), transparent 60%), radial-gradient(40% 40% at 85% 10%, rgba(245,184,46,.10), transparent 60%)"></div>
     <div class="container-narrow relative z-10 text-center">
-      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full mb-6 text-sm font-semibold">
+      <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-navy-line2 rounded-full mb-6 text-sm font-semibold text-ink">
         ⚡ 600+ projetos entregues
       </span>
-      <h1 class="text-4xl lg:text-6xl mb-6">Cases reais.</h1>
-      <p class="text-lg lg:text-xl text-slate-100/90 max-w-2xl mx-auto">
+      <h1 class="text-4xl lg:text-6xl font-display font-bold text-ink mb-6">Cases reais.</h1>
+      <p class="text-lg lg:text-xl text-ink-mut max-w-2xl mx-auto">
         Obras entregues em Brasília, Goiás e região. Residencial, comercial, industrial, rural e híbrido com bateria.
       </p>
     </div>
   </section>
 
-  <section class="section bg-surface-alt">
+  <section class="py-16 lg:py-24 bg-navy-800 border-t border-navy-line">
     <div class="container-wide">
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {cases.map(c => (
@@ -46,7 +46,7 @@ const cases = todos.sort((a, b) => a.id.localeCompare(b.id));
       </div>
 
       <div class="text-center mt-16">
-        <p class="text-muted mb-5">Gostou? Faça um orçamento sem compromisso pra sua casa ou empresa.</p>
+        <p class="text-ink-mut mb-5">Gostou? Faça um orçamento sem compromisso pra sua casa ou empresa.</p>
         <a href="https://wa.me/5561998805002?text=Oi!%20Quero%20um%20or%C3%A7amento%20de%20energia%20solar" target="_blank" rel="noopener" class="btn-primary text-lg">
           Quero meu orçamento no WhatsApp
         </a>
