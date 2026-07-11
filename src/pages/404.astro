@@ -3,20 +3,21 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Página não encontrada — EcoSunPower" noIndex={true}>
-  <section class="min-h-[70vh] flex items-center justify-center bg-gradient-tech">
+  <section class="min-h-[70vh] flex items-center justify-center bg-navy">
     <div class="container-narrow text-center">
       <div class="text-9xl mb-6">🔌</div>
-      <h1 class="text-5xl lg:text-7xl mb-4">
-        <span class="text-gradient">404</span>
+      <h1 class="text-5xl lg:text-7xl font-display font-bold mb-4">
+        <span class="bg-gradient-to-r from-primary-400 to-green-500 bg-clip-text text-transparent">404</span>
       </h1>
-      <h2 class="text-2xl lg:text-3xl mb-6">Essa página deu curto-circuito</h2>
-      <p class="text-lg text-muted max-w-md mx-auto mb-10">
+      <h2 class="text-2xl lg:text-3xl font-display font-bold text-ink mb-6">Essa página deu curto-circuito</h2>
+      <p class="text-lg text-ink-mut max-w-md mx-auto mb-10">
         A página que você procurou não existe ou foi movida.
         Mas seu sistema solar continua firme e forte!
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/" class="btn-secondary">Voltar pra home</a>
-        <a href="https://wa.me/5561998805002" target="_blank" rel="noopener" class="btn-outline" style="color: #1E293B; border-color: #1E293B;">
+        <a href="https://wa.me/5561998805002" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-navy-line2 text-ink font-semibold hover:border-primary-500 hover:text-white transition-all">
           Falar com especialista
         </a>
       </div>
