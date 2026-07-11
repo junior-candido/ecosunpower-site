@@ -60,9 +60,9 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
   noChrome={true}
   noIndex={true}
 >
-  <main class="min-h-screen bg-gradient-to-b from-slate-900 via-slate-700 to-slate-50">
+  <main class="min-h-screen bg-navy">
     <!-- HEADER MINIMAL COM LOGO + SELO CFT -->
-    <header class="bg-slate-900/90 backdrop-blur border-b border-slate-800 sticky top-0 z-30 shadow-xl">
+    <header class="bg-navy/90 backdrop-blur border-b border-navy-line sticky top-0 z-30 shadow-xl">
       <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
         <div class="flex items-center gap-3">
           <img src="/logo-ecosunpower-icon.png" alt="EcoSunPower" class="h-9 w-9 drop-shadow-[0_0_10px_rgba(255,199,44,0.4)]" />
@@ -138,21 +138,21 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
 
     <!-- FORMULÁRIO QUALIFICADOR -->
     <section id="calcular" class="max-w-2xl mx-auto px-4 py-12 -mt-8 relative z-10">
-      <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 md:p-8">
+      <div class="bg-navy-700 rounded-2xl shadow-2xl border border-navy-line p-6 md:p-8">
         <div class="text-center mb-6">
-          <span class="inline-block bg-accent-100 text-accent-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+          <span class="inline-block bg-accent-500/15 text-accent-400 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
             30 segundos · 2 perguntas
           </span>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mt-3">
+          <h2 class="text-2xl md:text-3xl font-bold text-ink mt-3">
             Calcule sua economia
           </h2>
-          <p class="text-sm text-slate-600 mt-1">Continuamos pelo WhatsApp com diagnóstico técnico personalizado</p>
+          <p class="text-sm text-ink-mut mt-1">Continuamos pelo WhatsApp com diagnóstico técnico personalizado</p>
         </div>
 
         <form id="form-cotacao" class="space-y-6">
           <div>
-            <label class="block text-sm font-bold text-slate-800 mb-2">1. Sua cidade</label>
-            <select id="cidade" required class="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-primary-500 outline-none text-slate-900 bg-white text-sm">
+            <label class="block text-sm font-bold text-ink mb-2">1. Sua cidade</label>
+            <select id="cidade" required class="w-full px-4 py-3 rounded-lg border-2 border-navy-line2 focus:border-primary-500 outline-none text-ink bg-navy-600 text-sm">
               <option value="">Selecione...</option>
               <optgroup label="Distrito Federal">
                 {cidadesDF.map((c, i) => (
@@ -169,27 +169,27 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
           </div>
 
           <div>
-            <label class="block text-sm font-bold text-slate-800 mb-2">2. Quanto vem na sua conta de luz?</label>
+            <label class="block text-sm font-bold text-ink mb-2">2. Quanto vem na sua conta de luz?</label>
             <div class="grid grid-cols-2 gap-2">
-              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-primary-400 transition text-center">
+              <label class="conta-opt cursor-pointer p-3 border-2 border-navy-line2 rounded-lg hover:border-primary-400 transition text-center">
                 <input type="radio" name="conta" value="ate-500" class="sr-only" required>
-                <div class="text-[10px] text-slate-500 uppercase">Até</div>
-                <div class="font-bold text-slate-900">R$ 500</div>
+                <div class="text-[10px] text-ink-mut2 uppercase">Até</div>
+                <div class="font-bold text-ink">R$ 500</div>
               </label>
-              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-primary-400 transition text-center">
+              <label class="conta-opt cursor-pointer p-3 border-2 border-navy-line2 rounded-lg hover:border-primary-400 transition text-center">
                 <input type="radio" name="conta" value="500-1000" class="sr-only" required>
-                <div class="text-[10px] text-slate-500 uppercase">R$ 500 a</div>
-                <div class="font-bold text-slate-900">R$ 1.000</div>
+                <div class="text-[10px] text-ink-mut2 uppercase">R$ 500 a</div>
+                <div class="font-bold text-ink">R$ 1.000</div>
               </label>
-              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-primary-400 transition text-center">
+              <label class="conta-opt cursor-pointer p-3 border-2 border-navy-line2 rounded-lg hover:border-primary-400 transition text-center">
                 <input type="radio" name="conta" value="1000-2000" class="sr-only" required>
-                <div class="text-[10px] text-slate-500 uppercase">R$ 1.000 a</div>
-                <div class="font-bold text-slate-900">R$ 2.000</div>
+                <div class="text-[10px] text-ink-mut2 uppercase">R$ 1.000 a</div>
+                <div class="font-bold text-ink">R$ 2.000</div>
               </label>
-              <label class="conta-opt cursor-pointer p-3 border-2 border-slate-200 rounded-lg hover:border-primary-400 transition text-center">
+              <label class="conta-opt cursor-pointer p-3 border-2 border-navy-line2 rounded-lg hover:border-primary-400 transition text-center">
                 <input type="radio" name="conta" value="acima-2000" class="sr-only" required>
-                <div class="text-[10px] text-slate-500 uppercase">Acima de</div>
-                <div class="font-bold text-slate-900">R$ 2.000</div>
+                <div class="text-[10px] text-ink-mut2 uppercase">Acima de</div>
+                <div class="font-bold text-ink">R$ 2.000</div>
               </label>
             </div>
           </div>
@@ -201,13 +201,13 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
       </div>
 
       <!-- QUALIFICADO -->
-      <div id="resultado-qualificado" class="hidden mt-6 bg-white rounded-2xl shadow-2xl border-2 border-emerald-300 p-6 md:p-8 text-center">
+      <div id="resultado-qualificado" class="hidden mt-6 bg-navy-700 rounded-2xl shadow-2xl border-2 border-green-500/40 p-6 md:p-8 text-center">
         <div class="inline-block bg-emerald-500 text-white text-2xl rounded-full w-14 h-14 leading-[3.5rem] mb-4">🎯</div>
-        <h3 class="text-2xl font-bold text-slate-900 mb-2">Perfil dentro do que atendemos!</h3>
-        <p class="text-slate-700 mb-2" id="resultado-qualificado-msg">
+        <h3 class="text-2xl font-bold text-ink mb-2">Perfil dentro do que atendemos!</h3>
+        <p class="text-ink-mut mb-2" id="resultado-qualificado-msg">
           Atendemos sua região e seu perfil de consumo.
         </p>
-        <p class="text-sm text-slate-500 mb-6">
+        <p class="text-sm text-ink-mut2 mb-6">
           Resposta do Responsável Técnico CFT/CREA em até 24h.
         </p>
         <a
@@ -223,49 +223,49 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
       </div>
 
       <!-- NÃO QUALIFICADO -->
-      <div id="resultado-nao-qualificado" class="hidden mt-6 bg-amber-50 rounded-2xl shadow-md border border-amber-200 p-6 md:p-8 text-center">
+      <div id="resultado-nao-qualificado" class="hidden mt-6 bg-accent-500/10 rounded-2xl shadow-md border border-accent-500/25 p-6 md:p-8 text-center">
         <div class="text-4xl mb-3">📋</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2">Por enquanto, ainda não compensa</h3>
-        <p class="text-slate-700 mb-3">
+        <h3 class="text-xl font-bold text-ink mb-2">Por enquanto, ainda não compensa</h3>
+        <p class="text-ink-mut mb-3">
           Atendemos sistemas onde a conta de luz fica a partir de <strong>R$ 500/mês</strong> — abaixo disso o payback fica muito longo e preferimos ser honestos com você.
         </p>
-        <p class="text-sm text-slate-600">
+        <p class="text-sm text-ink-mut">
           Sua conta aumentou recentemente (chuveiro elétrico, ar-condicionado, carro elétrico ou expansão familiar)? Volte aqui!
         </p>
       </div>
 
       <!-- FORA ÁREA -->
-      <div id="resultado-fora-area" class="hidden mt-6 bg-slate-100 rounded-2xl shadow-md border border-slate-300 p-6 md:p-8 text-center">
+      <div id="resultado-fora-area" class="hidden mt-6 bg-navy-700 rounded-2xl shadow-md border border-navy-line p-6 md:p-8 text-center">
         <div class="text-4xl mb-3">📍</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2">Ainda não atendemos sua região</h3>
-        <p class="text-slate-700">
+        <h3 class="text-xl font-bold text-ink mb-2">Ainda não atendemos sua região</h3>
+        <p class="text-ink-mut">
           Hoje atendemos <strong>Brasília-DF e Entorno de Goiás</strong> (Valparaíso, Luziânia, Cidade Ocidental, Águas Lindas, Formosa, Alto Paraíso e demais cidades próximas). Estamos expandindo — obrigado pelo interesse!
         </p>
       </div>
     </section>
 
     <!-- COBERTURA — DF + ENTORNO GO -->
-    <section class="bg-white border-y border-slate-200 py-10">
+    <section class="bg-navy-800 border-y border-navy-line py-10">
       <div class="max-w-5xl mx-auto px-4">
         <div class="text-center mb-6">
-          <span class="inline-block bg-primary-100 text-primary-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+          <span class="inline-block bg-primary-500/15 text-primary-400 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
             Onde atendemos
           </span>
-          <h2 class="text-xl md:text-2xl font-bold text-slate-900 mt-3">
+          <h2 class="text-xl md:text-2xl font-bold text-ink mt-3">
             Brasília-DF e Entorno · cobertura presencial
           </h2>
-          <p class="text-sm text-slate-600 mt-1">Visitamos o local da obra, projetamos sob medida e fazemos a homologação na Neoenergia-DF ou Equatorial-GO.</p>
+          <p class="text-sm text-ink-mut mt-1">Visitamos o local da obra, projetamos sob medida e fazemos a homologação na Neoenergia-DF ou Equatorial-GO.</p>
         </div>
         <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-primary-50 border border-primary-200 rounded-xl p-4">
-            <div class="font-bold text-primary-900 text-sm uppercase tracking-wider mb-2">🏙 Distrito Federal · todas as RAs</div>
-            <div class="text-xs text-primary-700 leading-relaxed">
+          <div class="bg-primary-500/10 border border-primary-500/25 rounded-xl p-4">
+            <div class="font-bold text-ink text-sm uppercase tracking-wider mb-2">🏙 Distrito Federal · todas as RAs</div>
+            <div class="text-xs text-primary-300 leading-relaxed">
               Plano Piloto · Lago Sul · Lago Norte · Águas Claras · Vicente Pires · Taguatinga · Ceilândia · Guará · Park Way · Sobradinho · Gama · Santa Maria · Planaltina · Brazlândia · Núcleo Bandeirante · Riacho Fundo · Recanto das Emas · Samambaia · Jardim Botânico · São Sebastião · Arniqueira · e demais RAs
             </div>
           </div>
-          <div class="bg-accent-50 border border-accent-200 rounded-xl p-4">
-            <div class="font-bold text-accent-700 text-sm uppercase tracking-wider mb-2">🌿 Goiás · 11 cidades do Entorno</div>
-            <div class="text-xs text-amber-800 leading-relaxed">
+          <div class="bg-accent-500/10 border border-accent-500/25 rounded-xl p-4">
+            <div class="font-bold text-accent-400 text-sm uppercase tracking-wider mb-2">🌿 Goiás · 11 cidades do Entorno</div>
+            <div class="text-xs text-ink-mut leading-relaxed">
               Valparaíso de Goiás · Cidade Ocidental · Jardim Ingá · Luziânia · Novo Gama · Águas Lindas de Goiás · Formosa · Padre Bernardo · Alto Paraíso de Goiás · São João da Aliança · São Gabriel de Goiás
             </div>
           </div>
@@ -274,22 +274,22 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
     </section>
 
     <!-- CASES REAIS -->
-    <section class="bg-white py-12 border-y border-slate-200">
+    <section class="bg-navy-800 py-12 border-y border-navy-line">
       <div class="max-w-6xl mx-auto px-4">
         <div class="text-center mb-8">
-          <span class="inline-block bg-primary-100 text-primary-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+          <span class="inline-block bg-primary-500/15 text-primary-400 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
             Quem confiou na gente
           </span>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mt-3">
+          <h2 class="text-2xl md:text-3xl font-bold text-ink mt-3">
             +600 projetos entregues em Brasília e Entorno
           </h2>
-          <p class="text-sm text-slate-600 mt-2">Casas, condomínios, comércios e usinas. Cada um com dimensionamento próprio por engenharia.</p>
+          <p class="text-sm text-ink-mut mt-2">Casas, condomínios, comércios e usinas. Cada um com dimensionamento próprio por engenharia.</p>
         </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {cases.map((c) => (
-          <div class="group bg-white rounded-2xl overflow-hidden shadow border border-slate-200 hover:shadow-2xl hover:-translate-y-1 transition">
-            <div class="aspect-video bg-slate-200 overflow-hidden">
+          <div class="group bg-navy-700 rounded-2xl overflow-hidden border border-navy-line hover:shadow-2xl hover:-translate-y-1 transition">
+            <div class="aspect-video bg-navy-800 overflow-hidden">
               <img
                 src={c.fotoPrincipal}
                 alt={c.titulo}
@@ -298,12 +298,12 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
               />
             </div>
             <div class="p-4">
-              <div class="text-[10px] uppercase tracking-wider text-primary-600 font-bold">{c.tag}</div>
-              <div class="font-bold text-slate-900 mt-1">{(c as any).cliente ?? c.titulo}</div>
-              <div class="text-xs text-slate-500 mt-0.5">{c.cidade}/{c.uf}</div>
-              <div class="text-sm text-slate-700 mt-2 line-clamp-2">{c.descCurta}</div>
+              <div class="text-[10px] uppercase tracking-wider text-primary-400 font-bold">{c.tag}</div>
+              <div class="font-bold text-ink mt-1">{(c as any).cliente ?? c.titulo}</div>
+              <div class="text-xs text-ink-mut2 mt-0.5">{c.cidade}/{c.uf}</div>
+              <div class="text-sm text-ink-mut mt-2 line-clamp-2">{c.descCurta}</div>
               {('kwp' in c && c.kwp) && (
-                <div class="mt-3 inline-flex items-center gap-2 bg-emerald-50 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full border border-emerald-200">
+                <div class="mt-3 inline-flex items-center gap-2 bg-green-500/15 text-green-400 text-xs font-bold px-2.5 py-1 rounded-full border border-green-500/30">
                   ⚡ {c.kwp} kWp
                   {('economiaMensalBrl' in c && c.economiaMensalBrl) && (
                     <span>· R$ {c.economiaMensalBrl.toLocaleString('pt-BR')}/mês</span>
@@ -318,66 +318,66 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
     </section>
 
     <!-- DIFERENCIAL TÉCNICO -->
-    <section class="bg-gradient-to-br from-primary-50 to-accent-50 py-14">
+    <section class="bg-navy-800 py-14">
       <div class="max-w-5xl mx-auto px-4">
         <div class="text-center mb-10">
-          <span class="inline-block bg-white text-primary-700 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow">
+          <span class="inline-block bg-navy-700 text-primary-300 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow">
             Engenharia · não vendedor
           </span>
-          <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mt-3">
+          <h2 class="text-2xl md:text-3xl font-bold text-ink mt-3">
             Por que somos diferentes
           </h2>
         </div>
 
         <div class="grid md:grid-cols-2 gap-4">
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">🎓</div>
             <div>
-              <div class="font-bold text-slate-900">Responsável Técnico CFT/CREA</div>
-              <div class="text-sm text-slate-600 mt-1">Registro 98940457153. Projeto, ART e homologação na Neoenergia-DF ou Equatorial-GO sob responsabilidade técnica formal.</div>
+              <div class="font-bold text-ink">Responsável Técnico CFT/CREA</div>
+              <div class="text-sm text-ink-mut mt-1">Registro 98940457153. Projeto, ART e homologação na Neoenergia-DF ou Equatorial-GO sob responsabilidade técnica formal.</div>
             </div>
           </div>
 
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">🏆</div>
             <div>
-              <div class="font-bold text-slate-900">Marcas Tier 1 Bloomberg</div>
-              <div class="text-sm text-slate-600 mt-1">
+              <div class="font-bold text-ink">Marcas Tier 1 Bloomberg</div>
+              <div class="text-sm text-ink-mut mt-1">
                 Painéis <strong>Trina, JA Solar, Jinko, Risen, LONGi</strong> (líderes mundiais).
                 Inversores <strong>Sungrow, Solax, Hoymiles, SolarEdge</strong>. Validadas pra financiamento bancário (Santander, BV, Sicredi).
               </div>
             </div>
           </div>
 
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">🛡</div>
             <div>
-              <div class="font-bold text-slate-900">Garantia 12 meses</div>
-              <div class="text-sm text-slate-600 mt-1">Mão de obra e instalação com 1 ano de garantia EcoSunPower. Painéis com garantia de fábrica de 25 anos (linear de potência).</div>
+              <div class="font-bold text-ink">Garantia 12 meses</div>
+              <div class="text-sm text-ink-mut mt-1">Mão de obra e instalação com 1 ano de garantia EcoSunPower. Painéis com garantia de fábrica de 25 anos (linear de potência).</div>
             </div>
           </div>
 
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">📊</div>
             <div>
-              <div class="font-bold text-slate-900">Monitoramento em tempo real</div>
-              <div class="text-sm text-slate-600 mt-1">Plataforma própria pra acompanhar geração do seu sistema 24/7. Alertas se algo cair, sem você precisar perceber primeiro.</div>
+              <div class="font-bold text-ink">Monitoramento em tempo real</div>
+              <div class="text-sm text-ink-mut mt-1">Plataforma própria pra acompanhar geração do seu sistema 24/7. Alertas se algo cair, sem você precisar perceber primeiro.</div>
             </div>
           </div>
 
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">📍</div>
             <div>
-              <div class="font-bold text-slate-900">Base local Brasília-DF</div>
-              <div class="text-sm text-slate-600 mt-1">Empresa registrada, endereço físico, atendimento presencial quando precisar. Não somos integrador online distante.</div>
+              <div class="font-bold text-ink">Base local Brasília-DF</div>
+              <div class="text-sm text-ink-mut mt-1">Empresa registrada, endereço físico, atendimento presencial quando precisar. Não somos integrador online distante.</div>
             </div>
           </div>
 
-          <div class="bg-white rounded-xl p-5 shadow flex gap-4">
+          <div class="bg-navy-700 border border-navy-line rounded-xl p-5 flex gap-4">
             <div class="text-3xl">🤖</div>
             <div>
-              <div class="font-bold text-slate-900">Atendimento por IA + humano</div>
-              <div class="text-sm text-slate-600 mt-1">Cotação rápida via WhatsApp 24/7 (IA Eva) + atendimento técnico humano pra fechamento. Sem ficar pagando ligação ou esperando dias.</div>
+              <div class="font-bold text-ink">Atendimento por IA + humano</div>
+              <div class="text-sm text-ink-mut mt-1">Cotação rápida via WhatsApp 24/7 (IA Eva) + atendimento técnico humano pra fechamento. Sem ficar pagando ligação ou esperando dias.</div>
             </div>
           </div>
         </div>
@@ -391,16 +391,16 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
     </section>
 
     <!-- FOOTER MINIMAL -->
-    <footer class="bg-dark text-slate-300 py-8">
+    <footer class="bg-navy border-t border-navy-line text-ink-mut py-8">
       <div class="max-w-5xl mx-auto px-4 text-center text-xs space-y-2">
         <div class="flex items-center justify-center gap-2 mb-3">
           <img src="/logo-ecosunpower-icon.png" alt="EcoSunPower" class="h-7 w-7" />
           <span class="font-bold text-white text-base">EcoSunPower</span>
         </div>
-        <div class="font-semibold text-slate-200">ECOSUNPOWER ENERGIA SOLAR LTDA</div>
+        <div class="font-semibold text-ink">ECOSUNPOWER ENERGIA SOLAR LTDA</div>
         <div>CNPJ 33.020.459/0001-06</div>
         <div>Brasília-DF · Responsável Técnico CFT/CREA · Registro 98940457153</div>
-        <div class="text-[10px] text-slate-500 pt-3">Anúncio em conformidade com legislação brasileira de publicidade. Garantia 12 meses mão de obra. Equipamentos seguem garantia de fábrica.</div>
+        <div class="text-[10px] text-ink-mut2 pt-3">Anúncio em conformidade com legislação brasileira de publicidade. Garantia 12 meses mão de obra. Equipamentos seguem garantia de fábrica.</div>
       </div>
     </footer>
   </main>
@@ -417,13 +417,13 @@ const heroPosterUrl = '/videos/cotacao-hero-poster.jpg';
       document.querySelectorAll('.conta-opt input').forEach((input) => {
         input.addEventListener('change', () => {
           document.querySelectorAll('.conta-opt').forEach((opt) => {
-            opt.classList.remove('border-primary-500', 'bg-primary-50');
-            opt.classList.add('border-slate-200');
+            opt.classList.remove('border-primary-500', 'bg-primary-500/15');
+            opt.classList.add('border-navy-line2');
           });
           const parent = input.closest('.conta-opt');
           if (parent) {
-            parent.classList.remove('border-slate-200');
-            parent.classList.add('border-primary-500', 'bg-primary-50');
+            parent.classList.remove('border-navy-line2');
+            parent.classList.add('border-primary-500', 'bg-primary-500/15');
           }
         });
       });
