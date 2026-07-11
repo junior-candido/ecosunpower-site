@@ -40,6 +40,28 @@ export default {
           DEFAULT: '#FFFFFF',
           alt: '#F8FAFC',
         },
+        // Tema dark (cara da calculadora) — repaginação do site
+        navy: {
+          DEFAULT: '#0b1220',
+          950: '#070c15',
+          900: '#0b1220',
+          800: '#0e1728',
+          700: '#101a2e',
+          600: '#132139',
+          500: '#1b3350',
+          line: '#22304a',
+          line2: '#2b4a6a',
+        },
+        ink: {
+          DEFAULT: '#eef3f9',
+          mut: '#9fb4cc',
+          mut2: '#647a9a',
+        },
+        green: {
+          DEFAULT: '#2ecc9b',
+          400: '#3dd68c',
+          500: '#2ecc9b',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],

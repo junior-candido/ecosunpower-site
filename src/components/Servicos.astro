@@ -1,191 +1,72 @@
 ---
-const servicos = [
-  {
-    title: 'Sistema On-grid',
-    desc: 'Carro-chefe da EcoSunPower. Pra residências, comércios e indústrias conectados à rede. Reduz a conta em até 95% e tem o melhor custo-benefício do mercado.',
-    cta: 'Quero on-grid',
-    icon: 'ongrid',
-    color: 'primary',
-    featured: true,
-    badge: 'Mais vendido',
-  },
-  {
-    title: 'Solar + Bateria',
-    desc: 'Sistema híbrido com armazenamento. Energia 24h mesmo na falta de luz. Independência total e segurança energética.',
-    cta: 'Quero com bateria',
-    icon: 'bateria',
-    color: 'accent',
-    featured: false,
-  },
-  {
-    title: 'Off-grid e Bombeamento',
-    desc: 'Pra locais sem rede elétrica: fazendas, sítios, irrigação. Sistema autônomo dimensionado pra demanda específica.',
-    cta: 'Quero off-grid',
-    icon: 'offgrid',
-    color: 'primary',
-    featured: false,
-  },
-  {
-    title: 'Carregador para Carro Elétrico',
-    desc: 'Instalação de carregadores de qualquer porte: wallbox residencial, comercial e DC fast charging. Com ou sem solar acoplado.',
-    cta: 'Quero carregador',
-    icon: 'carregador',
-    color: 'accent',
-    featured: false,
-  },
-  {
-    title: 'Manutenção de Sistemas',
-    desc: 'Limpeza, diagnóstico, monitoramento remoto e reparo. Atendemos sistemas EcoSunPower e de outras instaladoras.',
-    cta: 'Quero manutenção',
-    icon: 'manutencao',
-    color: 'primary',
-    featured: false,
-  },
-  {
-    title: 'Mercado Livre / Grupo A',
-    desc: 'Solução completa pra indústrias e grandes empresas em alta tensão. Migração pro mercado livre e geração própria.',
-    cta: 'Quero saber mais',
-    icon: 'industria',
-    color: 'accent',
-    featured: false,
-  },
-];
+// Serviços repaginado (tema dark calc): mosaico bento — a elétrica completa.
+// Mercado Livre removido (ainda não atua); Bomba de Calor e Projeto Elétrico adicionados.
+const wa = (txt: string) => `https://wa.me/5561998805002?text=Oi!%20${encodeURIComponent(txt)}`;
 ---
 
-<section id="servicos" class="section bg-white">
+<section id="servicos" class="relative bg-navy py-16 lg:py-24 border-t border-navy-line">
   <div class="container-wide">
-    <!-- Header -->
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <span class="tag-accent">Nossos serviços</span>
-      <h2 class="text-4xl lg:text-5xl mt-4 mb-5">
-        Soluções completas <span class="text-gradient">em energia</span>
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="inline-flex items-center gap-2.5 font-mono text-xs tracking-[0.16em] uppercase text-primary-400">
+        <span class="w-5 h-px bg-primary-400"></span> O que a gente faz <span class="w-5 h-px bg-primary-400"></span>
+      </span>
+      <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink mt-4 mb-3 text-balance">
+        Tudo de <span class="text-primary-400">elétrica</span>, num lugar só
       </h2>
-      <p class="text-lg text-muted leading-relaxed">
-        Da casa de 3 quartos à indústria com demanda de 500 kWp.
-        Solar é o foco principal, mas atendemos qualquer demanda na área de energia.
+      <p class="text-lg text-ink-mut leading-relaxed">
+        Da geração de energia à última tomada — com engenharia por trás de cada projeto.
       </p>
     </div>
 
-    <!-- Cards -->
-    <div class="grid md:grid-cols-3 gap-6">
-      {servicos.map((s) => (
-        <div class={`card group flex flex-col overflow-hidden p-0 relative transition-all hover:-translate-y-1 ${s.featured ? 'ring-2 ring-accent-500 ring-offset-2' : ''}`}>
-          {s.featured && s.badge && (
-            <div class="absolute top-3 right-3 z-10 bg-accent-500 text-dark text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-              ⭐ {s.badge}
-            </div>
-          )}
+    <!-- Bento -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 auto-rows-[130px] gap-3.5">
+      <!-- Featured: Solar -->
+      <a href={wa('Quero energia solar')} target="_blank" rel="noopener"
+         class="col-span-2 row-span-2 group flex flex-col justify-end rounded-2xl p-6 border border-primary-600 transition-all hover:-translate-y-1"
+         style="background:linear-gradient(158deg,rgba(28,169,224,.18),#132139)">
+        <div class="text-4xl mb-auto">☀️</div>
+        <h3 class="text-2xl font-display font-bold text-ink">Energia solar</h3>
+        <p class="text-ink-mut text-sm mt-1.5 max-w-sm leading-relaxed">On-grid, off-grid e híbrido. Reduz a conta em até 95%, com dimensionamento de verdade.</p>
+        <span class="btn-primary mt-4 w-fit text-sm py-2.5 px-5">Calcular meu sistema</span>
+      </a>
 
-          <!-- Icon area -->
-          <div class={`h-44 ${s.color === 'primary' ? 'bg-gradient-to-br from-primary-500 to-primary-700' : 'bg-gradient-to-br from-accent-400 to-accent-600'} relative overflow-hidden flex items-center justify-center`}>
-            <!-- Decorative pattern -->
-            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 70% 70%, white 1px, transparent 2px); background-size: 40px 40px;"></div>
+      <a href={wa('Quero saber sobre bateria BESS')} target="_blank" rel="noopener"
+         class="relative group flex flex-col justify-between rounded-2xl p-5 border transition-all hover:-translate-y-1"
+         style="background:linear-gradient(158deg,rgba(245,184,46,.14),#132139);border-color:rgba(245,184,46,.35)">
+        <span class="absolute top-3.5 right-3.5 font-mono text-[9.5px] font-bold text-navy bg-green-500 px-1.5 py-0.5 rounded">novo</span>
+        <div class="text-2xl">🔋</div>
+        <div><h3 class="font-bold text-ink text-[15px]">Bateria &amp; BESS</h3><p class="text-ink-mut text-xs mt-1 leading-snug">Energia 24h. Pioneiros no mercado.</p></div>
+      </a>
 
-            <!-- SVG Icon -->
-            <div class="relative z-10 text-white group-hover:scale-110 transition-transform duration-300">
-              {s.icon === 'ongrid' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="8" y="10" width="48" height="28" rx="2"/>
-                  <line x1="8" y1="24" x2="56" y2="24"/>
-                  <line x1="24" y1="10" x2="24" y2="38"/>
-                  <line x1="40" y1="10" x2="40" y2="38"/>
-                  <line x1="32" y1="38" x2="32" y2="46"/>
-                  <line x1="20" y1="46" x2="44" y2="46"/>
-                  <path d="M14 46L14 56 24 56"/>
-                  <path d="M50 46L50 56 40 56"/>
-                  <circle cx="14" cy="56" r="2.5"/>
-                  <circle cx="50" cy="56" r="2.5"/>
-                </svg>
-              )}
-              {s.icon === 'bateria' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="6" y="18" width="48" height="32" rx="3"/>
-                  <line x1="54" y1="28" x2="54" y2="40"/>
-                  <line x1="58" y1="28" x2="58" y2="40"/>
-                  <rect x="14" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
-                  <rect x="24" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
-                  <rect x="34" y="26" width="6" height="16" fill="currentColor" stroke="none" rx="1"/>
-                  <path d="M18 8L26 16M22 12L30 4M40 12L48 4M44 16L52 8" opacity="0.7"/>
-                </svg>
-              )}
-              {s.icon === 'offgrid' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="48" cy="14" r="6"/>
-                  <line x1="48" y1="2" x2="48" y2="6"/>
-                  <line x1="56" y1="6" x2="59" y2="3"/>
-                  <line x1="60" y1="14" x2="56" y2="14"/>
-                  <line x1="56" y1="22" x2="59" y2="25"/>
-                  <path d="M8 50V32l16-10 16 10v18"/>
-                  <path d="M18 50v-10h12v10"/>
-                  <line x1="4" y1="50" x2="44" y2="50"/>
-                  <path d="M50 38v8M48 42h4" stroke-width="2"/>
-                  <line x1="50" y1="50" x2="60" y2="50"/>
-                </svg>
-              )}
-              {s.icon === 'carregador' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="18" y="8" width="28" height="36" rx="3"/>
-                  <line x1="26" y1="8" x2="26" y2="14"/>
-                  <line x1="38" y1="8" x2="38" y2="14"/>
-                  <path d="M34 22l-6 8h4l-2 6 6-8h-4l2-6z" fill="currentColor" stroke="none"/>
-                  <path d="M32 44v6"/>
-                  <rect x="14" y="50" width="36" height="6" rx="2"/>
-                  <circle cx="22" cy="56" r="2.5" fill="currentColor"/>
-                  <circle cx="42" cy="56" r="2.5" fill="currentColor"/>
-                </svg>
-              )}
-              {s.icon === 'manutencao' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M44 8a10 10 0 0 0-10 14L8 48l8 8 26-26a10 10 0 0 0 14-10l-8 8-6-6 8-8a10 10 0 0 0-6-6z"/>
-                  <circle cx="14" cy="50" r="2" fill="currentColor"/>
-                </svg>
-              )}
-              {s.icon === 'industria' && (
-                <svg width="80" height="80" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6 56V28l14 8V28l14 8V28l14 8v20"/>
-                  <line x1="2" y1="56" x2="62" y2="56"/>
-                  <rect x="14" y="42" width="6" height="8"/>
-                  <rect x="28" y="42" width="6" height="8"/>
-                  <rect x="42" y="42" width="6" height="8"/>
-                  <path d="M22 14l-4 6h6l-2 6 4-6h-6l2-6z" fill="currentColor" stroke="none"/>
-                  <line x1="6" y1="20" x2="6" y2="28"/>
-                </svg>
-              )}
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
-          </div>
+      <a href={wa('Quero um projeto elétrico')} target="_blank" rel="noopener"
+         class="group flex flex-col justify-between rounded-2xl p-5 border border-navy-line bg-navy-600 transition-all hover:-translate-y-1 hover:border-navy-line2">
+        <div class="text-2xl">⚡</div>
+        <div><h3 class="font-bold text-ink text-[15px]">Projeto elétrico</h3><p class="text-ink-mut text-xs mt-1 leading-snug">Planta e circuitos por norma.</p></div>
+      </a>
 
-          <!-- Content -->
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
-              {s.title}
-            </h3>
-            <p class="text-muted text-sm leading-relaxed mb-6 flex-1">{s.desc}</p>
+      <a href={wa('Quero aquecer minha piscina')} target="_blank" rel="noopener"
+         class="relative group flex flex-col justify-between rounded-2xl p-5 border transition-all hover:-translate-y-1"
+         style="background:linear-gradient(158deg,rgba(245,184,46,.14),#132139);border-color:rgba(245,184,46,.35)">
+        <span class="absolute top-3.5 right-3.5 font-mono text-[9.5px] font-bold text-navy bg-green-500 px-1.5 py-0.5 rounded">novo</span>
+        <div class="text-2xl">♨️</div>
+        <div><h3 class="font-bold text-ink text-[15px]">Bomba de Calor</h3><p class="text-ink-mut text-xs mt-1 leading-snug">Aquecimento de piscina.</p></div>
+      </a>
 
-            <a
-              href={`https://wa.me/5561998805002?text=Oi!%20${encodeURIComponent(s.cta)}`}
-              target="_blank"
-              rel="noopener"
-              class="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-bold text-sm group/cta"
-            >
-              {s.cta}
-              <svg class="w-4 h-4 group-hover/cta:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      ))}
+      <a href={wa('Quero um carregador para carro elétrico')} target="_blank" rel="noopener"
+         class="group flex flex-col justify-between rounded-2xl p-5 border border-navy-line bg-navy-600 transition-all hover:-translate-y-1 hover:border-navy-line2">
+        <div class="text-2xl">🔌</div>
+        <div><h3 class="font-bold text-ink text-[15px]">Carregador VE</h3><p class="text-ink-mut text-xs mt-1 leading-snug">Wallbox ao DC fast.</p></div>
+      </a>
+
+      <a href={wa('Quero manutenção do meu sistema')} target="_blank" rel="noopener"
+         class="group flex flex-col justify-between rounded-2xl p-5 border border-navy-line bg-navy-600 transition-all hover:-translate-y-1 hover:border-navy-line2">
+        <div class="text-2xl">🛠️</div>
+        <div><h3 class="font-bold text-ink text-[15px]">Manutenção</h3><p class="text-ink-mut text-xs mt-1 leading-snug">Do nosso ou de outros.</p></div>
+      </a>
     </div>
 
-    <!-- Bottom CTA -->
-    <div class="text-center mt-12">
-      <a
-        href="https://wa.me/5561998805002?text=Oi!%20Quero%20conhecer%20todos%20os%20servi%C3%A7os%20da%20EcoSunPower"
-        target="_blank"
-        rel="noopener"
-        class="btn-secondary"
-      >
+    <div class="text-center mt-11">
+      <a href={wa('Quero conhecer todos os serviços da EcoSunPower')} target="_blank" rel="noopener" class="btn-primary">
         Quero falar com especialista
       </a>
     </div>
