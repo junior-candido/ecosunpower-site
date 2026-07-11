@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoSunPower · Simulador de Aquecimento de Piscina & Carga Elétrica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b1220; --panel:#111c31; --panel2:#0e1728; --line:#1e2d47;
+    --blue:#1ca9e0; --blue-dark:#0b6fa4; --gold:#f5b82e;
+    --ok:#3dd68c; --danger:#f0544f; --danger-deep:#7a1f1d;
+    --ink:#eaf2fb; --muted:#8ea3bf; --muted2:#647a9a;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(28,169,224,.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(245,184,46,.06), transparent 55%),
+      var(--navy);
+    color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.5;
+    padding:0 0 60px;
+  }
+  .wrap{max-width:1000px; margin:0 auto; padding:0 16px}
+
+  /* ---------- HEADER ---------- */
+  header.top{padding:26px 0 18px; border-bottom:1px solid var(--line); margin-bottom:22px}
+  .brand{display:flex; align-items:center; gap:13px; flex-wrap:wrap}
+  .logo{width:44px; height:44px; flex:0 0 auto}
+  .brand h1{font-family:'Archivo',sans-serif; font-weight:800; font-size:19px; letter-spacing:.2px; margin:0; line-height:1.1}
+  .brand h1 span{color:var(--gold)}
+  .brand .tag{font-size:12px; color:var(--muted); margin-top:2px; letter-spacing:.3px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--blue); margin:22px 0 6px}
+  .lede{font-family:'Archivo',sans-serif; font-weight:700; font-size:clamp(24px,5vw,34px); line-height:1.08; margin:0 0 8px; letter-spacing:-.5px}
+  .lede b{color:var(--gold)}
+  .sub{color:var(--muted); max-width:62ch; font-size:15px}
+
+  /* ---------- MODULES ---------- */
+  .module{background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid var(--line);
+    border-radius:16px; padding:20px; margin:18px 0; box-shadow:0 1px 0 rgba(255,255,255,.03) inset}
+  .mod-head{display:flex; align-items:baseline; gap:10px; margin:0 0 4px}
+  .mod-num{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; color:var(--blue); background:rgba(28,169,224,.10);
+    border:1px solid rgba(28,169,224,.3); border-radius:6px; padding:1px 7px}
+  .mod-head h2{font-family:'Archivo',sans-serif; font-weight:700; font-size:18px; margin:0; letter-spacing:.2px}
+  .mod-desc{color:var(--muted); font-size:13.5px; margin:2px 0 16px}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+
+  /* ---------- POOL DRAWING ---------- */
+  .poolbox{background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:14px}
+  .poolbox svg{width:100%; height:auto; display:block}
+  .cap{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin:0 0 8px}
+  .statrow{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px}
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:11px 13px}
+  .stat .k{font-size:11px; color:var(--muted); letter-spacing:.4px}
+  .stat .v{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:20px; color:var(--gold); margin-top:2px}
+  .stat .v small{font-size:12px; color:var(--muted); font-weight:500}
+
+  /* ---------- SYSTEM DIAGRAM ---------- */
+  .sysbox svg{width:100%; height:auto}
+  .flow{stroke-dasharray:6 7; animation:dash 1.1s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-26}}
+  .solar-on .solarflow{opacity:1}
+  .solarflow{opacity:.12; transition:opacity .5s}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:var(--muted)}
+  .legend i{display:inline-block; width:11px; height:3px; border-radius:2px; margin-right:6px; vertical-align:middle}
+
+  /* ---------- LOAD MODULE ---------- */
+  table.loads{width:100%; border-collapse:collapse; font-size:14px}
+  table.loads th{text-align:left; font-size:11px; letter-spacing:.5px; text-transform:uppercase; color:var(--muted); font-weight:600; padding:0 8px 8px; border-bottom:1px solid var(--line)}
+  table.loads td{padding:7px 8px; border-bottom:1px solid rgba(30,45,71,.5); vertical-align:middle}
+  table.loads input[type=text]{width:100%; background:transparent; border:none; color:var(--ink); font-family:inherit; font-size:14px; padding:4px 2px}
+  table.loads input[type=text]:focus{outline:1px solid var(--blue); border-radius:5px; background:var(--panel2)}
+  .wcell{display:flex; align-items:center; gap:4px; justify-content:flex-end}
+  .wcell input{width:66px; background:var(--panel2); border:1px solid var(--line); color:var(--ink); border-radius:6px;
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px; padding:5px 6px; text-align:right}
+  .wcell input:focus{outline:none; border-color:var(--blue)}
+  .wcell .u{font-size:11px; color:var(--muted)}
+  .qty input{width:44px; text-align:center}
+  .hcell input{width:54px}
+  .kwhcell{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; color:var(--blue); white-space:nowrap}
+  .kwhcell.term{color:var(--gold); font-size:12px}
+  .tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:0 -4px 0}
+  table.loads{min-width:560px}
+  .housetotal{display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; margin-top:16px;
+    background:linear-gradient(180deg,rgba(245,184,46,.08),var(--panel2)); border:1px solid rgba(245,184,46,.28); border-radius:12px; padding:14px 16px}
+  .housetotal .k{font-size:11px; color:var(--muted); letter-spacing:.4px; text-transform:uppercase}
+  .housetotal .v{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:26px; color:var(--gold); line-height:1.1}
+  .housetotal .v small{font-size:13px; color:var(--muted); font-weight:500}
+  .housetotal .hint{font-size:12px; color:var(--muted); max-width:30ch; text-align:right}
+  .housetotal .hint b{font-family:'IBM Plex Mono',monospace; color:var(--blue)}
+  td.center{text-align:center}
+  .sw{cursor:pointer; width:38px; height:22px; border-radius:12px; background:var(--line); border:none; position:relative; transition:background .2s; flex:0 0 auto}
+  .sw::after{content:""; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#cdd9ea; transition:transform .2s}
+  .sw.on{background:var(--blue)} .sw.on::after{transform:translateX(16px); background:#fff}
+  .del{background:none; border:none; color:var(--muted); cursor:pointer; font-size:17px; line-height:1; padding:4px 6px; border-radius:6px}
+  .del:hover{color:var(--danger); background:rgba(240,84,79,.1)}
+
+  .toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:14px 0 4px}
+  .btn{font-family:'Inter',sans-serif; font-weight:600; font-size:13px; border-radius:9px; padding:9px 14px; cursor:pointer; border:1px solid var(--line); background:var(--panel2); color:var(--ink); transition:.15s}
+  .btn:hover{border-color:var(--blue)}
+  .btn.add{background:rgba(28,169,224,.14); border-color:rgba(28,169,224,.4); color:#bfe6fb}
+  .presets{display:flex; flex-wrap:wrap; gap:7px; margin-top:12px}
+  .chip{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 10px; border-radius:20px; border:1px dashed var(--line); background:transparent; color:var(--muted); cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--gold); color:var(--gold); border-style:solid}
+
+  /* ---------- LOAD BAR (SIGNATURE) ---------- */
+  .gauge{margin-top:20px; background:var(--panel2); border:1px solid var(--line); border-radius:13px; padding:16px}
+  .gauge-top{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:10px; gap:12px; flex-wrap:wrap}
+  .gauge-top .kw{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:30px; line-height:1; transition:color .3s}
+  .gauge-top .kw small{font-size:14px; color:var(--muted); font-weight:500}
+  .gauge-top .lbl{font-size:11px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase}
+  .bar{position:relative; height:30px; background:#0a1424; border:1px solid var(--line); border-radius:8px; overflow:hidden}
+  .fill{position:absolute; inset:0 auto 0 0; width:0%; border-radius:7px 0 0 7px; transition:width .35s cubic-bezier(.2,.7,.2,1), background .35s}
+  .fill.ok{background:linear-gradient(90deg,#1f7a55,var(--ok))}
+  .fill.bad{background:linear-gradient(90deg,#8a2b28,var(--danger))}
+  .limit{position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--gold); z-index:3}
+  .limit::after{content:attr(data-lbl); position:absolute; top:-17px; left:50%; transform:translateX(-50%); white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.5px; color:var(--gold)}
+  /* seletor de concessionária (módulo 3) */
+  .conc-bar{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin:2px 0 8px}
+  .conc-field{display:flex; flex-direction:column; gap:5px}
+  .conc-field.cf-sel{flex:1 1 240px; min-width:200px}
+  .conc-field label{font-size:11px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; color:var(--muted)}
+  .conc-field label .opt{font-weight:500; text-transform:none; letter-spacing:0; color:var(--muted2)}
+  #concSel{width:100%; background:var(--panel2); color:var(--ink); border:1px solid var(--line); border-radius:9px;
+    padding:9px 10px; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer}
+  #concSel:focus{outline:none; border-color:var(--blue)}
+  .conc-field .cf-in{display:flex; align-items:center; gap:5px; background:var(--panel2); border:1px solid var(--line);
+    border-radius:9px; padding:6px 9px}
+  .conc-field .cf-in:focus-within{border-color:var(--blue)}
+  .conc-field .cf-in input{width:58px; background:transparent; border:none; color:var(--ink); font-family:'IBM Plex Mono',monospace;
+    font-weight:700; font-size:14px; text-align:right}
+  .conc-field .cf-in input:focus{outline:none}
+  .conc-field .cf-in .u{font-size:11px; color:var(--muted)}
+  .conc-hint{margin:0 0 14px; font-size:12px; line-height:1.45; color:var(--gold);
+    background:rgba(245,184,46,.09); border:1px solid rgba(245,184,46,.28); border-radius:9px; padding:9px 12px}
+  /* metragem / bomba / padrão */
+  .dim-toggle{margin:0 0 12px}
+  #volInput{width:92px !important}
+  .bomba-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  #bombaSel{flex:1 1 240px; min-width:200px; background:var(--panel2); color:var(--ink); border:1px solid var(--line);
+    border-radius:9px; padding:9px 10px; font-family:inherit; font-size:13px; font-weight:600; cursor:pointer}
+  #bombaSel:focus{outline:none; border-color:var(--blue)}
+  .bomba-row .cf-in{display:flex; align-items:center; gap:5px; background:var(--panel2); border:1px solid var(--line);
+    border-radius:9px; padding:6px 9px}
+  .bomba-row .cf-in:focus-within{border-color:var(--blue)}
+  .bomba-row .cf-in input{width:54px; background:transparent; border:none; color:var(--ink); font-family:'IBM Plex Mono',monospace;
+    font-weight:700; font-size:14px; text-align:right}
+  .bomba-row .cf-in input:focus{outline:none}
+  .bomba-row .cf-in .u{font-size:11px; color:var(--muted)}
+  .padrao{margin-top:16px; background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:14px 16px}
+  .padrao-top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:10px}
+  .padrao-top .lbl{font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; color:var(--muted)}
+  .padrao-out{font-family:'Archivo',sans-serif; font-size:18px; color:var(--ink)}
+  .padrao-out b{color:var(--blue)}
+  .padrao-sub{margin-top:6px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted)}
+  .padrao-hint{margin-top:8px; font-size:11px; color:var(--muted2); line-height:1.4}
+  .verdict{margin-top:16px; border-radius:11px; padding:14px 16px; display:flex; gap:13px; align-items:center; transition:.3s; border:1px solid}
+  .verdict .badge{font-family:'Archivo',sans-serif; font-weight:800; font-size:15px; letter-spacing:.5px; white-space:nowrap}
+  .verdict .txt{font-size:13px; line-height:1.4}
+  .verdict.mono{background:rgba(61,214,140,.09); border-color:rgba(61,214,140,.35)}
+  .verdict.mono .badge{color:var(--ok)}
+  .verdict.tri{background:rgba(240,84,79,.10); border-color:rgba(240,84,79,.4)}
+  .verdict.tri .badge{color:var(--danger)}
+  .demand{display:flex; gap:22px; flex-wrap:wrap; margin-top:14px; font-size:12.5px; color:var(--muted)}
+  .demand b{font-family:'IBM Plex Mono',monospace; color:var(--ink); font-weight:700}
+  .fd{display:flex; align-items:center; gap:8px; margin-top:12px; font-size:12.5px; color:var(--muted)}
+  .fd input{width:52px; background:var(--panel2); border:1px solid var(--line); color:var(--ink); border-radius:6px; padding:4px 6px; font-family:'IBM Plex Mono',monospace; text-align:center}
+
+  /* ---------- CONSUMPTION ---------- */
+  .ctrls{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:560px){.ctrls{grid-template-columns:1fr}}
+  .ctrl label{font-size:12px; color:var(--muted); letter-spacing:.3px; display:flex; justify-content:space-between; margin-bottom:7px}
+  .ctrl label b{font-family:'IBM Plex Mono',monospace; color:var(--gold); font-weight:700}
+  input[type=range]{-webkit-appearance:none; width:100%; height:5px; border-radius:4px; background:var(--line); outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:19px; height:19px; border-radius:50%; background:var(--blue); border:3px solid #0a1424; cursor:pointer; box-shadow:0 0 0 1px var(--blue)}
+  input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--blue); border:3px solid #0a1424; cursor:pointer}
+  .seg{display:flex; gap:6px; background:var(--panel2); padding:4px; border-radius:10px; border:1px solid var(--line)}
+  .seg button{flex:1; border:none; background:transparent; color:var(--muted); font-family:inherit; font-weight:600; font-size:12.5px; padding:8px 4px; border-radius:7px; cursor:pointer; transition:.15s}
+  .seg button.sel{background:var(--blue); color:#fff}
+  .seg.gold button.sel{background:var(--gold); color:#231a02}
+
+  /* ---------- SCENARIOS ---------- */
+  .plug{width:100%; margin:18px 0 4px; border:none; border-radius:13px; padding:17px; cursor:pointer;
+    font-family:'Archivo',sans-serif; font-weight:800; font-size:16px; letter-spacing:.5px; color:#04121e;
+    background:linear-gradient(90deg,var(--gold),#ffcf5a); box-shadow:0 8px 30px -10px rgba(245,184,46,.6); transition:.2s}
+  .plug:hover{transform:translateY(-1px)}
+  .plug.active{background:linear-gradient(90deg,var(--ok),#7ff0b8); box-shadow:0 8px 30px -10px rgba(61,214,140,.6)}
+  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel2); border:1px solid var(--line); border-radius:13px; padding:16px; position:relative; transition:.3s; overflow:hidden}
+  .card.hidden{opacity:.28; filter:saturate(.3)}
+  .card .tier{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--muted)}
+  .card h3{font-family:'Archivo',sans-serif; font-size:15px; margin:6px 0 12px; font-weight:700; line-height:1.2}
+  .card .big{font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:27px; line-height:1}
+  .card .permo{font-size:12px; color:var(--muted); margin-top:2px}
+  .card .split{margin-top:12px; font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:10px; display:grid; gap:3px}
+  .card .split span{display:flex; justify-content:space-between}
+  .card .split b{font-family:'IBM Plex Mono',monospace; color:var(--ink); font-weight:600}
+  .card.win{border-color:var(--ok)} .card.win .big{color:var(--ok)}
+  .card.mid .big{color:var(--blue)} .card.hi .big{color:var(--gold)}
+  .save-note{margin-top:16px; text-align:center; font-size:14px; color:var(--muted)}
+  .save-note b{color:var(--ok); font-family:'IBM Plex Mono',monospace; font-size:17px}
+
+  .note{font-size:12px; color:var(--muted2); margin-top:16px; padding-top:14px; border-top:1px dashed var(--line); line-height:1.55}
+  .note code{font-family:'IBM Plex Mono',monospace; color:var(--muted); background:var(--panel2); padding:1px 5px; border-radius:4px}
+
+  footer{margin-top:34px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--muted)}
+  footer b{color:var(--ink)}
+  footer a{color:var(--blue); text-decoration:none}
+  .disc{font-size:11px; color:var(--muted2); margin-top:14px; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <img src="/logo-ecosun-ecossistema.png" alt="EcoSunPower Energia Solar" style="height:56px;width:auto;max-width:260px;display:block;flex:0 0 auto" />
+      <div>
+        <h1>Simulador de Piscina &amp; Carga Elétrica</h1>
+        <div class="tag">Estudo Técnico de Aquecimento & Carga Elétrica — Piscina residencial</div>
+      </div>
+    </div>
+
+    <div class="eyebrow" id="concEyebrow">Console de dimensionamento</div>
+    <p class="lede">Quanto essa piscina consome para ficar <b>quente</b> — e como o sol derruba essa conta.</p>
+    <p class="sub">Ferramenta de campo: monte a carga real do cliente, veja o padrão de ligação que a norma obriga, e simule o custo do aquecimento com e sem energia solar acoplada ao sistema.</p>
+  </header>
+
+  <!-- MÓDULO 1 — PISCINA -->
+  <section class="module">
+    <div class="mod-head"><span class="mod-num">01</span><h2>A piscina do cliente</h2></div>
+    <p class="mod-desc">Informe a <b>metragem real</b> da piscina — o motor calcula a superfície e o volume. O que manda no aquecimento é a <b>superfície</b> (evaporação), não só o volume.</p>
+
+    <div class="seg dim-toggle" id="dimMode">
+      <button data-m="medidas" class="sel" type="button">Por medidas (C×L×P)</button>
+      <button data-m="volume" type="button">Por volume (litros)</button>
+    </div>
+
+    <div class="conc-bar" id="dimMedidas">
+      <div class="conc-field"><label for="dimC">Comprimento</label><div class="cf-in"><input id="dimC" type="number" min="1" step="0.1" value="10"><span class="u">m</span></div></div>
+      <div class="conc-field"><label for="dimL">Largura</label><div class="cf-in"><input id="dimL" type="number" min="1" step="0.1" value="5.2"><span class="u">m</span></div></div>
+      <div class="conc-field"><label for="dimP">Profundidade média</label><div class="cf-in"><input id="dimP" type="number" min="0.4" step="0.05" value="1.2"><span class="u">m</span></div></div>
+    </div>
+
+    <div class="conc-bar" id="dimVolume" style="display:none">
+      <div class="conc-field cf-sel"><label for="volInput">Volume total <span class="opt">(ex.: 90 mil)</span></label><div class="cf-in"><input id="volInput" type="text" inputmode="numeric" value="62.400"><span class="u">litros</span></div></div>
+      <div class="conc-field"><label for="volProf">Profundidade média</label><div class="cf-in"><input id="volProf" type="number" min="0.4" step="0.05" value="1.2"><span class="u">m</span></div></div>
+    </div>
+
+    <div class="grid2">
+      <div class="poolbox">
+        <p class="cap">Planta — cotas em metros</p>
+        <svg viewBox="0 0 420 300" role="img" aria-label="Planta da piscina em L">
+          <!-- pool polygon: L shape. scale 34px/m, origin x30 y20 -->
+          <!-- verts (m): (0,7)(10,7)(10,0)(6,0)(6,3)(0,3) -->
+          <polygon points="30,258 370,258 370,20 234,20 234,122 30,122"
+                   fill="#0d2b45" stroke="#1ca9e0" stroke-width="2.5"/>
+          <polygon points="30,258 370,258 370,20 234,20 234,122 30,122"
+                   fill="none" stroke="#1ca9e0" stroke-width="1" opacity=".4" transform="translate(4,4)"/>
+          <!-- depth zones labels -->
+          <text x="132" y="196" fill="#bfe6fb" font-family="IBM Plex Mono, monospace" font-size="13" text-anchor="middle" font-weight="700">FUNDA</text>
+          <text x="132" y="214" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">40 m² · H 1,37</text>
+          <text x="302" y="66" fill="#bfe6fb" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle" font-weight="700">RASA</text>
+          <text x="302" y="83" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="middle">12 m² · H 0,50</text>
+          <!-- dimension labels -->
+          <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#f5b82e" font-weight="600">
+            <text x="200" y="278" text-anchor="middle">10,00 m</text>
+            <text x="388" y="140" text-anchor="middle" transform="rotate(90 388 140)">7,00 m</text>
+            <text x="14" y="192" text-anchor="middle" transform="rotate(-90 14 192)">4,00 m</text>
+            <text x="132" y="112" text-anchor="middle">6,00 m</text>
+            <text x="302" y="13" text-anchor="middle">4,00 m</text>
+          </g>
+        </svg>
+      </div>
+
+      <div>
+        <div class="poolbox">
+          <p class="cap">Corte — profundidades &amp; manta térmica</p>
+          <svg viewBox="0 0 420 190" role="img" aria-label="Corte da piscina">
+            <!-- ground -->
+            <rect x="20" y="40" width="380" height="130" fill="#0a1424" stroke="#1e2d47"/>
+            <!-- water body stepped: shallow left small, deep right -->
+            <path d="M30 70 L150 70 L150 120 L390 120 L390 158 L30 158 Z" fill="#0d2b45" stroke="#1ca9e0" stroke-width="2"/>
+            <!-- water surface line -->
+            <line x1="30" y1="70" x2="390" y2="70" stroke="#1ca9e0" stroke-width="1" opacity=".5" stroke-dasharray="4 4"/>
+            <!-- thermal cover -->
+            <rect x="30" y="60" width="360" height="7" rx="3" fill="#f5b82e" opacity=".9"/>
+            <text x="210" y="55" fill="#f5b82e" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="middle">MANTA TÉRMICA (obrigatória)</text>
+            <!-- depth markers -->
+            <text x="90" y="100" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">0,50 m</text>
+            <text x="270" y="145" fill="#bfe6fb" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">1,37 m</text>
+            <line x1="150" y1="72" x2="150" y2="120" stroke="#1e2d47" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="statrow">
+          <div class="stat"><div class="k">Volume total</div><div class="v"><span id="volDisp">62.400</span> <small>L</small></div></div>
+          <div class="stat"><div class="k">Superfície</div><div class="v"><span id="areaDisp">52</span> <small>m²</small></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 2 — SISTEMA -->
+  <section class="module sysbox" id="sysbox">
+    <div class="mod-head"><span class="mod-num">02</span><h2>O sistema, ponta a ponta</h2></div>
+    <p class="mod-desc">Circuito de água (azul) e circuito de energia (dourado). O solar entra plugado no mesmo quadro que alimenta a bomba de calor.</p>
+    <svg viewBox="0 0 900 340" role="img" aria-label="Diagrama do sistema">
+      <!-- WATER LOOP -->
+      <!-- pool -->
+      <rect x="30" y="200" width="150" height="100" rx="10" fill="#0d2b45" stroke="#1ca9e0" stroke-width="2"/>
+      <path d="M45 240c14 8 25 8 39 0s25-8 39 0 25 8 39 0" stroke="#1ca9e0" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="30" y="192" width="150" height="6" rx="3" fill="#f5b82e" opacity=".85"/>
+      <text x="105" y="325" fill="#eaf2fb" font-family="Archivo, sans-serif" font-size="14" text-anchor="middle" font-weight="700">PISCINA</text>
+      <text x="105" y="285" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">60.800 L</text>
+
+      <!-- filter/pump -->
+      <rect x="270" y="222" width="120" height="66" rx="9" fill="#111c31" stroke="#1e2d47" stroke-width="1.5"/>
+      <circle cx="300" cy="255" r="15" fill="none" stroke="#1ca9e0" stroke-width="2"/>
+      <path d="M300 245v20M291 255h18" stroke="#1ca9e0" stroke-width="2" stroke-linecap="round"/>
+      <text x="345" y="251" fill="#eaf2fb" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" font-weight="600">Filtro +</text>
+      <text x="345" y="266" fill="#eaf2fb" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" font-weight="600">motobomba</text>
+
+      <!-- heat pump -->
+      <rect x="480" y="212" width="150" height="86" rx="10" fill="#0e2033" stroke="#1ca9e0" stroke-width="2"/>
+      <g stroke="#1ca9e0" stroke-width="2" fill="none" stroke-linecap="round">
+        <circle cx="520" cy="255" r="17"/>
+        <path d="M520 240v30M520 255l13-8M520 255l13 8"/>
+      </g>
+      <text x="590" y="248" fill="#bfe6fb" font-family="Inter, sans-serif" font-size="12.5" text-anchor="middle" font-weight="700">BOMBA</text>
+      <text x="590" y="263" fill="#bfe6fb" font-family="Inter, sans-serif" font-size="12.5" text-anchor="middle" font-weight="700">DE CALOR</text>
+      <text x="590" y="284" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="middle">100k BTU</text>
+
+      <!-- water flow lines -->
+      <path d="M180 250 H270" stroke="#1ca9e0" stroke-width="3" fill="none" class="flow"/>
+      <path d="M390 250 H480" stroke="#1ca9e0" stroke-width="3" fill="none" class="flow"/>
+      <!-- return hot to pool (top) -->
+      <path d="M630 235 C700 190 190 150 105 192" stroke="#f5b82e" stroke-width="3" fill="none" class="flow" opacity=".9"/>
+      <text x="400" y="150" fill="#f5b82e" font-family="IBM Plex Mono, monospace" font-size="10.5" text-anchor="middle">água aquecida ↩</text>
+
+      <!-- ENERGY: quadro -->
+      <rect x="700" y="212" width="90" height="86" rx="9" fill="#111c31" stroke="#f5b82e" stroke-width="1.5"/>
+      <text x="745" y="250" fill="#f5b82e" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" font-weight="700">QUADRO</text>
+      <text x="745" y="266" id="svgQuadro" fill="#8ea3bf" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">380/220V</text>
+      <path d="M700 255 H630" stroke="#f5b82e" stroke-width="2.5" fill="none" class="flow"/>
+
+      <!-- grid -->
+      <text x="860" y="250" fill="#8ea3bf" font-family="Inter, sans-serif" font-size="11" text-anchor="middle" font-weight="600">REDE</text>
+      <text x="860" y="264" id="svgRede" fill="#8ea3bf" font-family="Inter, sans-serif" font-size="11" text-anchor="middle" font-weight="600">Concessionária</text>
+      <path d="M790 245 H835" stroke="#8ea3bf" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+
+      <!-- SOLAR -->
+      <g class="solarflow">
+        <rect x="700" y="40" width="120" height="70" rx="8" fill="#0e2033" stroke="#f5b82e" stroke-width="2"/>
+        <g stroke="#f5b82e" stroke-width="1.4" opacity=".8">
+          <line x1="720" y1="40" x2="720" y2="110"/><line x1="740" y1="40" x2="740" y2="110"/>
+          <line x1="760" y1="40" x2="760" y2="110"/><line x1="780" y1="40" x2="780" y2="110"/>
+          <line x1="800" y1="40" x2="800" y2="110"/>
+          <line x1="700" y1="63" x2="820" y2="63"/><line x1="700" y1="86" x2="820" y2="86"/>
+        </g>
+        <text x="760" y="130" fill="#f5b82e" font-family="Inter, sans-serif" font-size="12" text-anchor="middle" font-weight="700">SOLAR ~5 kWp</text>
+        <path d="M745 110 V212" stroke="#f5b82e" stroke-width="3" fill="none" class="flow"/>
+        <text x="775" y="165" fill="#f5b82e" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="start">autoconsumo ↓</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:#1ca9e0"></i>Circuito de água</span>
+      <span><i style="background:#f5b82e"></i>Energia / calor</span>
+      <span><i style="background:#8ea3bf"></i>Rede da concessionária</span>
+    </div>
+  </section>
+
+  <!-- MÓDULO 3 — CARGA -->
+  <section class="module">
+    <div class="mod-head"><span class="mod-num">03</span><h2>Carga elétrica da casa <span style="font-weight:400;color:var(--muted);font-size:13px">— edite ao vivo</span></h2></div>
+    <p class="mod-desc">Ligue os aparelhos que o cliente <b>realmente tem</b>, ajuste a potência, adicione o que faltar. A barra mostra onde a carga para em relação ao limite da <b id="modDescNorma">norma da sua concessionária</b>.</p>
+
+    <div class="conc-bar">
+      <div class="conc-field cf-sel">
+        <label for="concSel">Concessionária <span class="opt">(opcional)</span></label>
+        <select id="concSel"></select>
+      </div>
+      <div class="conc-field">
+        <label for="limitInput">Limite mono→tri</label>
+        <div class="cf-in"><input id="limitInput" type="number" min="1" max="75" step="1" value="12"><span class="u">kW</span></div>
+      </div>
+      <div class="conc-field">
+        <label for="tarifaInput">Tarifa</label>
+        <div class="cf-in"><span class="u">R$</span><input id="tarifaInput" type="text" inputmode="decimal" value="0,80"><span class="u">/kWh</span></div>
+      </div>
+      <div class="conc-field">
+        <label for="cipInput">Iluminação pública</label>
+        <div class="cf-in"><span class="u">R$</span><input id="cipInput" type="text" inputmode="decimal" value="0,00"><span class="u">/mês</span></div>
+      </div>
+    </div>
+    <p class="conc-hint" id="concHint">⚠️ Valores no padrão comum de baixa tensão — <b>confira o limite, a tarifa e as tensões</b> na norma da sua concessionária e ajuste os campos acima se preciso.</p>
+
+    <div class="tablewrap">
+    <table class="loads">
+      <thead><tr><th>Aparelho</th><th style="text-align:right">Potência</th><th style="text-align:center">Qtd</th><th style="text-align:center">h/dia</th><th style="text-align:right">kWh/mês</th><th style="text-align:center">On</th><th></th></tr></thead>
+      <tbody id="loadBody"></tbody>
+    </table>
+    </div>
+
+    <div class="housetotal">
+      <div>
+        <div class="k">Consumo mensal estimado da casa</div>
+        <div class="v"><span id="totKwh">0</span> <small>kWh</small> · <span id="totRs">R$ 0</span><small id="cipDisp" style="color:var(--muted);font-weight:400;font-size:12px"></small></div>
+      </div>
+      <div class="hint">Bomba de calor: <b id="heatKwh">0</b> kWh — puxado do cálculo térmico do módulo 04, não de horas × potência.</div>
+    </div>
+
+    <div class="toolbar">
+      <button class="btn add" id="addBtn">+ Adicionar carga</button>
+    </div>
+    <div class="presets" id="presets"></div>
+
+    <div class="gauge">
+      <div class="gauge-top">
+        <div><div class="lbl">Carga instalada (soma)</div><div class="kw" id="kwVal">0,0<small> kW</small></div></div>
+        <div style="text-align:right"><div class="lbl">Enquadramento</div><div class="kw" id="kwLimit" style="font-size:16px;color:var(--muted)">— de 12 kW —</div></div>
+      </div>
+      <div class="bar">
+        <div class="fill ok" id="fill"></div>
+        <div class="limit" id="limitMark"></div>
+      </div>
+      <div class="verdict mono" id="verdict">
+        <span class="badge" id="vBadge">MONOFÁSICO 220 V</span>
+        <span class="txt" id="vTxt">Fase + neutro. Piso mínimo de 30 kWh/mês. Cabe enquanto a carga instalada ficar abaixo de 12 kW.</span>
+      </div>
+      <div class="fd">
+        Fator de demanda
+        <input type="number" id="fdInput" value="0.7" min="0.3" max="1" step="0.05">
+        → <span>Demanda provável: <b id="demandVal">0,0 kW</b></span>
+      </div>
+      <div class="demand">
+        <span>Piso mínimo faturável: <b id="floorVal">30 kWh</b></span>
+        <span>Tensão local: <b id="tensaoLine">220 V (F+N) · 380 V (F+F)</b></span>
+      </div>
+    </div>
+    <div class="padrao">
+      <div class="padrao-top">
+        <span class="lbl">Padrão de entrada</span>
+        <div class="seg" id="padraoSeg">
+          <button data-p="auto" class="sel" type="button">Auto (motor)</button>
+          <button data-p="mono" type="button">Mono</button>
+          <button data-p="bi" type="button">Bi</button>
+          <button data-p="tri" type="button">Tri</button>
+        </div>
+      </div>
+      <div class="padrao-out" id="padraoOut">—</div>
+      <div class="padrao-sub" id="correnteOut"></div>
+      <div class="padrao-hint">Estimativa NBR 5410 (cobre, PVC, método B1) pela demanda provável — o dimensionamento oficial sai da Calculadora EcoSunPower.</div>
+    </div>
+
+    <p class="note" id="enqNote">Gatilho normativo: monofásica 220 V para cargas <b>até 12 kW</b>; trifásica 380/220 V para cargas <b>acima de 12 kW</b>. Duas grandezas diferentes: a <b>barra (kW)</b> é a potência instalada simultânea e define o padrão de ligação — o tempo de uso <b>não</b> a altera; o <b>consumo (kWh)</b> é potência × tempo × 30 dias e define o valor da conta. A <b>demanda provável</b> (× fator de demanda) serve para dimensionar disjuntor e cabo de entrada.</p>
+  </section>
+
+  <!-- MÓDULO 4 — CONSUMO -->
+  <section class="module">
+    <div class="mod-head"><span class="mod-num">04</span><h2>Custo do aquecimento &amp; Fio B</h2></div>
+    <p class="mod-desc">Consumo mensal só para <b>manter a piscina aquecida</b>. Ajuste temperatura, estação e manta — os números recalculam na hora.</p>
+
+    <div class="ctrls">
+      <div class="ctrl">
+        <label>Temperatura-alvo da água <b><span id="tVal">28</span> °C</b></label>
+        <input type="range" id="temp" min="26" max="30" step="1" value="28">
+      </div>
+      <div class="ctrl">
+        <label>Casamento com o sol (bomba de dia) <b><span id="mVal">85</span> %</b></label>
+        <input type="range" id="match" min="40" max="100" step="5" value="85">
+      </div>
+      <div class="ctrl">
+        <label style="margin-bottom:9px">Estação</label>
+        <div class="seg" id="season">
+          <button data-s="0">Verão</button>
+          <button data-s="1" class="sel">Meia-estação</button>
+          <button data-s="2">Inverno</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <label style="margin-bottom:9px">Manta térmica</label>
+        <div class="seg gold" id="cover">
+          <button data-c="1" class="sel">Com manta</button>
+          <button data-c="0">Sem manta</button>
+        </div>
+      </div>
+      <div class="ctrl" style="grid-column:1/-1">
+        <label style="margin-bottom:9px">Tipo de bomba <span style="font-weight:400;color:var(--muted)">— COP do manual, editável</span></label>
+        <div class="bomba-row">
+          <select id="bombaSel"></select>
+          <div class="cf-in"><span class="u">COP</span><input id="copInput" type="text" inputmode="decimal" value="5,5"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="statrow" style="grid-template-columns:1fr 1fr 1fr; margin-top:20px">
+      <div class="stat"><div class="k">Consumo da bomba</div><div class="v" style="color:var(--blue)" id="kwh">0 <small>kWh/mês</small></div></div>
+      <div class="stat"><div class="k">Só energia (tarifa cheia)</div><div class="v" id="eCost">R$ 0</div></div>
+      <div class="stat"><div class="k">Aquecer do zero (1ª vez)</div><div class="v" style="color:var(--muted);font-size:16px" id="startCost">R$ 0</div></div>
+    </div>
+  </section>
+
+  <!-- MÓDULO 5 — SOLAR -->
+  <section class="module" id="solarModule">
+    <div class="mod-head"><span class="mod-num">05</span><h2>Pluga o solar e vê a conta cair</h2></div>
+    <p class="mod-desc">Sem solar, a bomba paga tarifa cheia. Com solar rodando <b>de dia</b>, a energia vai direto do painel para a bomba — autoconsumo <b>não paga Fio B</b>.</p>
+
+    <button class="plug" id="plugBtn">⚡ PLUGAR O SOLAR NO SISTEMA</button>
+
+    <div class="cards">
+      <div class="card hi" id="cardA">
+        <div class="tier">Cenário atual</div>
+        <h3>Bomba na rede<br>sem solar</h3>
+        <div class="big" id="aBig">R$ 0</div>
+        <div class="permo">por mês, só o aquecimento</div>
+        <div class="split">
+          <span>Energia <b id="aEne">R$ 0</b></span>
+          <span>Fio B <b>—</b></span>
+        </div>
+      </div>
+      <div class="card mid hidden" id="cardB">
+        <div class="tier">Com solar · à noite</div>
+        <h3>Bomba via<br>compensação</h3>
+        <div class="big" id="bBig">R$ 0</div>
+        <div class="permo">energia abatida, paga só o Fio B</div>
+        <div class="split">
+          <span>Energia <b>compensada</b></span>
+          <span>Fio B 60% <b id="bFio">R$ 0</b></span>
+        </div>
+      </div>
+      <div class="card win hidden" id="cardC">
+        <div class="tier">Com solar · de dia ✓</div>
+        <h3>Bomba casada<br>com o sol</h3>
+        <div class="big" id="cBig">R$ 0</div>
+        <div class="permo">autoconsumo direto do painel</div>
+        <div class="split">
+          <span>Autoconsumo <b id="cAuto">0%</b></span>
+          <span>Fio B residual <b id="cFio">R$ 0</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="save-note" id="saveNote" style="display:none">
+      Rodando a bomba de dia, o cliente deixa de pagar cerca de <b id="saveVal">R$ 0</b>/mês no aquecimento.
+      A <b>manta + os <span id="volNote">62.400</span> L</b> seguram o calor à noite — funciona como bateria térmica, sem custo de bateria de lítio.
+    </div>
+
+    <p class="note">Premissas cravadas (editáveis no código): tarifa Equatorial GO B1 ≈ <code>R$ 0,80/kWh</code> (bandeira amarela) · Fio B 2026 = 60% da TUSD ≈ <code>R$ 0,17/kWh</code> sobre energia compensada · COP real médio <code>5,5</code> · perda térmica ≈ <code>0,40 kWh/(m²·°C·dia)</code>, manta reduz 50%. O Fio B sobe todo ano (75% em 2027, 90% em 2028, 100% em 2029) — quanto mais sobe, mais o casamento com o sol compensa. Valores de operação; o valor unitário exato do Fio B sai da fatura discriminada do cliente.</p>
+  </section>
+
+  <footer>
+    <div>
+      <b>EcoSunPower Energia Solar</b><br>
+      On-grid · Off-grid · Híbrido · Aquecimento
+    </div>
+    <div style="text-align:right">
+      <a href="https://www.ecosunpower.eng.br">www.ecosunpower.eng.br</a> · @ecosunpowerenergia.solarjr<br>
+      junior@ecosunpower.eng.br · WhatsApp (61) 99880-5002
+    </div>
+  </footer>
+  <p class="disc">Estudo técnico para tomada de decisão. Estimativas de operação sob as premissas indicadas; os valores finais dependem da fatura discriminada, do uso real e das condições climáticas do local. Não constitui documento tarifário oficial da concessionária.</p>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ---------- CONSTANTS ----------
+  const FIOB=0.17, KPERDA=0.40;
+
+  // ---------- BOMBA / AQUECIMENTO ----------
+  // COP = quantos kWh de calor a bomba entrega por kWh elétrico. Valores de
+  // catálogo (física, não chute): bomba de calor 5–6; resistência elétrica 1.
+  // Editável — se você tiver o COP do manual da bomba, é só digitar.
+  const BOMBAS={
+    "bc-inverter":{nome:"Bomba de calor inverter", cop:6.0},
+    "bc-padrao":  {nome:"Bomba de calor (padrão)", cop:5.5},
+    "bc-onoff":   {nome:"Bomba de calor on/off",   cop:5.0},
+    "resistencia":{nome:"Aquecedor elétrico (resistência)", cop:1.0},
+    "outra":      {nome:"Outra / do manual (edite o COP)", cop:5.5}
+  };
+
+  // ---------- CONCESSIONÁRIAS ----------
+  // Padrão comum de baixa tensão: monofásico 220 V (F+N), trifásico 380/220 V,
+  // limite 12 kW para o enquadramento residencial. Só a Equatorial-GO tem números
+  // validados pelo RT. Nas demais o padrão é o comum de BT e fica EDITÁVEL — o
+  // próprio usuário confirma limite, tarifa e tensões na norma da sua concessionária.
+  // Nada é inventado: onde não há validação, aparece o aviso "confira os valores".
+  const DEF={limiteKW:12, tarifa:0.80, vFN:"220 V", vFF:"380 V", floorMono:"30 kWh", floorTri:"100 kWh"};
+  const CONC={
+    "generico":      {nome:"Genérico",             regiao:"",                    norma:"",       validado:false},
+    "equatorial-go": {nome:"Equatorial",           regiao:"Luziânia · GO",       norma:"NT.001", validado:true},
+    "neoenergia-df": {nome:"Neoenergia",           regiao:"Brasília · DF",       norma:"",       validado:false},
+    "enel-sp":       {nome:"Enel",                 regiao:"São Paulo · SP",      norma:"",       validado:false},
+    "enel-rj":       {nome:"Enel",                 regiao:"Rio de Janeiro · RJ", norma:"",       validado:false},
+    "enel-ce":       {nome:"Enel",                 regiao:"Ceará · CE",          norma:"",       validado:false},
+    "light-rj":      {nome:"Light",                regiao:"Rio de Janeiro · RJ", norma:"",       validado:false},
+    "cpfl":          {nome:"CPFL",                 regiao:"São Paulo · SP",      norma:"",       validado:false},
+    "cemig":         {nome:"Cemig",                regiao:"Minas Gerais · MG",   norma:"",       validado:false},
+    "copel":         {nome:"Copel",                regiao:"Paraná · PR",         norma:"",       validado:false},
+    "celesc":        {nome:"Celesc",               regiao:"Santa Catarina · SC", norma:"",       validado:false},
+    "rge":           {nome:"RGE",                  regiao:"Rio Grande do Sul · RS", norma:"",    validado:false},
+    "edp":           {nome:"EDP",                  regiao:"SP · ES",             norma:"",       validado:false},
+    "energisa":      {nome:"Energisa",             regiao:"MT · MS · PB · TO · SE", norma:"",    validado:false},
+    "coelba":        {nome:"Coelba (Neoenergia)",  regiao:"Bahia · BA",          norma:"",       validado:false},
+    "celpe":         {nome:"Celpe (Neoenergia)",   regiao:"Pernambuco · PE",     norma:"",       validado:false},
+    "cosern":        {nome:"Cosern (Neoenergia)",  regiao:"Rio G. do Norte · RN", norma:"",      validado:false},
+    "equatorial-pa": {nome:"Equatorial",           regiao:"Pará · PA",           norma:"",       validado:false},
+    "equatorial-ma": {nome:"Equatorial",           regiao:"Maranhão · MA",       norma:"",       validado:false},
+    "equatorial-pi": {nome:"Equatorial",           regiao:"Piauí · PI",          norma:"",       validado:false},
+    "amazonas":      {nome:"Amazonas Energia",     regiao:"Amazonas · AM",       norma:"",       validado:false},
+    "outra":         {nome:"Outra concessionária", regiao:"",                    norma:"",       validado:false}
+  };
+  function cData(k){ return Object.assign({}, DEF, CONC[k]||CONC.generico, {key:k}); }
+  let CFG=cData("generico");
+  function getLIMIT(){ var el=$("limitInput"); return Math.max(1, (el&&+el.value)||CFG.limiteKW); }
+  function getTARIFA(){ var el=$("tarifaInput"); var v=el&&parseFloat(String(el.value||"").replace(",",".")); return (v>0)?v:CFG.tarifa; }
+  function getCIP(){ var el=$("cipInput"); var v=el&&parseFloat(String(el.value||"").replace(",",".")); return (v>0)?v:0; }
+  function getCOP(){ var el=$("copInput"); var v=el&&parseFloat(String(el.value||"").replace(",",".")); return (v>=1)?v:5.5; }
+
+  // ---------- METRAGEM DA PISCINA ----------
+  // Dois modos: por medidas (C×L×P) ou por volume total direto. A superfície
+  // (que manda no aquecimento por evaporação) vem de C×L, ou de volume/profundidade.
+  let dimMode="medidas";                 // "medidas" | "volume"
+  function parseNum(s){                   // aceita "62.400", "90 mil", "90000", "90,5"
+    s=String(s||"").toLowerCase().trim();
+    var mil=/\bmil\b|mil$/.test(s);
+    var n=parseFloat(s.replace(/\.(?=\d{3}(\D|$))/g,"").replace(/[^\d,.-]/g,"").replace(",","."));
+    if(!isFinite(n)) return 0;
+    return mil?n*1000:n;
+  }
+  function getProf(){ var el=dimMode==="volume"?$("volProf"):$("dimP"); var p=el&&+el.value; return (p>0)?p:1.2; }
+  function getVol(){
+    if(dimMode==="volume"){ var v=parseNum($("volInput")&&$("volInput").value); return v>0?v:60800; }
+    var c=+($("dimC")&&$("dimC").value), l=+($("dimL")&&$("dimL").value), p=getProf();
+    return (c>0&&l>0)?c*l*p*1000:60800;
+  }
+  function getArea(){
+    if(dimMode==="volume"){ var p=getProf(); return p>0?getVol()/(p*1000):52; }
+    var c=+($("dimC")&&$("dimC").value), l=+($("dimL")&&$("dimL").value);
+    return (c>0&&l>0)?c*l:52;
+  }
+
+  // ---------- PADRÃO DE ENTRADA / CABO & DISJUNTOR (NBR 5410, estimativa) ----------
+  // Disjuntores comerciais e bitola de cobre PVC (método B1) que suporta cada um.
+  const DJS=[10,16,20,25,32,40,50,63,70,80,100,125];
+  const CABO={10:"2,5",16:"2,5",20:"2,5",25:"4",32:"6",40:"10",50:"10",63:"16",70:"25",80:"25",100:"35",125:"50"};
+  let padraoMode="auto";                 // "auto" | "mono" | "bi" | "tri"
+  function padraoEfetivo(kw){ return (padraoMode!=="auto")?padraoMode:((kw>getLIMIT())?"tri":"mono"); }
+  function nomePadrao(p){ return p==="tri"?"Trifásico":(p==="bi"?"Bifásico":"Monofásico"); }
+  function correnteEntrada(p, kwDem){
+    var P=kwDem*1000, vFN=parseFloat(CFG.vFN)||220, vFF=parseFloat(CFG.vFF)||380;
+    if(p==="tri") return P/(Math.sqrt(3)*vFF);
+    if(p==="bi")  return P/vFF;
+    return P/vFN;                         // monofásico F+N
+  }
+  function breakerFor(I){ for(var i=0;i<DJS.length;i++){ if(DJS[i]>=I) return DJS[i]; } return DJS[DJS.length-1]; }
+
+  const TAMB=[24,21,17];                 // verão, meia, inverno (°C)
+
+  // ---------- LOAD STATE ----------
+  let loads=[
+    {name:"Chuveiro elétrico", w:5500, q:1, h:0.7, on:true},
+    {name:"Bomba de calor 100k BTU", w:5000, q:1, h:0, on:true, heat:true},
+    {name:"Micro-ondas", w:1400, q:1, h:0.3, on:true},
+    {name:"Motobomba da piscina", w:1000, q:1, h:4, on:true},
+    {name:"Geladeira + convencionais", w:2500, q:1, h:8, on:true},
+  ];
+  const presets=[
+    ["Chuveiro 5.500 W",5500,0.7],["Chuveiro 7.700 W",7700,0.7],
+    ["Ar-cond. 9k BTU",990,8],["Ar-cond. 12k BTU",1400,8],["Ar-cond. 18k BTU",2000,8],
+    ["Forno elétrico",1500,0.5],["Máq. de lavar",2000,1],["Bomba de calor 100k",5000,0,true],
+    ["Ducha higiênica",2800,0.2],["Adega / freezer",400,8],
+  ];
+
+  const $=id=>document.getElementById(id);
+  const body=$("loadBody"), fmt=n=>n.toLocaleString("pt-BR",{maximumFractionDigits:0});
+  const brl=n=>"R$ "+n.toLocaleString("pt-BR",{maximumFractionDigits:0});
+
+  function renderLoads(){
+    body.innerHTML="";
+    loads.forEach((l,i)=>{
+      const tr=document.createElement("tr");
+      const hCell = l.heat
+        ? '<td class="center"><span style="font-size:11px;color:var(--gold)">térmico</span></td>'
+        : '<td class="center"><div class="wcell hcell" style="justify-content:center"><input type="number" value="'+l.h+'" min="0" step="0.5" data-i="'+i+'" data-k="h"></div></td>';
+      tr.innerHTML=
+        '<td><input type="text" value="'+l.name.replace(/"/g,'&quot;')+'" data-i="'+i+'" data-k="name"></td>'+
+        '<td><div class="wcell"><input type="number" value="'+l.w+'" min="0" step="50" data-i="'+i+'" data-k="w"><span class="u">W</span></div></td>'+
+        '<td class="center"><div class="wcell qty" style="justify-content:center"><input type="number" value="'+l.q+'" min="1" step="1" data-i="'+i+'" data-k="q"></div></td>'+
+        hCell+
+        '<td style="text-align:right"><span class="kwhcell'+(l.heat?' term':'')+'" data-kwh="'+i+'">—</span></td>'+
+        '<td class="center"><button class="sw '+(l.on?"on":"")+'" data-i="'+i+'" data-k="on" aria-label="ligar/desligar"></button></td>'+
+        '<td class="center"><button class="del" data-i="'+i+'" data-k="del" aria-label="excluir">✕</button></td>';
+      body.appendChild(tr);
+    });
+    recalc();
+  }
+
+  body.addEventListener("input",e=>{
+    const t=e.target, i=+t.dataset.i, k=t.dataset.k; if(i==null||!k)return;
+    if(k==="name")loads[i].name=t.value;
+    else if(k==="w")loads[i].w=+t.value||0;
+    else if(k==="q")loads[i].q=Math.max(1,+t.value||1);
+    else if(k==="h")loads[i].h=Math.max(0,+t.value||0);
+    recalc();
+  });
+  body.addEventListener("click",e=>{
+    const t=e.target, i=+t.dataset.i, k=t.dataset.k; if(i==null||!k)return;
+    if(k==="on"){loads[i].on=!loads[i].on; t.classList.toggle("on"); recalc();}
+    else if(k==="del"){loads.splice(i,1); renderLoads();}
+  });
+  $("addBtn").addEventListener("click",()=>{loads.push({name:"Nova carga",w:0,q:1,h:1,on:true}); renderLoads();});
+
+  const pc=$("presets");
+  presets.forEach(p=>{
+    const b=document.createElement("button"); b.className="chip"; b.textContent="+ "+p[0];
+    b.addEventListener("click",()=>{loads.push({name:p[0].replace(/\s+\d[\d.]*\s*W?$/,"").trim()||p[0],w:p[1],q:1,h:p[2]||0,on:true,heat:!!p[3]}); renderLoads();});
+    pc.appendChild(b);
+  });
+
+  // ---------- LOAD CALC ----------
+  function recalc(){
+    let inst=0;
+    loads.forEach(l=>{ if(l.on) inst+=l.w*l.q; });
+    const kw=inst/1000;
+    $("kwVal").innerHTML=kw.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+'<small> kW</small>';
+
+    const lim=getLIMIT(), vFN=CFG.vFN, vFF=CFG.vFF;
+    const pct=Math.min(100, kw/20*100);           // scale 0–20 kW
+    const limitPct=Math.min(100, lim/20*100);
+    $("limitMark").style.left=limitPct+"%";
+    $("limitMark").setAttribute("data-lbl","LIMITE "+lim+" kW");
+    const fill=$("fill");
+    fill.style.width=pct+"%";
+
+    const over=kw>lim;
+    fill.className="fill "+(over?"bad":"ok");
+    $("kwVal").style.color=over?"var(--danger)":"var(--ok)";
+
+    const v=$("verdict"), badge=$("vBadge"), txt=$("vTxt"), floor=$("floorVal"), kl=$("kwLimit");
+    const pef=padraoEfetivo(kw);
+    if(pef==="tri"){
+      v.className="verdict tri";
+      badge.textContent="TRIFÁSICO "+vFF+"/"+vFN;
+      txt.textContent="3 fases equilibradas, corrente menor por fase, aceita a casa + bomba + expansão. Acima de "+lim+" kW a norma exige — troca de padrão e projeto elétrico.";
+      floor.textContent=CFG.floorTri;
+    }else if(pef==="bi"){
+      v.className="verdict tri";
+      badge.textContent="BIFÁSICO "+vFF+"/"+vFN;
+      txt.textContent="2 fases + neutro — alternativa intermediária entre mono e tri. Confirme a disponibilidade de bifásico na sua concessionária.";
+      floor.textContent=CFG.floorTri;
+    }else{
+      v.className="verdict mono";
+      badge.textContent="MONOFÁSICO "+vFN;
+      txt.textContent="Fase + neutro ("+vFN+" já disponível no local). Piso mínimo de "+CFG.floorMono+"/mês. Cabe enquanto a carga instalada ficar abaixo de "+lim+" kW.";
+      floor.textContent=CFG.floorMono;
+    }
+    if(over){ kl.innerHTML="acima de "+lim+" kW"; kl.style.color="var(--danger)"; }
+    else{ kl.innerHTML="dentro de "+lim+" kW"; kl.style.color="var(--ok)"; }
+    var tl=$("tensaoLine"); if(tl) tl.textContent=vFN+" (F+N) · "+vFF+" (F+F)";
+
+    const fd=Math.min(1,Math.max(0.3,+$("fdInput").value||0.7));
+    const kwDem=kw*fd;
+    $("demandVal").textContent=kwDem.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+" kW";
+
+    // padrão de entrada → corrente → disjuntor → cabo (NBR 5410, estimativa)
+    var I=correnteEntrada(pef, kwDem), dj=breakerFor(I), cabo=CABO[dj]||"—";
+    if($("padraoOut")) $("padraoOut").innerHTML="<b>"+nomePadrao(pef)+"</b> · disjuntor <b>"+dj+" A</b> · cabo <b>"+cabo+" mm²</b>";
+    if($("correnteOut")) $("correnteOut").textContent="Corrente de projeto ≈ "+I.toLocaleString("pt-BR",{maximumFractionDigits:1})+" A · demanda "+kwDem.toLocaleString("pt-BR",{maximumFractionDigits:1})+" kW (fator "+fd+")";
+
+    updateEnergyTotals();
+  }
+
+  function updateEnergyTotals(){
+    let tot=0;
+    loads.forEach((l,i)=>{
+      let k=0;
+      if(l.on) k = l.heat ? monthlyKWh() : (l.w*l.q*l.h*30/1000);
+      if(l.on) tot+=k;
+      const cell=body.querySelector('[data-kwh="'+i+'"]');
+      if(cell) cell.textContent = l.on ? Math.round(k).toLocaleString("pt-BR") : "—";
+    });
+    $("totKwh").textContent=Math.round(tot).toLocaleString("pt-BR");
+    $("totRs").textContent=brl(tot*getTARIFA()+getCIP());
+    var cipEl=$("cipDisp"); if(cipEl){ var cip=getCIP(); cipEl.textContent=cip>0?(" · inclui iluminação pública "+brl(cip)):""; }
+    $("heatKwh").textContent=Math.round(monthlyKWh()).toLocaleString("pt-BR");
+  }
+  $("fdInput").addEventListener("input",recalc);
+
+  // ---------- CONSUMPTION STATE ----------
+  let season=1, cover=1, solarOn=false;
+  const tempEl=$("temp"), matchEl=$("match");
+
+  $("season").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    season=+b.dataset.s; [...e.currentTarget.children].forEach(x=>x.classList.toggle("sel",x===b)); calcConsumo();});
+  $("cover").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
+    cover=+b.dataset.c; [...e.currentTarget.children].forEach(x=>x.classList.toggle("sel",x===b)); calcConsumo();});
+  tempEl.addEventListener("input",()=>{$("tVal").textContent=tempEl.value; calcConsumo();});
+  matchEl.addEventListener("input",()=>{$("mVal").textContent=matchEl.value; calcConsumo();});
+
+  function monthlyKWh(){
+    const talvo=+tempEl.value, dT=Math.max(0, talvo-TAMB[season]);
+    const mFactor=cover?0.5:1.0;
+    const term_day=getArea()*dT*KPERDA*mFactor;   // kWh térmico/dia
+    const el_day=term_day/getCOP();
+    return el_day*30;                         // kWh elétrico/mês
+  }
+  function startupCost(){
+    // aquecer do zero ~9°C: m*c*dT
+    const kcal=getVol()*1*9, kwt=kcal/860, kwe=kwt/getCOP();
+    return kwe*getTARIFA();
+  }
+
+  function calcConsumo(){
+    const kwh=monthlyKWh();
+    $("kwh").innerHTML=fmt(kwh)+' <small>kWh/mês</small>';
+    const eCost=kwh*getTARIFA();
+    $("eCost").textContent=brl(eCost);
+    $("startCost").textContent=brl(startupCost());
+    calcScenarios(kwh,eCost);
+    updateEnergyTotals();
+  }
+
+  function calcScenarios(kwh,eCost){
+    const match=(+matchEl.value)/100;
+    // A: rede sem solar
+    const A=eCost;
+    // B: solar, roda à noite → energia compensada, paga só Fio B
+    const B=kwh*FIOB;
+    // C: solar, casado de dia → fração casada = R$0; resto via compensação paga Fio B
+    const cFioCost=kwh*(1-match)*FIOB;
+    const C=cFioCost;
+
+    $("aBig").textContent=brl(A); $("aEne").textContent=brl(A);
+    $("bBig").textContent=brl(B); $("bFio").textContent=brl(B);
+    $("cBig").textContent=brl(C);
+    $("cAuto").textContent=Math.round(match*100)+"%";
+    $("cFio").textContent=brl(cFioCost);
+
+    const save=A-C;
+    $("saveVal").textContent=brl(save);
+  }
+
+  // ---------- PLUG SOLAR ----------
+  $("plugBtn").addEventListener("click",()=>{
+    solarOn=!solarOn;
+    const btn=$("plugBtn");
+    btn.classList.toggle("active",solarOn);
+    btn.textContent=solarOn?"✓ SOLAR PLUGADO — energia do painel alimentando a bomba":"⚡ PLUGAR O SOLAR NO SISTEMA";
+    $("cardB").classList.toggle("hidden",!solarOn);
+    $("cardC").classList.toggle("hidden",!solarOn);
+    $("cardA").classList.toggle("hi",!solarOn);
+    $("saveNote").style.display=solarOn?"block":"none";
+    $("sysbox").classList.toggle("solar-on",solarOn);
+  });
+
+  // ---------- CONCESSIONÁRIA UI ----------
+  function fillConcSelect(){
+    var sel=$("concSel"); if(!sel) return;
+    var html="";
+    for(var k in CONC){ if(!CONC.hasOwnProperty(k)) continue;
+      var c=CONC[k], lbl=c.nome+(c.regiao?(" — "+c.regiao):"")+(c.norma?(" ("+c.norma+")"):"");
+      html+='<option value="'+k+'">'+lbl+'</option>';
+    }
+    sel.innerHTML=html; sel.value="generico";
+  }
+  function renderLabels(){
+    var lim=getLIMIT(), vFN=CFG.vFN, vFF=CFG.vFF;
+    var gen=(CFG.key==="generico"||CFG.key==="outra");
+    var normaTxt=CFG.norma?(CFG.nome+" "+CFG.norma):"norma da sua concessionária";
+    var eb=$("concEyebrow");
+    if(eb) eb.textContent="Console de dimensionamento"+(CFG.regiao?(" · "+CFG.regiao):"")+((!gen)?(" · "+CFG.nome):"");
+    if($("svgRede")) $("svgRede").textContent=gen?"Concessionária":CFG.nome;
+    if($("svgQuadro")) $("svgQuadro").textContent=vFF+"/"+vFN;
+    if($("modDescNorma")) $("modDescNorma").textContent=normaTxt;
+    var ch=$("concHint"); if(ch) ch.style.display=CFG.validado?"none":"";
+    var nt=$("enqNote");
+    if(nt) nt.innerHTML="Gatilho normativo — <b>"+normaTxt+"</b>: monofásica "+vFN+" para cargas <b>até "+lim+" kW</b>; trifásica "+vFF+"/"+vFN+" para cargas <b>acima de "+lim+" kW</b>. Duas grandezas diferentes: a <b>barra (kW)</b> é a potência instalada simultânea e define o padrão de ligação — o tempo de uso <b>não</b> a altera; o <b>consumo (kWh)</b> é potência × tempo × 30 dias e define o valor da conta. A <b>demanda provável</b> (× fator de demanda) serve para dimensionar disjuntor e cabo de entrada.";
+  }
+  function onConcChange(){
+    var sel=$("concSel"); CFG=cData(sel?sel.value:"generico");
+    var li=$("limitInput"); if(li) li.value=CFG.limiteKW;
+    var ti=$("tarifaInput"); if(ti) ti.value=CFG.tarifa.toFixed(2).replace(".",",");
+    renderLabels(); recalc(); calcConsumo();
+  }
+  function initConc(){
+    fillConcSelect();
+    var sel=$("concSel"); if(sel) sel.addEventListener("change",onConcChange);
+    var li=$("limitInput"); if(li) li.addEventListener("input",function(){renderLabels();recalc();});
+    var ti=$("tarifaInput"); if(ti) ti.addEventListener("input",function(){renderLabels();recalc();calcConsumo();});
+    onConcChange();
+  }
+
+  // ---------- METRAGEM / BOMBA / PADRÃO UI ----------
+  function refreshDims(){
+    var a=getArea(), vol=getVol();
+    if($("areaDisp")) $("areaDisp").textContent=a.toLocaleString("pt-BR",{maximumFractionDigits:1});
+    if($("volDisp"))  $("volDisp").textContent=Math.round(vol).toLocaleString("pt-BR");
+    if($("volNote"))  $("volNote").textContent=Math.round(vol).toLocaleString("pt-BR");
+  }
+  function fillBombaSelect(){
+    var sel=$("bombaSel"); if(!sel) return;
+    var html="";
+    for(var k in BOMBAS){ if(!BOMBAS.hasOwnProperty(k)) continue; html+='<option value="'+k+'">'+BOMBAS[k].nome+'</option>'; }
+    sel.innerHTML=html; sel.value="bc-padrao";
+  }
+  function initExtras(){
+    var dm=$("dimMode");
+    if(dm) dm.addEventListener("click",function(e){
+      var b=e.target.closest("button"); if(!b) return;
+      dimMode=b.dataset.m;
+      [].forEach.call(dm.children,function(x){x.classList.toggle("sel",x===b);});
+      if($("dimMedidas")) $("dimMedidas").style.display=(dimMode==="medidas")?"":"none";
+      if($("dimVolume"))  $("dimVolume").style.display =(dimMode==="volume")?"":"none";
+      refreshDims(); recalc(); calcConsumo();
+    });
+    ["dimC","dimL","dimP","volInput","volProf"].forEach(function(id){
+      var el=$(id); if(el) el.addEventListener("input",function(){refreshDims();recalc();calcConsumo();});
+    });
+    var ci=$("cipInput"); if(ci) ci.addEventListener("input",function(){recalc();calcConsumo();});
+    fillBombaSelect();
+    var bs=$("bombaSel"); if(bs) bs.addEventListener("change",function(){
+      var b=BOMBAS[bs.value]||BOMBAS["bc-padrao"];
+      var cop=$("copInput"); if(cop) cop.value=b.cop.toFixed(1).replace(".",",");
+      recalc(); calcConsumo();
+    });
+    var cop=$("copInput"); if(cop) cop.addEventListener("input",function(){recalc();calcConsumo();});
+    var ps=$("padraoSeg");
+    if(ps) ps.addEventListener("click",function(e){
+      var b=e.target.closest("button"); if(!b) return;
+      padraoMode=b.dataset.p;
+      [].forEach.call(ps.children,function(x){x.classList.toggle("sel",x===b);});
+      recalc();
+    });
+    refreshDims();
+  }
+
+  // ---------- INIT ----------
+  renderLoads();
+  calcConsumo();
+  initConc();
+  initExtras();
+})();
+</script>
+</body>
+</html>
