@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /proposta/
 
 Sitemap: https://ecosunpower.eng.br/sitemap-index.xml
