@@ -37,6 +37,18 @@ Claude em 29/07/2026; a fonte da verdade é ESTE repositório.
 3. Adicionar o link novo na lista do `public/coleta/index.html`.
 4. Commit + push na main.
 
+## Melhorias de 29/07 (à noite)
+
+- **ZIP dos arquivos no envio**: o "Enviar pro WhatsApp" agora manda DOIS
+  arquivos — o dossiê PDF + um `..._arquivos.zip` com todas as fotos (jpg) e
+  PDFs anexados, nomes numerados por item (`04-foto-do-padrao.jpg`). O ZIP
+  chega como documento no zap → Junior salva no PC (WhatsApp Web) e extrai.
+  Empacotador ZIP próprio dentro da página (store-only, sem biblioteca externa).
+- **Localização**: o obrigatório é o LINK do Google Maps (colado — vale
+  encurtado maps.app.goo.gl); o botão GPS é atalho opcional pra quem está no
+  local. (A Neoenergia já era assim; a Equatorial exigia coordenada e foi
+  ajustada — coordenada colada também continua valendo e vira UTM no dossiê.)
+
 ## Detalhes de manutenção
 
 - O número do WhatsApp de destino fica **pré-preenchido no campo** `f_zap`

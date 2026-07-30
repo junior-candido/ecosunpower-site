@@ -169,7 +169,7 @@ var MAX=3;
 var IT=[
 {id:'docid',b:1,c:1,nt:0,nf:1,t:'CNH ou RG do cliente',s:'PDF ou foto legível',p:'Nº do documento (opcional)'},
 {id:'conta',b:1,c:1,nt:0,nf:1,t:'Conta de luz',s:'foto ou PDF da fatura',p:'Referência (ex.: 06/2026)'},
-{id:'geo',b:1,c:1,nt:1,nf:0,t:'Localização da UC',s:'coordenadas decimais — vira UTM',p:'-16.686900, -49.264800',g:1},
+{id:'geo',b:1,c:1,nt:1,nf:0,t:'Localização da UC',s:'cole o LINK do Google Maps (ou use o GPS se estiver no local)',p:'https://maps.app.goo.gl/… ou -16.6869, -49.2648',g:1},
 {id:'padrao',b:1,c:0,nt:1,nf:1,t:'Foto do padrão de entrada',s:'tem que mostrar bitola dos cabos e disjuntor',p:'Ex.: 16 mm², disjuntor 63 A tripolar'},
 {id:'mod',b:2,c:0,nt:1,nf:0,t:'Módulos',s:'quantidade, marca e potência',p:'Ex.: 18x TCL Solar 710 W'},
 {id:'inv',b:2,c:0,nt:1,nf:0,t:'Inversor(es)',s:'quantidade, marca e potência',p:'Ex.: 1x GoodWe GW15K-ET'},
@@ -286,7 +286,7 @@ function gps(id){
 
 function feito(i){
  if(!ativo(i))return true;
- if(i.id==='geo')return !!parseGeo(S.txt.geo);
+ if(i.id==='geo'){var g=(S.txt.geo||'').trim();return !!parseGeo(g)||/^https?:\/\/\S+$/i.test(g)}
  var t=!i.nt||!!(S.txt[i.id]||'').trim(),f=!i.nf||(S.files[i.id]||[]).length>0;return t&&f;
 }
 function faltando(){return IT.filter(function(i){return ativo(i)&&!feito(i)})}
@@ -335,7 +335,7 @@ function resumo(){
  return L.join('\n');
 }
 function lin(i){var v=(S.txt[i.id]||'').trim(),q=(S.files[i.id]||[]).length,e=[];
- if(i.id==='geo'){var u=utmTxt();if(u)e.push(u.dec)}else if(v)e.push(v);
+ if(i.id==='geo'){var u=utmTxt();if(u)e.push(u.dec);else if(v)e.push(v)}else if(v)e.push(v);
  if(q)e.push(q+(q===1?' anexo':' anexos'));
  return (feito(i)?'✅ ':'⬜ ')+i.t+(e.length?' — '+e.join(' · '):'')}
 function copiarCliente(){
@@ -436,6 +436,40 @@ function carregaBytes(){var q=[];IT.forEach(function(i){(S.files[i.id]||[]).forE
  return Promise.all(q)}
 function pdfFile(){return carregaBytes().then(function(){return new File([gerarDossie()],nomePDF(),{type:'application/pdf'})})}
 
+/* ---------- ZIP dos arquivos (fotos+PDFs viram arquivos no PC do escritório) ---------- */
+function crc32(u8){var t=crc32.t;if(!t){t=crc32.t=[];for(var i=0;i<256;i++){var c=i;for(var j=0;j<8;j++)c=(c&1)?(3988292384^(c>>>1)):(c>>>1);t[i]=c>>>0}}
+ var c=4294967295;for(var k=0;k<u8.length;k++)c=t[(c^u8[k])&255]^(c>>>8);return (c^4294967295)>>>0}
+function mkZip(items){
+ var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ items.forEach(function(it){
+  var nm=enc.encode(it.name),by=it.by,crc=crc32(by);
+  var lh=new DataView(new ArrayBuffer(30));
+  lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0x0800,true);
+  lh.setUint32(14,crc,true);lh.setUint32(18,by.length,true);lh.setUint32(22,by.length,true);lh.setUint16(26,nm.length,true);
+  parts.push(new Uint8Array(lh.buffer),nm,by);
+  cd.push({nm:nm,crc:crc,sz:by.length,off:off});
+  off+=30+nm.length+by.length});
+ var cdStart=off;
+ cd.forEach(function(e){
+  var ch=new DataView(new ArrayBuffer(46));
+  ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0x0800,true);
+  ch.setUint32(16,e.crc,true);ch.setUint32(20,e.sz,true);ch.setUint32(24,e.sz,true);
+  ch.setUint16(28,e.nm.length,true);ch.setUint32(42,e.off,true);
+  parts.push(new Uint8Array(ch.buffer),e.nm);off+=46+e.nm.length});
+ var eo=new DataView(new ArrayBuffer(22));
+ eo.setUint32(0,0x06054b50,true);eo.setUint16(8,cd.length,true);eo.setUint16(10,cd.length,true);
+ eo.setUint32(12,off-cdStart,true);eo.setUint32(16,cdStart,true);
+ parts.push(new Uint8Array(eo.buffer));
+ return new Blob(parts,{type:'application/zip'})}
+function zipFile(){
+ var out=[];
+ IT.forEach(function(i){(S.files[i.id]||[]).forEach(function(f,k){
+  var n=IT.indexOf(i)+1;if(n<10)n='0'+n;
+  out.push({f:f,name:n+'-'+slug(i.t)+(k?'-'+(k+1):'')+'.'+(f.type==='application/pdf'?'pdf':'jpg')})})});
+ if(!out.length)return Promise.resolve(null);
+ return Promise.all(out.map(function(e){return e.f.blob.arrayBuffer().then(function(ab){return{name:e.name,by:new Uint8Array(ab)}})}))
+  .then(function(items){return new File([mkZip(items)],nomePDF().replace(/\.pdf$/,'')+'_arquivos.zip',{type:'application/zip'})})}
+
 function travado(){
  var f=faltando();if(!f.length)return false;
  var m=[];f.slice(0,5).forEach(function(i){m.push('• '+i.t)});
@@ -444,16 +478,19 @@ function travado(){
 }
 function enviarZap(){
  if(travado())return;
- toast('Montando o dossiê…');
- pdfFile().then(function(pdf){
+ toast('Montando dossiê + arquivos…');
+ Promise.all([pdfFile(),zipFile()]).then(function(r){
+  var pdf=r[0],zip=r[1],files=zip?[pdf,zip]:[pdf];
   var txt=resumo(),c=campos();
-  if(navigator.canShare&&navigator.canShare({files:[pdf]}))
-   navigator.share({files:[pdf],title:'Homologação '+(c.cliente||''),text:txt}).then(function(){toast('Dossiê enviado')},function(){});
-  else{baixa(pdf);copia(txt);
+  if(navigator.canShare&&navigator.canShare({files:files}))
+   navigator.share({files:files,title:'Homologação '+(c.cliente||''),text:txt}).then(function(){toast('Dossiê + arquivos enviados')},function(){});
+  else if(navigator.canShare&&navigator.canShare({files:[pdf]}))
+   navigator.share({files:[pdf],title:'Homologação '+(c.cliente||''),text:txt}).then(function(){if(zip){baixa(zip);toast('Dossiê enviado. O ZIP dos arquivos foi BAIXADO — anexe no WhatsApp também.')}else toast('Dossiê enviado')},function(){});
+  else{baixa(pdf);if(zip)setTimeout(function(){baixa(zip)},400);copia(txt);
    var n=(c.zap||'').replace(/\D/g,'');if(n.length<=11)n='55'+n;
-   setTimeout(function(){window.open('https://wa.me/'+n+'?text='+encodeURIComponent(txt),'_blank')},600);
-   toast('Dossiê baixado.\nAnexe no WhatsApp que abriu.')}
- }).catch(function(){toast('Não consegui montar o dossiê')});
+   setTimeout(function(){window.open('https://wa.me/'+n+'?text='+encodeURIComponent(txt),'_blank')},900);
+   toast((zip?'Dossiê + ZIP baixados':'Dossiê baixado')+'.\nAnexe os dois no WhatsApp que abriu.')}
+ }).catch(function(){toast('Não consegui montar os arquivos')});
 }
 function baixarDossie(){toast('Montando o dossiê…');pdfFile().then(function(f){baixa(f);toast('Dossiê baixado')}).catch(function(){toast('Falhou')})}
 function baixa(f){var a=document.createElement('a'),u=URL.createObjectURL(f);a.href=u;a.download=f.name;
