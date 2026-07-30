@@ -205,7 +205,9 @@ function render(){
 }
 function drawAtt(id){
  var el=document.getElementById('at_'+id),L=S.files[id]||[],h='';
- if(L.length<MAX)h+='<label class="addf"><span>&#128247;</span>'+(L.length?'Mais uma':'Anexar foto')+
+ if(L.length<MAX)h+='<label class="addf"><span>&#128247;</span>Tirar foto'+
+  '<input type="file" accept="image/*" capture="environment" style="display:none" onchange="addFiles(\''+id+'\',this)"></label>'+
+  '<label class="addf"><span>&#128193;</span>'+(L.length?'Mais uma':'Galeria/PDF')+
   '<input type="file" accept="image/*,application/pdf" multiple style="display:none" onchange="addFiles(\''+id+'\',this)"></label>';
  L.forEach(function(f,k){h+='<div class="th">'+(f.type==='application/pdf'?'<div class="pdf">PDF</div>':'<img src="'+f.url+'">')+
   '<button onclick="delFile(\''+id+'\','+k+')">&times;</button></div>'});
