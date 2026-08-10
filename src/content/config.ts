@@ -12,7 +12,7 @@ const blog = defineCollection({
     category: z.enum(['tecnico', 'tecnologia', 'mercado', 'regulacao', 'casos', 'tutorial']),
     tags: z.array(z.string()).default([]),
     author: z.string().default('Junior Candido Rodrigues'),
-    authorRole: z.string().default('Engenheiro responsável EcoSunPower'),
+    authorRole: z.string().default('Responsável Técnico EcoSunPower — CREA/CFT'),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
     readingTime: z.number().optional(),
