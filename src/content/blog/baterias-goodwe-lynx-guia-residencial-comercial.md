@@ -2,7 +2,7 @@
 title: "Baterias GoodWe Lynx: qual serve pra sua casa — e qual serve pra sua empresa"
 description: "Guia da família Lynx: A G3, U G3, Home F G2 e a comercial Lynx C de 100,8 kWh. Diferenças de potência, proteção IP, onde cada uma pode ser instalada e os erros de especificação mais comuns."
 pubDate: 2026-08-10T12:00:00-03:00
-heroImage: /blog/baterias-goodwe-lynx-guia-residencial-comercial.jpg
+heroImage: /blog/baterias-goodwe-lynx-guia-residencial-comercial-v3.jpg
 heroImageAlt: "Arte: bateria GoodWe Lynx com raio"
 category: tecnologia
 tags: ["GoodWe", "bateria", "Lynx", "LFP", "BESS", "armazenamento"]

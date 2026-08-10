@@ -2,7 +2,7 @@
 title: "EcoSunPower agora é instaladora certificada GoodWe PLUS+ — o que isso muda pra você"
 description: "A EcoSunPower concluiu o programa oficial de certificação da GoodWe e agora é instaladora PLUS+ reconhecida pela fábrica. Entenda o que é o selo e por que ele protege o seu investimento."
 pubDate: 2026-08-10T12:00:00-03:00
-heroImage: /blog/ecosunpower-instaladora-certificada-goodwe-plus.jpg
+heroImage: /blog/ecosunpower-instaladora-certificada-goodwe-plus-v3.jpg
 heroImageAlt: "Arte: certificado GoodWe PLUS+ da EcoSunPower"
 category: mercado
 tags: ["GoodWe", "certificação", "PLUS+", "inversor", "híbrido", "qualidade"]

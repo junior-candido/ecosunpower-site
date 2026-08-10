@@ -2,7 +2,7 @@
 title: "Inversor GoodWe é bom? O guia das linhas pra residência e comércio (2026)"
 description: "Análise técnica das linhas de inversores string GoodWe: XS G3, DNS G4, MS G4 e trifásicos LV/HV. Medidor integrado, operação silenciosa, DPS embutido e o que isso muda no seu projeto."
 pubDate: 2026-08-10T12:00:00-03:00
-heroImage: /blog/inversor-goodwe-e-bom-guia-linhas-2026.jpg
+heroImage: /blog/inversor-goodwe-e-bom-guia-linhas-2026-v3.jpg
 heroImageAlt: "Arte: inversor GoodWe com onda senoidal"
 category: tecnologia
 tags: ["GoodWe", "inversor", "string", "DNS G4", "trifásico", "SEMS"]

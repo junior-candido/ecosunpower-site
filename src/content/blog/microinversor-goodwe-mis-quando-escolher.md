@@ -2,7 +2,7 @@
 title: "Microinversor GoodWe (série MIS): como funciona e quando é a escolha certa"
 description: "Guia do microinversor GoodWe GW2000-MIS: 4 MPPTs independentes, baixa tensão CC no telhado, Wi-Fi sem datalogger e garantia de 12 anos. Quando o micro vence o inversor string."
 pubDate: 2026-08-10T12:00:00-03:00
-heroImage: /blog/microinversor-goodwe-mis-quando-escolher.jpg
+heroImage: /blog/microinversor-goodwe-mis-quando-escolher-v3.jpg
 heroImageAlt: "Arte: painel solar com microinversor GoodWe MIS"
 category: tecnologia
 tags: ["GoodWe", "microinversor", "MIS", "sombreamento", "segurança", "telhado colonial"]

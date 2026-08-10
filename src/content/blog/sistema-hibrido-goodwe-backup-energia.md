@@ -2,7 +2,7 @@
 title: "Sistema híbrido GoodWe: luz acesa mesmo quando a rede cai"
 description: "Como funciona o inversor híbrido GoodWe (ES G2, ES-LD e linha ET), a comutação em milissegundos, retrofit em sistemas de qualquer marca e o BESS comercial que corta a conta de ponta."
 pubDate: 2026-08-10T12:00:00-03:00
-heroImage: /blog/sistema-hibrido-goodwe-backup-energia.jpg
+heroImage: /blog/sistema-hibrido-goodwe-backup-energia-v3.jpg
 heroImageAlt: "Arte: casa com sistema solar hibrido e bateria GoodWe"
 category: tecnologia
 tags: ["GoodWe", "híbrido", "backup", "BESS", "bateria", "peak shaving", "ET"]
