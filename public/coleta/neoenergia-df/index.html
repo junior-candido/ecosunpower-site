@@ -462,14 +462,16 @@ function enviarZap(){
  Promise.all([pdfFile(),zipFile()]).then(function(r){
   var pdf=r[0],zip=r[1],files=zip?[pdf,zip]:[pdf];
   var txt=resumo(),c=campos();
-  if(navigator.canShare&&navigator.canShare({files:files}))
-   navigator.share({files:files,title:'Homologação '+(c.cliente||''),text:txt}).then(function(){toast('Dossiê + arquivos enviados')},function(){});
-  else if(navigator.canShare&&navigator.canShare({files:[pdf]}))
-   navigator.share({files:[pdf],title:'Homologação '+(c.cliente||''),text:txt}).then(function(){if(zip){baixa(zip);toast('Dossiê enviado. O ZIP dos arquivos foi BAIXADO — anexe no WhatsApp também.')}else toast('Dossiê enviado')},function(){});
-  else{baixa(pdf);if(zip)setTimeout(function(){baixa(zip)},400);copia(txt);
+  var mob=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  var planoB=function(){baixa(pdf);if(zip)setTimeout(function(){baixa(zip)},400);copia(txt);
    var n=(c.zap||'').replace(/\D/g,'');if(n.length<=11)n='55'+n;
    setTimeout(function(){window.open('https://wa.me/'+n+'?text='+encodeURIComponent(txt),'_blank')},900);
-   toast((zip?'Dossiê + ZIP baixados':'Dossiê baixado')+'.\nAnexe os dois no WhatsApp que abriu.')}
+   toast((zip?'Dossiê + ZIP baixados':'Dossiê baixado')+'.\nAnexe os dois no WhatsApp que abriu.')};
+  if(mob&&navigator.canShare&&navigator.canShare({files:files}))
+   navigator.share({files:files,title:'Homologação '+(c.cliente||''),text:txt}).then(function(){toast('Dossiê + arquivos enviados')},function(err){if(!err||err.name!=='AbortError')planoB()});
+  else if(mob&&navigator.canShare&&navigator.canShare({files:[pdf]}))
+   navigator.share({files:[pdf],title:'Homologação '+(c.cliente||''),text:txt}).then(function(){if(zip){baixa(zip);toast('Dossiê enviado. O ZIP dos arquivos foi BAIXADO — anexe no WhatsApp também.')}else toast('Dossiê enviado')},function(err){if(!err||err.name!=='AbortError')planoB()});
+  else planoB();
  }).catch(function(){toast('Não consegui montar os arquivos')});
 }
 function baixarDossie(){toast('Montando o dossiê…');
