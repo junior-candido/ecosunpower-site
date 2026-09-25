@@ -1,0 +1,70 @@
+---
+// Chamada da home pra /financiamento — as 4 marcas parceiras em destaque.
+import IconeZap from './IconeZap.astro';
+import { PARCEIROS } from '../data/financiamento';
+
+const WA = 'https://wa.me/5561998805002?text=' +
+  encodeURIComponent('Oi! Quero simular o financiamento do meu sistema solar.');
+
+const maxParcelas = Math.max(...PARCEIROS.map((p) => p.parcelasMax));
+---
+
+<section class="bg-navy border-t border-navy-line py-16 lg:py-24">
+  <div class="container-narrow">
+    <div class="fin-home">
+      <div class="fin-texto">
+        <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink text-balance">
+          Dá para financiar e começar a pagar depois
+        </h2>
+        <p class="text-ink-mut mt-4 leading-relaxed">
+          Até {maxParcelas} parcelas, e a primeira só chega meses depois da instalação, com o sistema já baixando
+          sua conta. Simulamos nos quatro parceiros, ou no seu banco, e você escolhe.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 mt-8">
+          <a href={WA} target="_blank" rel="noopener" class="btn-primary"><IconeZap />Pedir proposta financiada</a>
+          <a href="/financiamento" class="inline-flex items-center justify-center px-6 py-3.5 rounded-full border border-navy-line2 text-ink font-semibold hover:border-primary-500 hover:text-white transition-colors">Ver as condições</a>
+        </div>
+      </div>
+
+      <div class="fin-placa" aria-label="Parceiros de financiamento">
+        {PARCEIROS.map((p) => (
+          <div class:list={['fin-logo', p.placa === 'escura' && 'fin-logo--escura']}>
+            <img src={p.logo} alt={p.nome} style={`width:${Math.round(p.logoLargura * 0.82)}px`} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fin-home {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 3.5rem;
+    align-items: center;
+  }
+  .fin-placa {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: #f5f8fb;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06);
+  }
+  .fin-logo {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 7.5rem; padding: 1.5rem;
+  }
+  .fin-logo:nth-child(even) { border-left: 1px solid #e3e9f0; }
+  .fin-logo:nth-child(n+3) { border-top: 1px solid #e3e9f0; }
+  .fin-logo--escura { background: #141414; border-color: #141414 !important; }
+  .fin-logo img { max-width: 100%; height: auto; }
+  @media (max-width: 1023px) {
+    .fin-home { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+  @media (max-width: 639px) {
+    .fin-logo { min-height: 6rem; padding: 1rem; }
+    .fin-logo img { max-width: 80%; }
+  }
+</style>

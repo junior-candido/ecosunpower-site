@@ -1,0 +1,395 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IconeZap from '../components/IconeZap.astro';
+import { PARCEIROS, HORIZONTE_MESES, CONFERIDO_EM } from '../data/financiamento';
+
+const WA = 'https://wa.me/5561998805002?text=' +
+  encodeURIComponent('Oi! Quero simular o financiamento do meu sistema solar.');
+const waParceiro = (nome: string) => 'https://wa.me/5561998805002?text=' +
+  encodeURIComponent(`Oi! Quero uma proposta de energia solar financiada pela ${nome}.`);
+const WA_BANCO = 'https://wa.me/5561998805002?text=' +
+  encodeURIComponent('Oi! Quero simular o financiamento solar no meu banco (ou usar consórcio). Vocês me mandam a proposta?');
+
+// Bancos em que o cliente pode simular por conta própria (com a nossa proposta)
+// (logos em cinza e menores de propósito: o destaque é dos 4 parceiros)
+const bancos = [
+  { nome: 'Banco do Brasil', logo: '/logos/bancos/bb.svg', h: 16 },
+  { nome: 'Caixa', logo: '/logos/bancos/caixa.svg', h: 18 },
+  { nome: 'Itaú', logo: '/logos/bancos/itau.svg', h: 30 },
+  { nome: 'Bradesco', logo: '/logos/bancos/bradesco.svg', h: 20 },
+  { nome: 'Santander', logo: '/logos/bancos/santander.svg', h: 18 },
+  { nome: 'Sicoob', logo: '/logos/bancos/sicoob.svg', h: 20 },
+  { nome: 'BTG Pactual', logo: '/logos/bancos/btg.svg', h: 26 },
+];
+
+// Régua: marcas a cada 2 anos
+const marcas = [0, 24, 48, 72, 96, 120].filter((m) => m <= HORIZONTE_MESES);
+const pct = (meses: number) => `${(meses / HORIZONTE_MESES) * 100}%`;
+
+const passos = [
+  { t: 'Visita e proposta', d: 'Vemos o telhado e a conta de luz e montamos o projeto com o valor fechado.' },
+  { t: 'Simulação', d: 'Simulamos nos parceiros e você escolhe o prazo e a parcela que cabem no mês.' },
+  { t: 'Análise de crédito', d: 'O parceiro analisa seus dados. A resposta costuma sair em poucos dias.' },
+  { t: 'Instalação e homologação', d: 'Com o crédito aprovado, instalamos e ligamos o sistema na concessionária.' },
+  { t: 'Primeira parcela', d: 'Chega só depois da carência, quando o sistema já está baixando sua conta.' },
+];
+---
+
+<Layout
+  title="Financiamento de energia solar — Solfácil, BV, Sol Agora e BelCred | EcoSunPower"
+  description="Financie seu sistema solar em até 120 parcelas e comece a pagar até 150 dias depois. A EcoSunPower simula com Solfácil, banco BV, Sol Agora e BelCred, ou no seu próprio banco."
+>
+  <!-- Abertura + placa de parceiros -->
+  <section class="relative overflow-hidden bg-navy pt-20 pb-16 lg:pt-28 lg:pb-24">
+    <div class="absolute inset-0 pointer-events-none"
+         style="background:radial-gradient(55% 60% at 50% -10%, rgba(28,169,224,.26), transparent 60%), radial-gradient(35% 45% at 88% 12%, rgba(255,199,44,.10), transparent 60%)"></div>
+
+    <div class="container-narrow relative z-10">
+      <div class="max-w-3xl">
+        <h1 class="text-4xl lg:text-6xl font-display font-bold text-ink leading-[1.05] text-balance">
+          Instale agora e comece a pagar depois
+        </h1>
+        <p class="text-lg lg:text-xl text-ink-mut mt-6 max-w-2xl leading-relaxed">
+          Trabalhamos com quatro parceiros de financiamento solar. Parcelas em até 120 vezes,
+          e a primeira só chega meses depois, com o sistema já gerando energia.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3.5 mt-9">
+          <a href={WA} target="_blank" rel="noopener" class="btn-primary"><IconeZap />Simular meu financiamento</a>
+          <a href="#comparar" class="inline-flex items-center justify-center px-6 py-3.5 rounded-full border border-navy-line2 text-ink font-semibold hover:border-primary-500 hover:text-white transition-colors">
+            Comparar os parceiros
+          </a>
+        </div>
+      </div>
+
+      <!-- A placa: logos nas cores oficiais -->
+      <div class="placa mt-14 lg:mt-20" aria-label="Parceiros de financiamento">
+        {PARCEIROS.map((p) => (
+          <div class:list={['placa-logo', p.placa === 'escura' && 'placa-logo--escura']}>
+            <img src={p.logo} alt={p.nome} width={p.logoLargura} style={`width:${p.logoLargura}px`} loading="eager" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Régua: quando começa e quando termina -->
+  <section id="comparar" class="bg-navy-950 border-t border-navy-line py-16 lg:py-24 scroll-mt-20">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink text-balance">Quando você começa a pagar, e até quando</h2>
+      <p class="text-ink-mut mt-4 max-w-2xl leading-relaxed">
+        A parte amarela é a carência: o sistema já está instalado e economizando, e você ainda não pagou nenhuma parcela.
+        A parte azul é o prazo máximo de parcelas de cada parceiro.
+      </p>
+
+      <div class="regua mt-12" role="img" aria-label={PARCEIROS.map((p) => `${p.nome}: primeira parcela em ${p.carenciaTexto}, até ${p.parcelasMax} parcelas`).join('. ')}>
+        {PARCEIROS.map((p) => (
+          <div class="regua-linha">
+            <div class:list={['regua-logo', p.placa === 'escura' && 'regua-logo--escura']}>
+              <img src={p.logo} alt="" style={`width:${Math.round(p.logoLargura * 0.62)}px`} loading="lazy" />
+            </div>
+            <div class="regua-trilho">
+              <div class="regua-carencia" style={`width:${pct(p.carenciaMeses)}`}></div>
+              <div class="regua-parcelas" style={`left:${pct(p.carenciaMeses)};width:${pct(p.parcelasMax)}`}>
+                <span>até {p.parcelasMax}×</span>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div class="regua-linha regua-eixo" aria-hidden="true">
+          <div></div>
+          <div class="regua-trilho">
+            {marcas.map((m) => (
+              <span class="regua-marca" style={`left:${pct(m)}`}>{m === 0 ? 'hoje' : `${m / 12} anos`}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-2 mt-8 text-sm text-ink-mut">
+        <span class="inline-flex items-center gap-2"><span class="w-4 h-2.5 rounded-sm bg-accent-500"></span>Carência, sem parcela</span>
+        <span class="inline-flex items-center gap-2"><span class="w-4 h-2.5 rounded-sm bg-primary-500"></span>Parcelas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Condições lado a lado -->
+  <section class="bg-navy border-t border-navy-line py-16 lg:py-24">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink text-balance">As condições de cada um</h2>
+      <p class="text-ink-mut mt-4 max-w-2xl leading-relaxed">
+        Todos financiam até 100% do projeto, com equipamentos e instalação. A taxa de juros sai na análise de crédito
+        de cada cliente, por isso não colocamos aqui: a gente simula e te mostra a parcela real.
+      </p>
+
+      <div class="condicoes mt-12">
+        {PARCEIROS.map((p) => (
+          <article class="cond">
+            <div class:list={['cond-logo', p.placa === 'escura' && 'cond-logo--escura']}>
+              <img src={p.logo} alt={p.nome} style={`width:${Math.round(p.logoLargura * 0.8)}px`} loading="lazy" />
+            </div>
+            <dl class="cond-dados">
+              <div><dt>Parcelas</dt><dd>{p.parcelasMin ? `de ${p.parcelasMin} a ${p.parcelasMax}×` : `até ${p.parcelasMax}×`}</dd></div>
+              <div><dt>1ª parcela</dt><dd>{p.carenciaTexto}</dd></div>
+              <div><dt>Valor da parcela</dt><dd class:list={[!p.parcelaFixa && 'text-accent-400']}>{p.parcela}</dd></div>
+              <div><dt>Pessoa física</dt><dd>{p.limitePF ? `até ${p.limitePF}` : 'sob análise'}</dd></div>
+              <div><dt>Empresa</dt><dd>{p.limitePJ ? `até ${p.limitePJ}` : 'sob análise'}</dd></div>
+            </dl>
+            <ul class="cond-destaques">
+              {p.destaques.map((d) => <li>{d}</li>)}
+            </ul>
+            <a href={waParceiro(p.nome)} target="_blank" rel="noopener" class="cond-zap">
+              <IconeZap class="w-4 h-4" />Pedir proposta com {p.nome}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Seu próprio banco -->
+  <section class="bg-navy-950 border-t border-navy-line py-16 lg:py-20">
+    <div class="container-narrow">
+      <div class="banco">
+        <div>
+          <h2 class="text-2xl lg:text-3xl font-display font-bold text-ink text-balance">Prefere financiar no seu banco, ou usar consórcio?</h2>
+          <p class="text-ink-mut mt-4 leading-relaxed max-w-xl">
+            Também dá. Os grandes bancos têm linha própria para energia solar, e carta de consórcio contemplada
+            também paga o sistema. Mandamos a proposta com o valor, a lista de equipamentos e o projeto técnico,
+            que é o que o banco ou a administradora pede. Você compara com os nossos parceiros e fica com a melhor condição.
+          </p>
+          <p class="text-sm text-ink-mut2 mt-6">A escolha é sua. Alguns bancos com linha para energia solar:</p>
+          <ul class="bancos mt-3" aria-label="Bancos com linha para energia solar">
+            {bancos.map((b) => (
+              <li><img src={b.logo} alt={b.nome} title={b.nome} style={`height:${b.h}px`} loading="lazy" /></li>
+            ))}
+            <li class="bancos-consorcio">+ consórcio</li>
+          </ul>
+        </div>
+        <a href={WA_BANCO} target="_blank" rel="noopener" class="btn-secondary shrink-0"><IconeZap />Pedir a proposta para o meu banco</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como funciona (sequência real) -->
+  <section class="bg-navy border-t border-navy-line py-16 lg:py-24">
+    <div class="container-narrow">
+      <h2 class="text-3xl lg:text-4xl font-display font-bold text-ink text-balance">Do orçamento à primeira parcela</h2>
+      <ol class="passos mt-12">
+        {passos.map((s, i) => (
+          <li>
+            <span class="passo-n">{i + 1}</span>
+            <h3 class="font-display font-bold text-ink text-lg">{s.t}</h3>
+            <p class="text-ink-mut text-sm leading-relaxed mt-1.5">{s.d}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="docs mt-16">
+        <h3 class="font-display font-bold text-ink text-xl">O que costuma ser pedido</h3>
+        <ul class="mt-4 grid sm:grid-cols-2 gap-x-10 gap-y-2.5 text-ink-mut">
+          <li>Documento com foto (RG ou CNH)</li>
+          <li>CPF, ou CNPJ para empresas</li>
+          <li>Conta de luz recente do imóvel</li>
+          <li>Comprovante de propriedade do imóvel, em alguns parceiros</li>
+        </ul>
+        <p class="text-sm text-ink-mut2 mt-4">Cada parceiro tem a sua lista. Na simulação a gente diz exatamente o que separar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fechamento -->
+  <section class="relative overflow-hidden bg-navy border-t border-navy-line py-16 lg:py-24">
+    <div class="absolute inset-0 pointer-events-none"
+         style="background:radial-gradient(60% 120% at 50% 118%, rgba(28,169,224,.2), transparent 60%)"></div>
+    <div class="container-narrow relative z-10 text-center">
+      <h2 class="text-3xl lg:text-5xl font-display font-bold text-ink text-balance">Quer ver quanto fica a sua parcela?</h2>
+      <p class="text-lg text-ink-mut mt-5 max-w-xl mx-auto">Manda uma foto da sua conta de luz. A gente simula nos quatro parceiros e te mostra lado a lado.</p>
+      <a href={WA} target="_blank" rel="noopener" class="btn-primary mt-9"><IconeZap />Simular meu financiamento</a>
+      <p class="text-xs text-ink-mut2 mt-10 max-w-2xl mx-auto leading-relaxed">
+        Condições públicas de cada parceiro, conferidas em {CONFERIDO_EM}, e sujeitas a mudança sem aviso.
+        Todo financiamento depende de análise e aprovação de crédito pelo parceiro. A EcoSunPower não é instituição
+        financeira: apresentamos as opções e ajudamos com o processo. As marcas pertencem aos seus donos.
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Placa: faixa clara que deixa cada marca na cor em que foi desenhada */
+  .placa {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: #f5f8fb;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06);
+  }
+  .placa-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 8.5rem;
+    padding: 1.75rem 1.25rem;
+  }
+  .placa-logo + .placa-logo { border-left: 1px solid #e3e9f0; }
+  .placa-logo img { max-width: 100%; height: auto; }
+  .placa-logo--escura { background: #141414; border-left-color: #141414 !important; }
+  @media (max-width: 767px) {
+    .placa { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .placa-logo { min-height: 6.5rem; padding: 1.25rem 1rem; }
+    .placa-logo:nth-child(3) { border-left: 0; }
+    .placa-logo:nth-child(n+3) { border-top: 1px solid #e3e9f0; }
+    .placa-logo img { max-width: 78%; }
+  }
+
+  /* Régua */
+  .regua { display: grid; gap: 1.1rem; }
+  .regua-linha {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .regua-logo {
+    display: flex; align-items: center; justify-content: center;
+    height: 3.25rem; border-radius: .75rem; background: #f5f8fb;
+  }
+  .regua-logo--escura { background: #141414; }
+  .regua-trilho {
+    position: relative;
+    height: 2.25rem;
+    border-radius: .5rem;
+    background: rgba(255, 255, 255, .03);
+  }
+  .regua-carencia {
+    position: absolute; inset: 0 auto 0 0;
+    border-radius: .5rem 0 0 .5rem;
+    background: repeating-linear-gradient(135deg, #ffc72c 0 6px, #e5a800 6px 9px);
+  }
+  .regua-parcelas {
+    position: absolute; top: 0; bottom: 0;
+    border-radius: 0 .5rem .5rem 0;
+    background: linear-gradient(90deg, #1fb8e8, #0e7cb8);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: .75rem;
+    transform-origin: left center;
+    animation: crescer .9s cubic-bezier(.2, .7, .2, 1) both;
+  }
+  .regua-linha:nth-child(2) .regua-parcelas { animation-delay: .08s; }
+  .regua-linha:nth-child(3) .regua-parcelas { animation-delay: .16s; }
+  .regua-linha:nth-child(4) .regua-parcelas { animation-delay: .24s; }
+  .regua-parcelas span { font-weight: 700; font-size: .875rem; color: #fff; white-space: nowrap; }
+  @keyframes crescer { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @media (prefers-reduced-motion: reduce) { .regua-parcelas { animation: none; } }
+
+  .regua-eixo .regua-trilho { background: none; height: 1.25rem; border-top: 1px solid #22304a; border-radius: 0; }
+  .regua-marca {
+    position: absolute; top: .35rem;
+    transform: translateX(-50%);
+    font-size: .75rem; color: #647a9a; white-space: nowrap;
+  }
+  .regua-marca:first-child { transform: none; }
+
+  @media (max-width: 767px) {
+    .regua { gap: 1.5rem; }
+    .regua-linha { grid-template-columns: 1fr; gap: .5rem; }
+    .regua-logo { justify-content: flex-start; padding-left: .9rem; width: 9.5rem; height: 2.75rem; }
+    .regua-eixo > div:first-child { display: none; }
+  }
+
+  /* Condições */
+  .condicoes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: #22304a;
+    border: 1px solid #22304a;
+    border-radius: 1.25rem;
+    overflow: hidden;
+  }
+  .cond { background: #0e1728; display: flex; flex-direction: column; }
+  .cond-logo {
+    display: flex; align-items: center; justify-content: center;
+    height: 6rem; background: #f5f8fb;
+  }
+  .cond-logo--escura { background: #141414; }
+  .cond-dados { padding: 1.5rem 1.5rem .5rem; display: grid; gap: 1rem; }
+  .cond-dados dt { font-size: .8125rem; color: #647a9a; }
+  .cond-dados dd { color: #eef3f9; font-weight: 600; margin-top: .15rem; line-height: 1.35; }
+  .cond-destaques {
+    margin-top: auto;
+    padding: 1rem 1.5rem 1.5rem;
+    display: grid; gap: .55rem;
+    font-size: .875rem; color: #9fb4cc; line-height: 1.45;
+    border-top: 1px dashed #22304a;
+  }
+  .cond-destaques li { padding-left: 1.1rem; position: relative; }
+  .cond-zap {
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    margin: 0 1.5rem 1.5rem; padding: .7rem 1rem; border-radius: 999px;
+    background: #25d366; color: #06301a; font-weight: 700; font-size: .875rem;
+    transition: background-color .2s;
+  }
+  .cond-zap:hover { background: #1ebe5b; }
+  .cond-zap:focus-visible { outline: 2px solid #ffc72c; outline-offset: 2px; }
+  .cond-destaques li::before {
+    content: ''; position: absolute; left: 0; top: .5em;
+    width: .45rem; height: .45rem; border-radius: 999px; background: #ffc72c;
+  }
+  @media (max-width: 1023px) { .condicoes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 639px) { .condicoes { grid-template-columns: 1fr; } }
+
+  /* Banco próprio */
+  .banco {
+    display: flex; gap: 2rem; align-items: center; justify-content: space-between;
+    padding: 2rem 2.25rem;
+    border-radius: 1.25rem;
+    border: 1px solid #2b4a6a;
+    background: linear-gradient(120deg, rgba(31, 184, 232, .10), rgba(31, 184, 232, .02) 60%);
+  }
+  .bancos { display: flex; flex-wrap: wrap; gap: .5rem; align-items: stretch; }
+  .bancos li {
+    display: flex; align-items: center; justify-content: center;
+    height: 2.75rem; padding: 0 .9rem; border-radius: .6rem;
+    background: rgba(238, 243, 249, .78);
+  }
+  .bancos img { width: auto; max-width: 7.5rem; filter: grayscale(1) contrast(1.15); opacity: .7; }
+  .bancos .bancos-consorcio {
+    background: none; border: 1px dashed rgba(255, 199, 44, .55);
+    color: #ffcb30; font-size: .875rem; font-weight: 600;
+  }
+  @media (max-width: 767px) {
+    .banco { flex-direction: column; align-items: stretch; padding: 1.5rem; }
+  }
+
+  /* Passos */
+  .passos {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.75rem;
+    counter-reset: none;
+  }
+  .passos li { position: relative; }
+  .passo-n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: 999px;
+    border: 1.5px solid #1fb8e8; color: #1fb8e8;
+    font-weight: 700; font-size: .95rem; margin-bottom: .9rem;
+    background: #0b1220; position: relative; z-index: 1;
+  }
+  .passos li:not(:last-child)::after {
+    content: ''; position: absolute; top: 1.125rem; left: 2.75rem; right: -1.25rem;
+    height: 1px; background: #2b4a6a;
+  }
+  .passos li:last-child .passo-n { border-color: #ffc72c; color: #ffc72c; }
+  @media (max-width: 1023px) {
+    .passos { grid-template-columns: 1fr; gap: 1.5rem; }
+    .passos li { padding-left: 3.25rem; }
+    .passo-n { position: absolute; left: 0; top: 0; margin: 0; }
+    .passos li:not(:last-child)::after { top: 2.5rem; bottom: -1.5rem; left: 1.125rem; right: auto; width: 1px; height: auto; }
+  }
+
+  .docs { padding-top: 2.5rem; border-top: 1px solid #22304a; }
+  .docs li { padding-left: 1.1rem; position: relative; }
+  .docs li::before { content: ''; position: absolute; left: 0; top: .6em; width: .45rem; height: .45rem; border-radius: 999px; background: #1fb8e8; }
+</style>
